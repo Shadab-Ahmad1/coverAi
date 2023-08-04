@@ -1,0 +1,192 @@
+.pic {
+    background-image: url(../assets/background.jpeg);
+    background-size: 100%;
+    background-position: right;
+    background-repeat: no-repeat;
+    padding-bottom: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 250px;
+}
+
+.major-div {
+    height: 1500px;
+    width: 1210px;
+    padding: 20px 20px 20px 20px;
+    min-height: 100%;
+    display: flex;
+    margin-bottom: 10%;
+    transform: matrix(1, 0, 0, 1, 0, 0);
+    border-radius: 10px 10px 10px 10px;
+    animation-name: slideIn;
+    animation-duration: 1s;
+    animation-timing-function: ease-in-out;
+}
+
+.container-unsubscribe {
+    margin-top: 20%;
+    background-color: #ffffff;
+    width: 600px;
+    height: 1200px;
+    margin-left: -44%;
+    box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.1);
+}
+
+.unsubscribe-h1 {
+    font-size: 48px;
+    font-weight: 700;
+    margin-left: 32%;
+}
+
+.container-unsubscribe p {
+    margin-top: 10%;
+    color: #575A73;
+    margin-left: 8%;
+    width: 516px;
+    height: 120px;
+    text-align: left;
+}
+
+input[type="email"] {
+    width: 60%;
+    height: 30px;
+    margin-left: 18%;
+    margin-top: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 2px solid #F6F6F6;
+    background-color: #F6F6F6;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.button {
+    padding: 10px 20px;
+    background-color: #1C545F;
+    color: #ffffff;
+    text-decoration: none;
+    align-items: center;
+    border: none;
+    text-align: center;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 12.8px;
+    text-decoration: none solid rgb(255, 255, 255);
+    letter-spacing: 0.5px;
+    transition: all 0s ease 0s;
+    box-sizing: border-box;
+    border-top-left-radius: 100px;
+    border-top-right-radius: 100px;
+    border-bottom-left-radius: 100px;
+    border-bottom-right-radius: 100px;
+    font-weight: bold;
+    cursor: pointer;
+    height: 50px;
+    width: 337px;
+    padding: 5px 22px 5px 22px;
+    display: inline-block;
+    margin-top: 3%;
+    margin-left: 22%;
+}
+
+.p-center {
+    margin-top: 10%;
+    text-align: center;
+}
+
+.card-num {
+    margin-top: 15%;
+    padding: 15px 32px
+}
+
+@media (max-width: 767px) {
+    /* Styles for mobile screens */
+    .pic {
+        background-image: url(../assets/background.jpeg);
+        background-size: 100%;
+        background-repeat: no-repeat;
+        padding-bottom: 10px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        overflow: scroll;
+        overflow: hidden;
+    }
+    .major-div {
+        margin-top: 30%;
+        height: 900px;
+        width: 300px;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 10%;
+        transform: matrix(1, 0, 0, 1, 0, 0);
+        border-radius: 10px;
+    }
+    .unsubscribe-h1 {
+        margin: -4% 0;
+        width: 100%;
+        font-size: 30px;
+        text-align: center;
+    }
+    .container-unsubscribe {
+        max-width: 320px;
+        height: 750px;
+        margin-left: 2%;
+    }
+    .unsub-p {
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+        font-size: 14px;
+        width: 100%;
+        max-width: 260px;
+    }
+    input[type="email"] {
+        margin-top: 15%;
+    }
+    .card-num {
+        position: relative;
+        margin-top: -100px;
+    }
+    .button {
+        padding: 10px 20px;
+        background-color: #1C545F;
+        color: #ffffff;
+        text-decoration: none;
+        align-items: center;
+        border: none;
+        text-align: center;
+        border-radius: 4px;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 12.8px;
+        text-decoration: none solid rgb(255, 255, 255);
+        letter-spacing: 0.5px;
+        transition: all 0s ease 0s;
+        box-sizing: border-box;
+        border-top-left-radius: 100px;
+        border-top-right-radius: 100px;
+        border-bottom-left-radius: 100px;
+        border-bottom-right-radius: 100px;
+        font-weight: bold;
+        cursor: pointer;
+        height: 40px;
+        width: 260px;
+        padding: 5px 22px 5px 22px;
+        display: inline-block;
+        margin-top: 3%;
+        margin-left: 9%;
+    }
+    .p-center {
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+        font-size: 14px;
+        width: 100%;
+        max-width: 260px;
+    }
+}

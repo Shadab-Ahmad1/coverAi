@@ -1,0 +1,249 @@
+    h1 {
+        margin-top: 10%;
+        color: black;
+        font-weight: bold;
+    }
+    
+    .container-register {
+        max-width: 668px;
+        height: 750px;
+    }
+    
+    .container-register h1 {
+        color: #333333
+    }
+    
+    .main-container {
+        background-image: url(../assets/background.jpeg);
+        background-size: 100%;
+        background-repeat: no-repeat;
+        padding-bottom: 10px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .next-conatiner {
+        margin-top: 15%;
+        margin-bottom: 10%;
+    }
+    
+    .container-price {
+        width: 600px;
+        height: 850px;
+        background: #FFFFFF;
+        border-radius: 10px;
+        color: #807F7D;
+        background-color: #fff;
+        border: 0.5px solid #ccc;
+        animation-name: slideIn;
+        animation-duration: 1s;
+        animation-timing-function: ease-in-out;
+    }
+    
+    .price-p2 {
+        margin-left: 30%;
+    }
+    
+    .price-p3 {
+        margin-right: 8%;
+        margin-left: 8%;
+        text-align: center;
+    }
+    
+    .price-p4 {
+        margin-top: -2%;
+        display: flex;
+        justify-content: center;
+        justify-self: center;
+        align-items: center;
+    }
+    
+    .price {
+        margin-top: 5%;
+        cursor: pointer;
+        align-items: center;
+        width: 30%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 15px auto;
+        flex-direction: column;
+        height: 110px;
+        border: 0.5px solid #ccc;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+    }
+    
+    .price:hover {
+        background-color: #F9F9F9;
+    }
+    
+    span {
+        color: black;
+        font-weight: bold;
+        font-size: 40px;
+        font-style: normal;
+        margin: 0 auto;
+        justify-content: center;
+        text-align: center;
+    }
+    
+    .price-p1 {
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        margin: 0 auto;
+    }
+    
+    price-ul {
+        display: flex;
+        margin: 0 auto;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .ul-price li {
+        width: 350px;
+        height: 52px;
+        background-color: #FFFFFF;
+        padding: 0px 15px 0px 15px;
+        box-shadow: rgb(0, 0, 0, 0.1) 0px 2px 20px 0px;
+        border-radius: 15px;
+        display: flex;
+        justify-content: center;
+        margin: 23px auto;
+        margin-bottom: 18px;
+        align-items: center;
+    }
+    
+    i {
+        text-align: left;
+        height: 16.0069px;
+        width: 11.441px;
+        margin: 0 20px 0;
+        color: #4221C0;
+    }
+    
+    .button-class {
+        outline: none;
+    }
+    
+    @keyframes slideIn {
+        from {
+            transform: translateY(-100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+    
+    @media (max-width:767px) {
+        .main-container {
+            background-image: url(../assets/background.jpeg);
+            background-size: 100%;
+            background-repeat: no-repeat;
+            padding-bottom: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            overflow: scroll;
+            overflow: hidden;
+        }
+        h1 {
+            margin-top: 10%;
+            color: black;
+            font-weight: bold;
+        }
+        .container-register {
+            max-width: 350px;
+            height: 750px;
+        }
+        .container-register h1 {
+            color: #333333
+        }
+        .next-conatiner {
+            margin-top: -10%;
+            margin-top: 40%;
+            margin-bottom: 30%;
+            height: 900px;
+        }
+        .container-register {
+            max-width: 300px;
+            height: 750px;
+        }
+        .container-price {
+            width: 310px;
+        }
+        .price {
+            cursor: pointer;
+            align-items: center;
+            width: 130px;
+            height: 90px;
+            border: 0.5px solid #ccc;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-self: center;
+            text-align: center;
+            margin: 0 auto;
+        }
+        span {
+            color: black;
+            margin-top: 10%;
+            font-weight: bold;
+            font-size: 30px;
+            font-style: normal;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-self: center;
+            text-align: center;
+            margin: 0 auto;
+        }
+        .prices-ul {
+            margin-top: 5%;
+        }
+        .ul-price li {
+            width: 218px;
+            height: 48px;
+            margin: 10px 100px 10px 100px;
+            background-color: #FFFFFF;
+            padding: 0px 15px 0px 15px;
+            display: list-item;
+            list-style-position: outside;
+            box-shadow: rgb(0, 0, 0, 0.1) 0px 2px 20px 0px;
+            border-top-left-radius: 40px;
+            border-top-right-radius: 40px;
+            border-bottom-left-radius: 40px;
+            border-bottom-right-radius: 40px;
+        }
+        li {
+            font-size: 14px;
+        }
+        i {
+            text-align: left;
+            height: 16.0069px;
+            width: 11.441px;
+            margin: 0 20px 0;
+            color: #4221C0;
+        }
+        .button-class {
+            outline: none;
+            margin-left: -15%;
+        }
+        .price-p2 {
+            margin-left: 14%;
+            font-size: 14px;
+        }
+        .price-p3 {
+            margin-right: 8%;
+            margin-left: 8%;
+            text-align: center;
+            font-size: 14px;
+        }
+    }

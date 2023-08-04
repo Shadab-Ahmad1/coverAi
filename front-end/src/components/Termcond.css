@@ -1,0 +1,181 @@
+* {
+    font-family: "Open Sans", sans-serif;
+}
+
+.main-sec {
+    background-image: url(../assets/background.jpeg);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    padding-bottom: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.div-1 {
+    height: 6370px;
+    width: 1240px;
+    align-items: center;
+}
+
+.terms {
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 62px;
+    color: #3D3D3D;
+    height: 124px;
+    width: 800px;
+    text-align: center;
+    margin-left: 17%;
+}
+
+.div-2 {
+    /* font-size: 14px;
+    line-height: 20px;
+    text-decoration: none solid rgb(0, 0, 0);
+    background-color: #FFFFFF;
+    width: -300px;
+    margin: 50px 0 100px 0;
+    padding: 30px 30px 30px 30px;
+    width: 100%;
+    transform: none;
+    transition: all 0s ease 0s;
+    box-sizing: border-box;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 20px 0px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px; */
+    width: 800px;
+    height: 5830px;
+    background: #FFFFFF;
+    border-radius: 10px;
+    background-color: #fff;
+    border: 0.5px solid #ccc;
+    animation-name: slideIn;
+    animation-duration: 1s;
+    animation-timing-function: ease-in-out;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 20px 0px;
+    align-items: center;
+    margin-left: 17%;
+}
+
+.h3 {
+    margin-left: 2%;
+    font-size: 14px;
+}
+
+.paragraph {
+    margin-left: 4%;
+    width: 750px;
+    color: #000000;
+    font-size: 14px;
+}
+
+.term-button {
+    margin-top: 5%;
+    font-family: "Open Sans", sans-serif;
+    margin-left: 39%;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 38px;
+    text-align: center;
+    background-position: 0% 0%;
+    color: #FFFFFF;
+    height: 50px;
+    width: 152px;
+    position: relative;
+    display: block;
+    cursor: pointer;
+    box-sizing: border-box;
+    border-radius: 25px;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+    text-decoration: none;
+    color: white;
+    background-color: #1c545f;
+}
+
+@media (max-width:767px) {
+    * {
+        font-family: "Open Sans", sans-serif;
+    }
+    .main-sec {
+        background-image: url(../assets/background.jpeg);
+        background-size: 100%;
+        background-repeat: no-repeat;
+        padding-bottom: 10px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        overflow: hidden;
+    }
+    .div-1 {
+        margin-top: 20%;
+        height: 11700px;
+        width: 350px;
+        align-items: center;
+    }
+    .terms {
+        margin-top: -3%;
+        font-size: 20px;
+        font-weight: 700;
+        color: #3D3D3D;
+        height: 100px;
+        width: 300px;
+        text-align: center;
+        margin-left: 10%;
+    }
+    .div-2 {
+        width: 340px;
+        height: 11350px;
+        background: #FFFFFF;
+        border-radius: 10px;
+        background-color: #fff;
+        border: 0.5px solid #ccc;
+        animation-name: slideIn;
+        animation-duration: 1s;
+        animation-timing-function: ease-in-out;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 20px 0px;
+        align-items: center;
+        margin-left: -0%;
+        margin-left: 2%;
+    }
+    .paragraph {
+        width: 310px;
+        margin-left: 5%;
+        color: #000000;
+        font-size: 14px;
+    }
+    .h3 {
+        margin-left: 2%;
+        font-size: 14px;
+    }
+    .term-button {
+        margin-top: 10%;
+        font-family: "Open Sans", sans-serif;
+        margin-left: 27%;
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 38px;
+        text-align: center;
+        background-position: 0% 0%;
+        color: #FFFFFF;
+        height: 50px;
+        width: 152px;
+        position: relative;
+        display: block;
+        cursor: pointer;
+        box-sizing: border-box;
+        border-radius: 25px;
+        border-top-left-radius: 25px;
+        border-top-right-radius: 25px;
+        border-bottom-left-radius: 25px;
+        border-bottom-right-radius: 25px;
+        text-decoration: none;
+        color: white;
+        background-color: #1c545f;
+    }
+}

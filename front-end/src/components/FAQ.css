@@ -1,0 +1,97 @@
+.pic {
+    background-image: url(../assets/background.jpeg);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.major-div {
+    max-height: 600px;
+}
+
+.All-FAQ {
+    margin-top: 20%;
+    margin-left: -20%;
+    height: 200px;
+    width: 1210px;
+    padding: 20px 20px 20px 20px;
+    display: flex;
+    margin-bottom: 10%;
+    transform: matrix(1, 0, 0, 1, 0, 0);
+    border-radius: 10px 10px 10px 10px;
+    animation-duration: 1s;
+    animation-fill-mode: both;
+    animation-name: slideInFromLeft;
+}
+
+.li-design {
+    background-color: #ffffff;
+    box-shadow: 1px solid #ccc;
+    border-radius: 5px;
+    width: 800px;
+    height: 168px;
+    margin-left: -0%;
+    margin-left: -24%;
+}
+
+.li-design-1 {
+    margin-left: 5%;
+}
+
+.li-design-1 h3 {
+    margin-left: 20%;
+}
+
+.p-design-1 {
+    margin-left: 5%;
+    margin-top: 5%;
+}
+
+.FAQ-h1 {
+    font-size: 48px;
+    font-weight: 700;
+    margin-left: 45%;
+}
+
+.p-center {
+    margin-top: 10%;
+    text-align: center;
+}
+
+@media (max-width:767px) {
+    .pic {
+        background-image: url(../assets/background.jpeg);
+        background-size: 100%;
+        background-repeat: no-repeat;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        overflow: hidden;
+    }
+    .FAQ-h1 {
+        font-size: 40px;
+        margin-top: -5%;
+        margin-left: 0;
+        text-align: center;
+    }
+    .All-FAQ {
+        margin-top: -40%;
+        margin-left: 0;
+        width: 100%;
+        padding: 20px;
+        justify-content: center;
+        animation-duration: 1s;
+        animation-fill-mode: both;
+        animation-name: slideInFromLeft;
+    }
+    .li-design {
+        background-color: #fbf8f2;
+        margin-top: 30%;
+        width: 100%;
+        margin-left: 0;
+        margin-bottom: 20px;
+    }
+}
