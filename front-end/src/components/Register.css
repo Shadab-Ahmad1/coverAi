@@ -901,17 +901,53 @@
     transform: rotate(360deg);
   }
 }
+h1-left-header
+{
+ 
+}
+.left-container>h1
+{
+  margin: .67em 0;
+  font-size: 48px;
+  font-weight: 400;
+  translate: 10px 60px 0px;
+}
+.left-container
+{
+  max-width: 50%;
+}
+.left-container >p{
+max-width: 280px;
+margin: auto;
+color: #3d3d3d;
+text-align: center;
+font-size: 16px;
+line-height: 30px;
+box-sizing: border-box;
+translate: 10px 40px 0px;
+font-family: "Open Sans", "Helvetica Neue", "Helvetica", sans-serif;
+}
+.show-cover-letter-button
+{
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  translate: -10px 0px 0px;
+  background-color:#1C545F; ;
+  color: white;
+  width: 50%;
+  height: 50%;
+  border-radius: 5px;
+
+  
+}
 .coverLetterWholeWrapper
 { display: flex;
   justify-content: center;
-  
-  width: 70%;
+   width: 70%;
   height: 100%;
-  background-color: #fff;
- 
-  
+  background-color: #fff; 
 }
-/* Add this style at the bottom of your existing CSS */
 .blur-background {
   position: absolute;
   top: 0;
@@ -924,7 +960,6 @@
   align-items: center;
   z-index: 1; /* Make sure it's above the content */
 }
-
 .coverLetterdivwrapper-2 {
   width: 100%;
   height: 100%;

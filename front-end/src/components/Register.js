@@ -863,7 +863,7 @@ const Register = () => {
               <h2> And your email address tooThis question is required.* </h2>{" "}
               <p> This is how we 'll contact you.</p>{" "}
               <input
-                type="email"
+                type="text"
                 placeholder="Type your answer here"
                 className="input-question-5"
                 value={formData.email}
@@ -929,7 +929,9 @@ const Register = () => {
                   <div className="left-container">
                     <h1 className="h1-left-container"> Thanks </h1>
                     <p>
-                      Your cover letter is being generated with the assistance of AI. Nice, right? (If nothing loads, please refresh the page)
+                      Your cover letter is being generated with the assistance of AI. Nice, right? 
+                      <br/>
+                      (If nothing loads, please refresh the page)
                     </p>
                   </div>
                   <div className="right-container">
