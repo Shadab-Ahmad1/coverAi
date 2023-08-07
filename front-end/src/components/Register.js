@@ -3,6 +3,7 @@ import axios from "axios";
 import "./Register.css";
 import StripeCheckout from "react-stripe-checkout";
 import { loadStripe } from '@stripe/stripe-js';
+import Thankyou from "./thankyou";
 
 const Register = () => {
   const [inputText, setInputText] = useState("");
@@ -62,6 +63,7 @@ const Register = () => {
   const generateCoverLetter = async () => {
     const apiKey = "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";
     setShowLoader(true);
+    setShowFirstLoader(false)
     const headers = {
       Authorization: `Bearer ${apiKey}`,
     };
@@ -961,6 +963,7 @@ const Register = () => {
                 <button id="Button" className="show-cover-letter-button" onClick={() => { handleShowLetterClick(); handleNext(); }}>
                   Show Letter
                 </button>
+                
                 <p> Your Cover letter has been created </p>
               </div>
             )}

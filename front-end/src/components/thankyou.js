@@ -1,7 +1,8 @@
 import React from "react";
 import "./thankyou.css";
+import Register from "./Register";
 
-function thankyou() {
+function thankyou({handleShowLetterClick}) {
   return (
     <>
     <section className="thankyou-whole-wrapper" id="thankyou-whole-wrapper">
@@ -15,7 +16,7 @@ function thankyou() {
             </div>
             <div className="col-sm-6" id="loadingContainer">
                         <div className="thank-you" id="coverLetterButton">
-                            <button className="btn button7">Show Letter</button>
+                            <button className="btn button7" onClick= {handleShowLetterClick}>Show Letter</button>
                             <p>Your Cover letter has been created!</p>
                         </div>
             </div>

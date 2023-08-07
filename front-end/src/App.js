@@ -18,6 +18,7 @@ import Viewletter from "./components/Viewletter";
 import Thankyou from "./components/thankyou";
 
 function App() {
+
   const [formData, setFormData] = useState("");
   const location = useLocation();
   const isRegisterPage = location.pathname.includes("/Register");
@@ -41,7 +42,7 @@ function App() {
         <Route path="/Cookies" element={<Cookies />} />{" "}
         <Route path="/Forget" element={<Forget />} />{" "}
         <Route path="/Viewletter" element={<Viewletter />} />{" "}
-        <Route path="/thank-you" element={<Thankyou />} />{" "}
+        <Route path="/thank-you"  element={<Thankyou />} />{" "}
       </Routes>{" "}
       {!isRegisterPage && !isThankYou && <Footer />}{" "}
     </>
