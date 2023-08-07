@@ -23,6 +23,7 @@ const storeItems = new Map([
 // Define a mongoose schema for payments
 const paymentSchema = new mongoose.Schema({
   email: String,
+  name: String,
   amount: Number,
   timestamp: Date,
 });
@@ -35,7 +36,7 @@ app.post('/create-checkout-session', async (req, res) => {
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       mode: 'payment',
-      customer_email: req.body.email, 
+      // customer_email: req.body.email, 
       line_items: req.body.items.map(item => {
         const storeItem = storeItems.get(item.id);
         return {
@@ -56,6 +57,7 @@ app.post('/create-checkout-session', async (req, res) => {
         // Create a new payment document in MongoDB
         const newPayment = new Payment({
           email: req.body.email,
+          name:req.body.name,
           amount: storeItems.get(req.body.items[0].id).priceInCents,
           timestamp: new Date(),
         });

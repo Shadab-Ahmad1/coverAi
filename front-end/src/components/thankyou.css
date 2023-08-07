@@ -1,0 +1,85 @@
+.thankyou-whole-wrapper{
+    height: calc(100vh - 100px);
+    padding: 3rem 0;
+    background-image: url("../assets/background.jpeg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+.container-fluid{
+    justify-content: space-around;
+    margin: 0 auto;
+    background: white;
+    display: flex;
+    width: 81%;
+    border: 1px solid #ddd;
+    padding: 0 !important;
+    height: 100%;
+    align-items: center;
+    border-radius: 10px;
+    box-shadow: 0 0 17px 17px rgba(0,0,0,0.04);
+}
+.col-sm-6{
+    width: 50%;
+}
+
+#thankYouContainer {
+    width: 40%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+    padding: 0 40px;
+}
+#loadingContainer {
+    width: 60%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #fbf8f2;
+    height: 100%;
+}
+
+.button-text-center .button7 {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 35px;
+    color: #FFFFFF;
+    height: 50px;
+    background: #1c545f;
+    border-radius: 100px;
+    padding: 5px 22px;
+    margin-top: 10px;
+    margin-bottom: 40px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+.button-text-center{
+    text-align: center;
+}
+
+#thankYouContainer .thanks{
+    color: #3d3d3d;
+    text-transform: capitalize;
+    font-size: 48px;
+    font-weight: 400;
+    margin: 0;
+}
+#thankYouContainer .user-email-text{
+    line-height: 35px;
+}
+#thankYouContainer  .thanks-description{
+    color: #3d3d3d;
+    font-size: 12px;
+    line-height: 26px;
+}
+
+#thankYouContainer  .thanks-description a{
+    color: #807f7d;
+    text-decoration: underline;
+}

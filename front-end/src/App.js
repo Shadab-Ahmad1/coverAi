@@ -15,17 +15,19 @@ import Termcond from "./components/Termcond";
 import Privacy from "./components/Privacy";
 import Cookies from "./components/Cookies";
 import Viewletter from "./components/Viewletter";
+import Thankyou from "./components/thankyou";
 
 function App() {
   const [formData, setFormData] = useState("");
   const location = useLocation();
   const isRegisterPage = location.pathname.includes("/Register");
+  const isThankYou = location.pathname.includes("/thank-you");
   const isViewletter = location.pathname.includes("/Viewletter");
 
   return (
     <>
       {" "}
-      {!isRegisterPage && <Navbar />}{" "}
+      {!isRegisterPage && !isThankYou && <Navbar />}{" "}
       <Routes>
         <Route path="/" element={<Home />} />{" "}
         <Route path="/Register" element={<Register />} />{" "}
@@ -39,8 +41,9 @@ function App() {
         <Route path="/Cookies" element={<Cookies />} />{" "}
         <Route path="/Forget" element={<Forget />} />{" "}
         <Route path="/Viewletter" element={<Viewletter />} />{" "}
+        <Route path="/thank-you" element={<Thankyou />} />{" "}
       </Routes>{" "}
-      {!isRegisterPage && <Footer />}{" "}
+      {!isRegisterPage && !isThankYou && <Footer />}{" "}
     </>
   );
 }

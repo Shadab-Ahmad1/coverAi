@@ -145,7 +145,9 @@ const Register = () => {
         body: JSON.stringify({
           items:[
             {id:1, amount: 1000 }
-          ]
+          ],
+          email:formData.email,
+          name:formData.fullName
         }),
       }).then( res => {
         if(res.ok) return res.json()
