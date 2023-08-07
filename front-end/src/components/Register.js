@@ -38,12 +38,21 @@ const Register = () => {
           button.click();
         }
       }
+      if (event.ctrlKey && event.key === 'Enter') {
+        const button = document.getElementById('Sub-Button');
+        if (button) {
+          button.click();
+        }
+      }
     };
-    document.addEventListener('keydown', handleKeyPress);
+  
+    window.addEventListener('keydown', handleKeyPress);
+  
     return () => {
-      document.removeEventListener('keydown', handleKeyPress);
+      window.removeEventListener('keydown', handleKeyPress);
     };
-  }, []); 
+  }, []);
+  
   const [submitted, setSubmitted] = useState(false);
   const [showLoader, setShowLoader] = useState(true);
   const [showFirstLoader, setShowFirstLoader] = useState(true);
@@ -61,8 +70,7 @@ const Register = () => {
       messages: [
         {
           role: "user",
-          content: `You are a helpful assistant that helps users write quality cover letters. The user has been prompted with many questions through a typeform based questionnaire and has provided answers to help craft the letter. The assistant\'s answer must be formatted in simple document, with all necessary tags except style tag for a coherent output as if the letter was in an email to be sent. Just don\'t include any links as clickable. The applicant provides his name in ${formData.fullName} and 
-          ${formData.companyName} information on the role he is applying to in ${formData.jobTitle} and ${formData.relevantWorkExperience} and ${formData.keyachievments} is regarding his past or current experience.`,
+          content: `You are a helpful assistant that helps users write quality cover letters. The user has been prompted with many questions through a typeform based questionnaire and has provided answers to help craft the letter. The assistant\'s answer must be formatted in simple document, with all necessary tags except style tag for a coherent output as if the letter was in an email to be sent. Just don\'t include any links as clickable. The applicant provides his name in ${formData.fullName} and information on the role he is applying to in ${formData.jobTitle} and ${formData.relevantWorkExperience} and ${formData.keyachievments} is regarding his past or current experience.`,
         },
       ],
       // temperature: 0.7,
@@ -905,7 +913,7 @@ const Register = () => {
               <p> Hope you like it. </p>{" "}
               <div className="question-5-btn-main">
                 <div className="question-5-btn">
-                  <button id="Button"
+                  <button id="Sub-Button"
                   
                     onClick={() => {
                       handleSubmit();
@@ -917,7 +925,7 @@ const Register = () => {
                   </button>{" "}
                 </div>{" "}
                 <div className="question-5-data">
-                  press <strong> Enter↵ </strong>{" "}
+                  press <strong>Ctrl+Enter↵ </strong>{" "}
                 </div>{" "}
               </div>{" "}
             </div>{" "}
@@ -940,9 +948,11 @@ const Register = () => {
                   <div className="right-container">
                     {/* Show loader until API response is received */}
                     {showLoader && (
-                      <div>
+                     <div>
                     <div className="cover-loader"></div>
+                    <div className="cover-loader-main">
                     <p> Your Cover Letter is generating in while</p>
+                    </div>
                     </div>
                   )}
                     {/* Show the "Show Letter" button */}
@@ -974,9 +984,12 @@ const Register = () => {
               {currentDisplayIndex >= halfwayIndex && (
                 <div className="blur-background">
                   <div className="coverLetterdivwrapper-2">
-                    <div id="coverLetterDiv">      
+                    <div id="coverLetterDiv" className="stripe-button-whole-wrapper">  
+                    <p> To see the full letter try for free! </p>    
                     <button id="Button" className="stripe-button" onClick={stripefunction}>
-                     Click to Proceed 
+                     
+                     <div className="test-mode-wrapper"> <h6 className="test-mode">TEST MODE</h6></div>
+                     <p>Try now</p>
                      </button>
                      </div>
                   </div>
@@ -1004,3 +1017,4 @@ const Register = () => {
 };
 
 export default Register;
+

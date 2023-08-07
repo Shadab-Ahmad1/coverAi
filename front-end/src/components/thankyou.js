@@ -14,7 +14,7 @@ function thankyou() {
                             If you do not receive any email Please contact our customer service team at <a href="mailto:info+coverai@yeesshh.com">info+coverai@yeesshh.com</a>.</p>
             </div>
             <div className="col-sm-6" id="loadingContainer">
-                        <div className="button-text-center" id="coverLetterButton">
+                        <div className="thank-you" id="coverLetterButton">
                             <button className="btn button7">Show Letter</button>
                             <p>Your Cover letter has been created!</p>
                         </div>
