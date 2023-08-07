@@ -24,8 +24,29 @@ const Register = () => {
     fullName: "",
     email: "",
   });
+  useEffect(() => {
+    const FirstloaderTimeout = setTimeout(() => {
+      setShowFirstLoader(false);
+    },200);
+    return () => clearTimeout(FirstloaderTimeout);
+  }, []);
+  useEffect(() => {
+    const handleKeyPress = (event) => {
+      if (event.key === 'Enter') {
+        const button = document.getElementById('Button');
+        if (button) {
+          button.click();
+        }
+      }
+    };
+    document.addEventListener('keydown', handleKeyPress);
+    return () => {
+      document.removeEventListener('keydown', handleKeyPress);
+    };
+  }, []); 
   const [submitted, setSubmitted] = useState(false);
   const [showLoader, setShowLoader] = useState(true);
+  const [showFirstLoader, setShowFirstLoader] = useState(true);
   const [showContent, setShowContent] = useState(false);
   const [coverLetterText, setCoverLetterText] = useState("");
 
@@ -68,7 +89,7 @@ const Register = () => {
           ));
         
   setCoverLetterText(formattedCoverLetter);
-          setShowContent(true);
+      setShowContent(true);
       }
     } catch (error) {
       setShowLoader(false);
@@ -95,9 +116,8 @@ const Register = () => {
       } else {
         clearInterval(typeInterval);
       }
-    }, 50); // Adjust the interval to control typing speed
+    }, 50); 
   };
-
   useEffect(() => {
     const loaderTimer = setTimeout(() => {
       setShowLoader(false);
@@ -225,21 +245,29 @@ const Register = () => {
     switch (step) {
       case 1:
         return (
-          <div className="render-in">
-            <h2> Free great cover letter in seconds </h2>{" "}
-            <h3 className="render-in-h3"> AI powered </h3>{" "}
-            <div className="render-in-div2">
-              <div className="render-in-btn-main">
-                <div className="render-in-btn">
-                  <button onClick={() => handleNext({})}> Start now </button>{" "}
-                </div>{" "}
-                <div className="render-in-div2-part">
-                  press <strong> Enter↵ </strong>{" "}
-                </div>{" "}
-              </div>{" "}
-            </div>{" "}
-          </div>
-        );
+          <div>
+          {showFirstLoader ? (
+            <div className="loader"></div>
+          ) : (
+            <div className="render-in">
+              <h2> Free great cover letter in seconds </h2>
+              <h3 className="render-in-h3"> AI powered </h3>
+              <div className="render-in-div2">
+                <div className="render-in-btn-main">
+                  <div className="render-in-btn">
+                    <button id="Button" onClick={() => handleNext({})}>
+                      Start now
+                    </button>
+                  </div>
+                  <div className="render-in-div2-part">
+                    press <strong> Enter↵ </strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      );    
       case 2:
         return (
           <div className="question-1-header">
@@ -253,12 +281,12 @@ const Register = () => {
             />{" "}
             <div className="question-1-btn-main">
               <div className="question-1-btn">
-                <button
+                <button id="Button"
                   onClick={() => handleNext({ fullName: inputText })}
                   disabled={errorMessage !== ""}
                 >
                   {" "}
-                  Ok{" "}
+                  Ok ✓{" "}
                 </button>{" "}
               </div>{" "}
               <div className="question-1-data">
@@ -288,7 +316,7 @@ const Register = () => {
             </p>{" "}
             <div className="question-1-div2-main">
               <div className="question-1-div2-btn">
-                <button onClick={() => handleNext()}> Sounds great </button>{" "}
+                <button id="Button" onClick={() => handleNext()}> Sounds great </button>{" "}
               </div>{" "}
               <div className="render-in-div2-part">
                 press <strong> Enter↵ </strong>{" "}
@@ -315,7 +343,7 @@ const Register = () => {
             </p>{" "}
             <div className="question-1-div2-main">
               <div className="question-1-div2-btn">
-                <button onClick={() => handleNext()}> Ok Fire Away </button>{" "}
+                <button id="Button" onClick={() => handleNext()}> Ok Fire Away </button>{" "}
               </div>{" "}
               <div className="render-in-div2-part">
                 press <strong> Enter↵ </strong>{" "}
@@ -330,7 +358,7 @@ const Register = () => {
             <h2> First some details about you... </h2>{" "}
             <div className="question-1-div4-main">
               <div className="question-1-div4-btn">
-                <button onClick={() => handleNext()}> Start </button>{" "}
+                <button id="Button" onClick={() => handleNext()}> Start </button>{" "}
               </div>{" "}
               <div className="render-in-div4-part">
                 press <strong> Enter↵ </strong>{" "}
@@ -344,7 +372,8 @@ const Register = () => {
             <div className="question-2-header">
               <h2> OK let 's get started. First some details about you...</h2>{" "}
             </div>{" "}
-            <div className="question-2-div1">
+            <div className="question-2-section2">
+            <div className="question-1-header">
               <h2> What is the job title you are applying for ? * </h2>{" "}
               <input
                 type="text"
@@ -355,12 +384,9 @@ const Register = () => {
                   setFormData({ ...formData, jobTitle: e.target.value })
                 }
               />{" "}
-              {!formData.jobTitle.trim() && (
-                <p className="error-message"> {errorMessage} </p>
-              )}{" "}
               <div className="question-2-btn-main">
-                <div className="question-2-btn">
-                  <button
+                <div className="question-2-btn ">
+                  <button id="Button"
                     onClick={() => handleNext()}
                     disabled={errorMessage !== ""}
                   >
@@ -373,6 +399,7 @@ const Register = () => {
                 </div>{" "}
               </div>{" "}
             </div>{" "}
+            </div>
           </div>
         );
       case 7:
@@ -381,10 +408,10 @@ const Register = () => {
             <div className="question-2-header">
               <h2> OK let 's get started. First some details about yo...</h2>{" "}
             </div>{" "}
-            <div className="question-2-div1">
+            <div className="question-1-header">
               <h2>
                 {" "}
-                What is the name of the company / organization you are applying
+                What is the name of the company/organization you are applying
                 to ? *{" "}
               </h2>{" "}
               <input
@@ -396,12 +423,10 @@ const Register = () => {
                   setFormData({ ...formData, companyName: e.target.value })
                 }
               />{" "}
-              {!formData.companyName.trim() && (
-                <p className="error-message"> {errorMessage} </p>
-              )}{" "}
+            
               <div className="question-2-btn-main">
-                <div className="question-2-btn">
-                  <button
+                <div className="question-2-btn ">
+                  <button id="Button"
                     onClick={() => handleNext()}
                     disabled={errorMessage !== ""}
                   >
@@ -422,7 +447,7 @@ const Register = () => {
             <div className="question-2-header">
               <h2> OK let 's get started. First some details about yo...</h2>{" "}
             </div>{" "}
-            <div className="question-2-div1">
+            <div className="question-1-header">
               <h2>
                 {" "}
                 What relevant work experiences would you like to mention ? *{" "}
@@ -439,12 +464,10 @@ const Register = () => {
                   })
                 }
               />{" "}
-              {!formData.relevantWorkExperience.trim() && (
-                <p className="error-message"> {errorMessage} </p>
-              )}{" "}
+           
               <div className="question-2-btn-main">
-                <div className="question-2-btn">
-                  <button
+                <div className="question-2-btn ">
+                  <button id="Button"
                     onClick={() => handleNext()}
                     disabled={errorMessage !== ""}
                   >
@@ -464,7 +487,7 @@ const Register = () => {
           <div className="question-3-main">
             <div className="question-3-header">
               <h2> One last question about you: </h2>{" "}
-              <h2> What are your key achievments ? * </h2>{" "}
+              <h2> What are the key achievements from your relevant past experiences that you would like to highlight? </h2>{" "}
               <input
                 type="text"
                 placeholder="Type your answer here"
@@ -477,12 +500,10 @@ const Register = () => {
                   })
                 }
               />{" "}
-              {!formData.keyachievments.trim() && (
-                <p className="error-message"> {errorMessage} </p>
-              )}{" "}
+        
               <div className="question-3-btn-main">
-                <div className="question-3-btn">
-                  <button
+                <div className="question-3-btn ">
+                  <button id="Button"
                     onClick={() => handleNext()}
                     disabled={errorMessage !== ""}
                   >
@@ -504,7 +525,7 @@ const Register = () => {
               <h2> Thanks!Just a few more questions... </h2>{" "}
               <div className="question-4-btn-main">
                 <div className="question-4-btn">
-                  <button onClick={() => handleNext()}> Bring them on! </button>{" "}
+                  <button id="Button" onClick={() => handleNext()}> Bring them on! </button>{" "}
                 </div>{" "}
                 <div className="question-4-data">
                   press <strong> Enter↵ </strong>{" "}
@@ -519,7 +540,7 @@ const Register = () => {
             <div className="question-5-header">
               <h2> Thanks!Just a few more questions... </h2>{" "}
             </div>{" "}
-            <div className="question-5-div1">
+            <div className="question-1-header">
               <h2> What is your highest level of education ? * </h2>{" "}
               <input
                 type="text"
@@ -533,12 +554,10 @@ const Register = () => {
                   })
                 }
               />{" "}
-              {!formData.educationLevel.trim() && (
-                <p className="error-message"> {errorMessage} </p>
-              )}{" "}
+            
               <div className="question-5-btn-main">
                 <div className="question-5-btn">
-                  <button
+                  <button id="Button"
                     onClick={() => handleNext()}
                     disabled={errorMessage !== ""}
                   >
@@ -559,7 +578,7 @@ const Register = () => {
             <div className="question-5-header">
               <h2> Thanks!Just a few more questions... </h2>{" "}
             </div>{" "}
-            <div className="question-5-div1">
+            <div className="question-1-header">
               <h2> What was your major or area of study ? * </h2>{" "}
               <input
                 type="text"
@@ -573,12 +592,10 @@ const Register = () => {
                   })
                 }
               />{" "}
-              {!formData.majorOrAreaOfStudy.trim() && (
-                <p className="error-message"> {errorMessage} </p>
-              )}{" "}
+             
               <div className="question-5-btn-main">
                 <div className="question-5-btn">
-                  <button
+                  <button id="Button"
                     onClick={() => handleNext()}
                     disabled={errorMessage !== ""}
                   >
@@ -599,7 +616,7 @@ const Register = () => {
             <div className="question-5-header">
               <h2> Thanks!Just a few more questions... </h2>{" "}
             </div>{" "}
-            <div className="question-5-div1">
+            <div className="question-1-header">
               <h2>
                 {" "}
                 Did you achieve any notable accomplishments during your
@@ -617,12 +634,10 @@ const Register = () => {
                   })
                 }
               />{" "}
-              {!formData.notableAccomplishments.trim() && (
-                <p className="error-message"> {errorMessage} </p>
-              )}{" "}
+            
               <div className="question-5-btn-main">
                 <div className="question-5-btn">
-                  <button
+                  <button  id="Button"
                     onClick={() => handleNext()}
                     disabled={errorMessage !== ""}
                   >
@@ -643,7 +658,7 @@ const Register = () => {
             <div className="question-5-header">
               <h2> Thanks!Just a few more questions... </h2>{" "}
             </div>{" "}
-            <div className="question-5-div1">
+            <div className="question-1-header">
               <h2>
                 {" "}
                 What are the required qualifications / skills for the job ? *
@@ -660,12 +675,10 @@ const Register = () => {
                   })
                 }
               />{" "}
-              {!formData.requiredQualifications.trim() && (
-                <p className="error-message"> {errorMessage} </p>
-              )}{" "}
+             
               <div className="question-5-btn-main">
                 <div className="question-5-btn">
-                  <button
+                  <button  id="Button"
                     onClick={() => handleNext()}
                     enabled={errorMessage !== ""}
                   >
@@ -686,7 +699,7 @@ const Register = () => {
             <div className="question-5-header">
               <h2> Thanks!Just a few more questions... </h2>{" "}
             </div>{" "}
-            <div className="question-5-div1">
+            <div className="question-1-header">
               <h2>
                 How do your qualifications / skills match those required ? *
               </h2>{" "}
@@ -702,12 +715,10 @@ const Register = () => {
                   })
                 }
               />{" "}
-              {!formData.qualificationsMatch.trim() && (
-                <p className="error-message"> {errorMessage} </p>
-              )}{" "}
+            
               <div className="question-5-btn-main">
                 <div className="question-5-btn">
-                  <button
+                  <button  id="Button"
                     onClick={() => handleNext()}
                     disabled={errorMessage !== ""}
                   >
@@ -728,7 +739,7 @@ const Register = () => {
             <div className="question-5-header">
               <h2> Thanks!Just a few more questions... </h2>{" "}
             </div>{" "}
-            <div className="question-5-div1">
+            <div className="question-1-header">
               <h2>
                 Almost there!Why are you interested in this job position at this
                 particular company / organization ? *
@@ -745,12 +756,10 @@ const Register = () => {
                   })
                 }
               />{" "}
-              {!formData.interestedforjob.trim() && (
-                <p className="error-message"> {errorMessage} </p>
-              )}{" "}
+            
               <div className="question-5-btn-main">
                 <div className="question-5-btn">
-                  <button
+                  <button  id="Button"
                     onClick={() => handleNext()}
                     disabled={errorMessage !== ""}
                   >
@@ -768,17 +777,16 @@ const Register = () => {
       case 17:
         return (
           <div className="question-5g-main">
-            <div className="question-5g-div1">
+            <div className="question-1-header">
               <h2>
                 {" "}
                 ...and that 's the end of the exam. Wasn' t too hard, right ?{" "}
               </h2>{" "}
-              <h2> OK, final question. </h2>{" "}
-              <h2>
-                {" "}
+              <h2> OK, final question.
+              {" "}
                 Provide a closing statement that summarizes your motivation for
-                applying and reiterates your interest in the position ?{" "}
-              </h2>{" "}
+                applying and reiterates your interest in the position ?{" "} </h2>{" "}
+           
               <input
                 type="text"
                 placeholder="Type your answer here"
@@ -792,19 +800,17 @@ const Register = () => {
                 }
               />{" "}
               <h5> Shift⇧ + Enter↵ to make a line break </h5>{" "}
-              {!formData.motivationStatement.trim() && (
-                <p className="error-message"> {errorMessage} </p>
-              )}{" "}
-              <div className="question-5-btn-main">
+             
+              <div className="question-6-btn-main">
                 <div className="question-5-btn">
-                  <button
+                  <button  id="Button"
                     onClick={() => handleNext()}
                     disabled={errorMessage !== ""}
                   >
                     Ok{" "}
                   </button>{" "}
                 </div>{" "}
-                <div className="question-5-data">
+                <div className="question-6-data">
                   press <strong> Enter↵ </strong>{" "}
                 </div>{" "}
               </div>{" "}
@@ -814,7 +820,7 @@ const Register = () => {
       case 18:
         return (
           <div className="question-6-main">
-            <div className="question-5g-div1">
+            <div className="question-1-header">
               <h2>
                 {" "}
                 And that 's it! Just a few personal details and we' ll have all
@@ -835,7 +841,7 @@ const Register = () => {
               />{" "}
               <div className="question-5-btn-main">
                 <div className="question-5-btn">
-                  <button
+                  <button   id="Button"
                     onClick={() => handleNext()}
                     disabled={!isButtonEnabled()}
                   >
@@ -853,11 +859,11 @@ const Register = () => {
       case 19:
         return (
           <div className="question-7-main">
-            <div className="question-5-div1">
+            <div className="question-1-header">
               <h2> And your email address tooThis question is required.* </h2>{" "}
               <p> This is how we 'll contact you.</p>{" "}
               <input
-                type="text"
+                type="email"
                 placeholder="Type your answer here"
                 className="input-question-5"
                 value={formData.email}
@@ -868,12 +874,10 @@ const Register = () => {
                   })
                 }
               />{" "}
-              {!formData.email.trim() && (
-                <p className="error-message"> {errorMessage} </p>
-              )}{" "}
+            
               <div className="question-5-btn-main">
                 <div className="question-5-btn">
-                  <button
+                  <button  id="Button"
                     onClick={() => handleNext()}
                     disabled={errorMessage !== ""}
                   >
@@ -898,7 +902,7 @@ const Register = () => {
               <p> Hope you like it. </p>{" "}
               <div className="question-5-btn-main">
                 <div className="question-5-btn">
-                  <button
+                  <button id="Button"
                   
                     onClick={() => {
                       handleSubmit();
@@ -939,7 +943,7 @@ const Register = () => {
                     {/* Show the "Show Letter" button */}
                     {!showLoader && (
               <div className="button-text-center" id="coverLetterButton">
-                <button className="show-cover-letter-button" onClick={() => { handleShowLetterClick(); handleNext(); }}>
+                <button id="Button" className="show-cover-letter-button" onClick={() => { handleShowLetterClick(); handleNext(); }}>
                   Show Letter
                 </button>
                 <p> Your Cover letter has been created </p>
@@ -966,8 +970,8 @@ const Register = () => {
                 <div className="blur-background">
                   <div className="coverLetterdivwrapper-2">
                     <div id="coverLetterDiv">      
-                    <button className="stripe-button" onClick={stripefunction}>
-                     Click to Proceed
+                    <button id="Button" className="stripe-button" onClick={stripefunction}>
+                     Click to Proceed 
                      </button>
                      </div>
                   </div>

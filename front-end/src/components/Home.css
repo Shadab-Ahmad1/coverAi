@@ -338,7 +338,7 @@ img {
     align-items: center;
 }
 
-h2 {
+.home4-data>h2 {
     font-weight: 700;
     font-size: 30px;
     line-height: 30px;
