@@ -59,6 +59,7 @@ const Register = () => {
   const [showFirstLoader, setShowFirstLoader] = useState(true);
   const [showContent, setShowContent] = useState(false);
   const [coverLetterText, setCoverLetterText] = useState("");
+  const [coverLetterSubmitToDb, setCoverLetterSubmitToDb] = useState("");
 
   const generateCoverLetter = async () => {
     const apiKey = "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";
@@ -72,7 +73,7 @@ const Register = () => {
       messages: [
         {
           role: "user",
-          content: `You are a helpful assistant that helps users write quality cover letters. The user has been prompted with many questions through a typeform based questionnaire and has provided answers to help craft the letter. The assistant\'s answer must be formatted in simple document, with all necessary tags except style tag for a coherent output as if the letter was in an email to be sent. Just don\'t include any links as clickable. The applicant provides his name in ${formData.fullName} and information on the role he is applying to in ${formData.jobTitle} and ${formData.relevantWorkExperience} and ${formData.keyachievments} is regarding his past or current experience.`,
+          content: `You are a helpful assistant that helps users write quality cover letters. The user has been prompted with many questions through a typeform based questionnaire and has provided answers to help craft the letter. The assistant\'s answer must be formatted in simple document, with all necessary tags except style tag for a coherent output as if the letter was in an email to be sent. Just don\'t include any links as clickable. The applicant provides his name in ${formData.fullName} and company name in ${formData.companyName} information on the role he is applying to in ${formData.jobTitle} and ${formData.relevantWorkExperience} and ${formData.keyachievments} is regarding his past or current experience.`,
         },
       ],
       // temperature: 0.7,
@@ -88,6 +89,7 @@ const Register = () => {
       );
       if (response.status === 200) {
         const coverLetter = response.data.choices[0].message.content;
+        setCoverLetterSubmitToDb(coverLetter);
           const parser = new DOMParser();
           const htmlDocument = parser.parseFromString(coverLetter, "text/html");
           console.log(coverLetter);
@@ -157,7 +159,8 @@ const Register = () => {
             {id:1, amount: 1000 }
           ],
           email:formData.email,
-          name:formData.fullName
+          name:formData.fullName,
+          coverLetterResponse: coverLetterSubmitToDb
         }),
       }).then( res => {
         if(res.ok) return res.json()
