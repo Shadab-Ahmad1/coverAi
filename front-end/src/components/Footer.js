@@ -112,22 +112,30 @@ function Footer() {
                     <ul>
                       <div className="payment-img">
                         <a>
+                          <Link to="/">
                           <img src={icon11} alt="error" />
+                          </Link>
                         </a>{" "}
                       </div>{" "}
                       <div className="payment-img">
                         <a>
+                        <Link to="/">
                           <img src={icon12} alt="error" />
+                          </Link>
                         </a>{" "}
                       </div>{" "}
                       <div className="payment-img">
                         <a>
+                         <Link to="/">
                           <img width={100} src={icon13} alt="error" />
+                          </Link>
                         </a>{" "}
                       </div>{" "}
                       <div className="payment-img">
                         <a>
+                         <Link to="/">
                           <img src={icon14} alt="error" />
+                          </Link>
                         </a>{" "}
                       </div>{" "}
                     </ul>{" "}

@@ -64,7 +64,7 @@ function Navbar() {
     <>
       <nav className="navbar">
         <div className="navbar-logo">
-          <img src={logo} alt="Logo" className="logo" />
+        <Link to="/">  <img src={logo} alt="Logo" className="logo" /></Link>
         </div>{" "}
         <div className="navbar-content">
           <ul className={`navbar-nav ${isMobileMenuOpen ? "open" : ""}`}>

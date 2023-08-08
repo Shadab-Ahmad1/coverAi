@@ -41,7 +41,8 @@
 }
 
 .navbar-logo {
-    margin-left: 40px;
+   
+    translate: 40px 7px 0px;
 }
 
 .navbar-content {

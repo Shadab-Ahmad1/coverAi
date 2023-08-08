@@ -28,7 +28,7 @@ const Register = () => {
   useEffect(() => {
     const FirstloaderTimeout = setTimeout(() => {
       setShowFirstLoader(false);
-    },200);
+    },500);
     return () => clearTimeout(FirstloaderTimeout);
   }, []);
   useEffect(() => {
@@ -101,7 +101,7 @@ const Register = () => {
             </React.Fragment>
           ));
         
-  setCoverLetterText(formattedCoverLetter);
+      setCoverLetterText(formattedCoverLetter);
       setShowContent(true);
       }
     } catch (error) {
@@ -119,9 +119,9 @@ const Register = () => {
   };
   
   const typeOutCoverLetter = () => {
-    const totalChars = coverLetterText.join('').length;
+    const totalChars = coverLetterText.join(' ' && '/n').length;
+    console.log(totalChars);
     let displayIndex = 0;
-  
     const typeInterval = setInterval(() => {
       if (displayIndex < totalChars) {
         setCurrentDisplayIndex(displayIndex);
@@ -407,7 +407,7 @@ const Register = () => {
                     disabled={errorMessage !== ""}
                   >
                     {" "}
-                    Ok{" "}
+                    Ok ✓{" "}
                   </button>{" "}
                 </div>{" "}
                 <div className="question-2-data">
@@ -447,7 +447,7 @@ const Register = () => {
                     disabled={errorMessage !== ""}
                   >
                     {" "}
-                    Ok{" "}
+                    Ok ✓{" "}
                   </button>{" "}
                 </div>{" "}
                 <div className="question-2-data">
@@ -488,7 +488,7 @@ const Register = () => {
                     disabled={errorMessage !== ""}
                   >
                     {" "}
-                    Ok{" "}
+                    Ok ✓{" "}
                   </button>{" "}
                 </div>{" "}
                 <div className="question-2-data">
@@ -524,7 +524,7 @@ const Register = () => {
                     disabled={errorMessage !== ""}
                   >
                     {" "}
-                    Ok{" "}
+                    Ok ✓{" "}
                   </button>{" "}
                 </div>{" "}
                 <div className="question-3-data">
@@ -578,7 +578,7 @@ const Register = () => {
                     disabled={errorMessage !== ""}
                   >
                     {" "}
-                    Ok{" "}
+                    Ok ✓{" "}
                   </button>{" "}
                 </div>{" "}
                 <div className="question-5-data">
@@ -616,7 +616,7 @@ const Register = () => {
                     disabled={errorMessage !== ""}
                   >
                     {" "}
-                    Ok{" "}
+                    Ok ✓{" "}
                   </button>{" "}
                 </div>{" "}
                 <div className="question-5-data">
@@ -658,7 +658,7 @@ const Register = () => {
                     disabled={errorMessage !== ""}
                   >
                     {" "}
-                    Ok{" "}
+                    Ok ✓{" "}
                   </button>{" "}
                 </div>{" "}
                 <div className="question-5-data">
@@ -699,7 +699,7 @@ const Register = () => {
                     enabled={errorMessage !== ""}
                   >
                     {" "}
-                    Ok{" "}
+                    Ok ✓{" "}
                   </button>{" "}
                 </div>{" "}
                 <div className="question-5-data">
@@ -739,7 +739,7 @@ const Register = () => {
                     disabled={errorMessage !== ""}
                   >
                     {" "}
-                    Ok{" "}
+                    Ok ✓{" "}
                   </button>{" "}
                 </div>{" "}
                 <div className="question-5-data">
@@ -780,7 +780,7 @@ const Register = () => {
                     disabled={errorMessage !== ""}
                   >
                     {" "}
-                    Ok{" "}
+                    Ok ✓{" "}
                   </button>{" "}
                 </div>{" "}
                 <div className="question-5-data">
@@ -808,6 +808,7 @@ const Register = () => {
                 placeholder="Type your answer here"
                 className="input-question-5"
                 value={formData.motivationStatement}
+                
                 onChange={(e) =>
                   setFormData({
                     ...formData,
@@ -823,7 +824,7 @@ const Register = () => {
                     onClick={() => handleNext()}
                     disabled={errorMessage !== ""}
                   >
-                    Ok{" "}
+                    Ok {" "}
                   </button>{" "}
                 </div>{" "}
                 <div className="question-6-data">
@@ -862,7 +863,7 @@ const Register = () => {
                     disabled={!isButtonEnabled()}
                   >
                     {" "}
-                    Ok{" "}
+                    Ok ✓{" "}
                   </button>{" "}
                 </div>{" "}
                 <div className="question-5-data">
@@ -898,7 +899,7 @@ const Register = () => {
                     disabled={errorMessage !== ""}
                   >
                     {" "}
-                    Ok{" "}
+                    Ok ✓{" "}
                   </button>{" "}
                 </div>{" "}
                 <div className="question-5-data">
@@ -953,14 +954,13 @@ const Register = () => {
                   <div className="right-container">
                     {/* Show loader until API response is received */}
                     {showLoader && (
-                     <div>
+                     <div className="cover-letter-loader-whole">
                     <div className="cover-loader"></div>
                     <div className="cover-loader-main">
                     <p> Your Cover Letter is generating in while</p>
                     </div>
                     </div>
                   )}
-                    {/* Show the "Show Letter" button */}
                     {!showLoader && (
               <div className="button-text-center" id="coverLetterButton">
                 <button id="Button" className="show-cover-letter-button" onClick={() => { handleShowLetterClick(); handleNext(); }}>
@@ -984,9 +984,10 @@ const Register = () => {
               {coverLetterText.slice(0, currentDisplayIndex).map((char, index) => (
                 <React.Fragment key={index}>
                   {char}
+                  
                 </React.Fragment>
               ))}
-              {/* Show the button when halfway through the text */}
+            
               {currentDisplayIndex >= halfwayIndex && (
                 <div className="blur-background">
                   <div className="coverLetterdivwrapper-2">
@@ -1009,17 +1010,24 @@ const Register = () => {
   };
   return (
     <div>
-      <section className="container-wraper">
-        {" "}
-        {showLoader && (
-          <div className="loader-container">
-            <div className="loader"> </div>{" "}
-          </div>
-        )}{" "}
-        {showContent && renderSteps()}{" "}
-      </section>{" "}
-    </div>
-  );
+    <section className="container-wraper">
+      {" "}
+      {showLoader && (
+        <div className="loader-container">
+         
+        </div>
+      )}{" "}
+    
+      {showFirstLoader && (
+        <div>
+          <div className="loader"></div>{" "}
+        </div>
+      )}
+      {showContent && renderSteps()}{" "}
+    </section>{" "}
+  </div>
+  
+);
 };
 
 export default Register;
