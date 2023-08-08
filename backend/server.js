@@ -25,6 +25,7 @@ const paymentSchema = new mongoose.Schema({
   email: String,
   name: String,
   amount: Number,
+  coverLetter:String,
   timestamp: Date,
 });
 
@@ -58,6 +59,7 @@ app.post('/create-checkout-session', async (req, res) => {
         const newPayment = new Payment({
           email: req.body.email,
           name:req.body.name,
+          coverLetter:req.body.coverLetterResponse,
           amount: storeItems.get(req.body.items[0].id).priceInCents,
           timestamp: new Date(),
         });
@@ -70,6 +72,7 @@ app.post('/create-checkout-session', async (req, res) => {
     res.status(500).json({ error: 'An error occurred on the server.' });
   }
 });
+
 
 
 app.listen(5000, () => console.log('Running on port 5000'));
