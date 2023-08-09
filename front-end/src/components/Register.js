@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./Register.css";
-import StripeCheckout from "react-stripe-checkout";
-import { loadStripe } from '@stripe/stripe-js';
-import Thankyou from "./thankyou";
 
 const Register = () => {
   const [inputText, setInputText] = useState("");
@@ -127,8 +124,8 @@ const Register = () => {
   const halfwayIndex = Math.floor(currentDisplayIndex / 2);
 
   const handleShowLetterClick = () => {
-    setCurrentDisplayIndex(0); // Reset the display index
-    setShowContent(true); // Display the cover letter container
+    setCurrentDisplayIndex(0); 
+    setShowContent(true); 
     typeOutCoverLetter();
   };
   
