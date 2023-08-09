@@ -10,6 +10,7 @@ const Register = () => {
   const [step, setStep] = useState(1);
   const [errorMessage, setErrorMessage] = useState("");
   const [formDataArray, setFormDataArray] = useState([]);
+  const [isValidEmail, setIsValidEmail] = useState(true);
   const [formData, setFormData] = useState({
     jobTitle: "",
     companyName: "",
@@ -53,6 +54,19 @@ const Register = () => {
       window.removeEventListener('keydown', handleKeyPress);
     };
   }, []);
+  const handleEmailChange = (e) => {
+    const emailValue = e.target.value;
+    setFormData({
+      ...formData,
+      email: emailValue,
+    });
+
+    // Email validation regex pattern
+    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
+    setIsValidEmail(emailPattern.test(emailValue));
+    
+  };
   
   const [submitted, setSubmitted] = useState(false);
   const [showLoader, setShowLoader] = useState(true);
@@ -172,10 +186,17 @@ const Register = () => {
       })
   };
 
-
   const handleNext = (data) => {
-    setStep(step + 1);
-    setFormData((prevData) => ({ ...prevData, ...data }));
+    if (step === 19) {
+      if (!isValidEmail) {
+        alert("Please enter a valid email address.");
+        return;
+      }
+      // Proceed to the next step for Case 19
+      // Your code here for Case 19
+     } 
+     setStep(step + 1);
+     setFormData((prevData) => ({ ...prevData, ...data }));
   };
 
   const handleSubmit = async () => {
@@ -884,16 +905,11 @@ const Register = () => {
                 placeholder="Type your answer here"
                 className="input-question-5"
                 value={formData.email}
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    email: e.target.value,
-                  })
-                }
+                onChange={handleEmailChange}
               />{" "}
-            
               <div className="question-5-btn-main">
                 <div className="question-5-btn">
+                   {!isValidEmail }
                   <button  id="Button"
                     onClick={() => handleNext()}
                     disabled={errorMessage !== ""}
@@ -904,6 +920,7 @@ const Register = () => {
                 </div>{" "}
                 <div className="question-5-data">
                   press <strong> Enter↵ </strong>{" "}
+                 
                 </div>{" "}
               </div>{" "}
             </div>{" "}

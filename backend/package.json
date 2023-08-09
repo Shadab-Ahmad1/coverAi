@@ -19,7 +19,7 @@
     "moment": "^2.29.4",
     "mongodb": "^5.7.0",
     "mongoos": "^0.0.1-security",
-    "mongoose": "^7.3.4",
+    "mongoose": "^7.4.2",
     "nodemailer": "^6.9.4",
     "stripe": "^12.17.0"
   },
