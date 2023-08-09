@@ -185,7 +185,6 @@ const Register = () => {
         console.log(e.error);
       })
   };
-
   const handleNext = (data) => {
     if (step === 19) {
       if (!isValidEmail) {
@@ -198,6 +197,8 @@ const Register = () => {
      setStep(step + 1);
      setFormData((prevData) => ({ ...prevData, ...data }));
   };
+
+
 
   const handleSubmit = async () => {
     setSubmitted(true);
@@ -907,9 +908,10 @@ const Register = () => {
                 value={formData.email}
                 onChange={handleEmailChange}
               />{" "}
+            
               <div className="question-5-btn-main">
                 <div className="question-5-btn">
-                   {!isValidEmail }
+                {!isValidEmail }
                   <button  id="Button"
                     onClick={() => handleNext()}
                     disabled={errorMessage !== ""}
@@ -920,7 +922,6 @@ const Register = () => {
                 </div>{" "}
                 <div className="question-5-data">
                   press <strong> Enter↵ </strong>{" "}
-                 
                 </div>{" "}
               </div>{" "}
             </div>{" "}
