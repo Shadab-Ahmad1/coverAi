@@ -144,11 +144,13 @@ const Register = () => {
   };
    
   useEffect(() => {
-    if (currentDisplayIndex <= TypedCoverLetter.length / 2 && !reachedHalfway) {
+ 
+    if (currentDisplayIndex == 200) {
       setReachedHalfway(true);
+      setTypedCoverLetter(false);
     }
-  }, [currentDisplayIndex, reachedHalfway]);
-  
+  }, [TypedCoverLetter, coverLetterText]);
+ 
 
   useEffect(() => {
     const loaderTimer = setTimeout(() => {
@@ -1000,7 +1002,7 @@ const Register = () => {
           </div>
         );
         case 22:
-          const halfwayIndex = Math.floor(coverLetterText.length / 2);
+         
           return (
             <div className="coverLetterWholeWrapper">
                <p className="type-writer-cover-letter" >{TypedCoverLetter}</p>
