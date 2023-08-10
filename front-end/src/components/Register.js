@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./Register.css";
 
+
 const Register = () => {
   const [inputText, setInputText] = useState("");
   const [step, setStep] = useState(1);
@@ -58,10 +59,7 @@ const Register = () => {
       ...formData,
       email: emailValue,
     });
-
-    // Email validation regex pattern
     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-
     setIsValidEmail(emailPattern.test(emailValue));
     
   };
@@ -88,8 +86,6 @@ const Register = () => {
           content: `You are a helpful assistant that helps users write quality cover letters. The user has been prompted with many questions through a typeform based questionnaire and has provided answers to help craft the letter. The assistant\'s answer must be formatted in simple document, with all necessary tags except style tag for a coherent output as if the letter was in an email to be sent. Just don\'t include any links as clickable. The applicant provides his name in ${formData.fullName} and company name in ${formData.companyName} information on the role he is applying to in ${formData.jobTitle} and ${formData.relevantWorkExperience} and ${formData.keyachievments} is regarding his past or current experience.`,
         },
       ],
-      // temperature: 0.7,
-      // max_tokens: 500,
       model: "gpt-3.5-turbo",
     };
 
@@ -110,9 +106,7 @@ const Register = () => {
       console.error("Error:", error.message);
     }
   };
-  // const [currentDisplayIndex, setCurrentDisplayIndex] = useState(0);
-  // const halfwayIndex = Math.floor(currentDisplayIndex / 2);
-  
+
 
   const handleShowLetterClick = () => {
     setCurrentDisplayIndex(0); 
@@ -126,12 +120,11 @@ const Register = () => {
     setCoverLetterText(true);
     setCurrentDisplayIndex(0);
     const totalChars = coverLetterText.split(' ');
-    console.log(totalChars);
-    console.log(coverLetterText);
     let currentIndex= 0;
     let typeText="";
     const typeInterval = setInterval(() => {
-      if (currentIndex< totalChars.length) {
+      const halfwayIndex = Math.floor(totalChars.length / 2); 
+      if (currentIndex< halfwayIndex) {
         typeText =totalChars.slice(0,currentIndex+1).join(' ');
         setTypedCoverLetter(typeText);
         setCurrentDisplayIndex(currentIndex);
@@ -141,11 +134,10 @@ const Register = () => {
         clearInterval(typeInterval);
       }
     }, 100); 
-  };
-   
+  };  
   useEffect(() => {
  
-    if (currentDisplayIndex == 200) {
+    if (currentDisplayIndex == 120) {
       setReachedHalfway(true);
       setTypedCoverLetter(false);
     }
@@ -199,9 +191,7 @@ const Register = () => {
       if (!isValidEmail) {
         alert("Please enter a valid email address.");
         return;
-      }
-      // Proceed to the next step for Case 19
-      // Your code here for Case 19
+      }   
      } 
      setStep(step + 1);
      setFormData((prevData) => ({ ...prevData, ...data }));
@@ -1005,7 +995,9 @@ const Register = () => {
          
           return (
             <div className="coverLetterWholeWrapper">
+            
                <p className="type-writer-cover-letter" >{TypedCoverLetter}</p>
+              
                {reachedHalfway && (
                 <div className="blur-background">
                   <div className="coverLetterdivwrapper-2">

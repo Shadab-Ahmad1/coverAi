@@ -150,6 +150,7 @@
   line-height: initial;
   font-weight: 700;
   cursor: pointer;
+
   transition-duration: 0.1s;
   transition-timing-function: ease-out;
   outline: none;
@@ -951,6 +952,7 @@ padding: 5px 22px !important;
 margin-top: 10px;
 margin-bottom: 40px !important;
 border: none;
+cursor: pointer;
   
 }
 
@@ -1029,6 +1031,7 @@ box-sizing: border-box;
   align-items: center;
   border: none;
   border-radius: 10px;
+  cursor: pointer;
 }
 
 .stripe-button-whole-wrapper>p
@@ -1048,7 +1051,9 @@ box-sizing: border-box;
   border: none;
   font-size: 14px;
   text-align: center;
+  cursor: pointer;
 }
+
 .stripe-button>p{
   translate: 0px -50px 0px;
   font-size: 14px;
