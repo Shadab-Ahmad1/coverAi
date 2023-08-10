@@ -68,6 +68,8 @@ function Thankyou({}) {
                 </>
               )}
             </div>
+            <i className='fa fa-download'></i>
+            <i className='fa fa-copy'></i>
           </div>
         </div>
       </section>
