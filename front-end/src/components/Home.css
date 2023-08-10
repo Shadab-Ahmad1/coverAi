@@ -4,7 +4,7 @@
 
 .home {
     margin-top: 0%;
-    padding-top: 210px;
+    padding-top: 250px;
     background-image: url(../assets/background.jpeg);
     background-size: 100%;
     background-position: right;
@@ -16,6 +16,12 @@
     justify-content: center;
     background-size: cover;
     overflow: hidden;
+}
+.home-left2 h1{
+    color: #3d3d3d;
+    text-transform: capitalize;
+    font-size: 48px;
+    font-weight: 400;
 }
 
 @media (max-width: 767px) {
@@ -40,8 +46,6 @@
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    float: left;
     animation-duration: 1s;
     animation-fill-mode: both;
     animation-name: slideInFromLeft;
@@ -56,9 +60,6 @@
     margin: 0 145px 0 145px;
 }
 
-.home-left2 {
-    width: 200px;
-}
 
 .home-right {
     width: 50%;
