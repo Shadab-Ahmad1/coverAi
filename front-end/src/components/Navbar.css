@@ -3,37 +3,29 @@
 }
 
 .navbar {
-    position: fixed;
-    right: 0;
-    left: 0;
+    padding: 35px 0px;
     z-index: 1030;
     font-family: "Open Sans", sans-serif;
     font-size: 14px;
-    line-height: 20px;
-    text-decoration: none solid rgb(255, 255, 255);
-    word-spacing: 0px;
-    background-color: #FFFFFF;
-    background-position: 0% 0%;
-    color: #FFFFFF;
-    height: 64px;
-    border-bottom: 1px solid #FFFFFF;
-    margin: 0 0 20px 0;
+    height: 100px;
     min-height: 35px;
     position: fixed;
     top: 0;
-    left: 0;
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    min-height: 35px;
-    padding-bottom: 0px !important;
-    padding-top: 0px !important;
     transition: all 0.3s ease;
-    background: #FFFFFF !important;
-    box-shadow: 0px -2px 24px rgba(0, 0, 0, 0.1);
+    background: transparent;
 }
-
+.navbar.scrolled {
+    background-color: #fff;
+    height: 70px;
+    padding: 0;
+}
+.scrolled .navbar-content .unsubscribe-button{
+    border: 1px solid #3A3161;
+}
 .hover-underline-animation {
     display: inline-block;
     position: relative;
@@ -64,6 +56,7 @@
     display: flex;
     align-items: center;
     margin-left: 10px;
+    list-style: none;
 }
 
 .nav-item {
@@ -85,7 +78,6 @@
     padding: 15px;
     color: #3d3d3d;
     background-position: 0% 0%;
-    background-color: #FFFFFF;
     text-align: center;
     word-spacing: 0px;
     line-height: 20px;
@@ -112,33 +104,17 @@
 }
 
 .unsubscribe-button {
-    margin-left: 0;
-    margin-right: 0;
     font-family: "Open Sans", sans-serif;
     font-size: 16px;
     font-weight: 700;
-    line-height: 38px;
     text-decoration: none solid rgb(0, 0, 0);
-    text-align: center;
-    white-space: 1px;
     background-position: 0% 0%;
     color: #000000;
     background-color: #ffffff;
-    height: 46px;
-    margin-top: -4%;
-    width: 148px;
-    border: 5px 22px 5px 22px;
-    border-color: #000000;
-    border: 1px solid black;
-    position: relative;
-    display: block;
+    padding: 15px 25px;
     cursor: pointer;
-    transform: none;
-    box-sizing: border-box;
-    border-top-left-radius: 25px;
-    border-top-right-radius: 25px;
-    border-bottom-left-radius: 25px;
-    border-bottom-right-radius: 25px;
+    outline: none;
+    border-radius: 25px;
 }
 
 .unsubscribe-button:hover {
