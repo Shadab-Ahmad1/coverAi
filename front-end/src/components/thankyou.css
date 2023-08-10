@@ -92,3 +92,41 @@
     left: 0;
     padding: 10px 25px;
 }
+
+#download-btn{
+    background: #1c545f;
+    border: none;
+    outline: none;
+    width: 50px;
+    box-shadow: 0 0 16px 7px rgba(0, 0, 0, 0.3) !important;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+#download-btn i{
+    color: #fff;
+    font-size: 16px;
+    margin: 0;
+    padding: 0;
+    margin-left: -5px;
+}
+
+#copy-btn{
+    background: #1c545f;
+    border: none;
+    outline: none;
+    width: 50px;
+    box-shadow: 0 0 16px 7px rgba(0, 0, 0, 0.3) !important;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+#copy-btn i{
+    color: #fff;
+    font-size: 16px;
+    margin: 0;
+    padding: 0;
+
+}

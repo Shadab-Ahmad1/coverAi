@@ -68,8 +68,12 @@ function Thankyou({}) {
                 </>
               )}
             </div>
+            <button id='download-btn'>
             <i className='fa fa-download'></i>
+            </button>
+            <button id='copy-btn'>
             <i className='fa fa-copy'></i>
+            </button>
           </div>
         </div>
       </section>
