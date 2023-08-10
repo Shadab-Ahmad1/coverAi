@@ -11,6 +11,7 @@ const Register = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [formDataArray, setFormDataArray] = useState([]);
   const [isValidEmail, setIsValidEmail] = useState(true);
+  const [TypedCoverLetter, setTypedCoverLetter]=useState('');
   const [formData, setFormData] = useState({
     jobTitle: "",
     companyName: "",
@@ -104,47 +105,54 @@ const Register = () => {
       if (response.status === 200) {
         const coverLetter = response.data.choices[0].message.content;
         setCoverLetterSubmitToDb(coverLetter);
-          const parser = new DOMParser();
-          const htmlDocument = parser.parseFromString(coverLetter, "text/html");
-          console.log(coverLetter);
-          const textContent = htmlDocument.body.textContent;
-          const formattedCoverLetter = coverLetter.split('\n').map((char, index) => (
-            <React.Fragment key={index}>
-              {char}
-              <br />
-            </React.Fragment>
-          ));
-        
-      setCoverLetterText(formattedCoverLetter);
-      setShowContent(true);
+        setCoverLetterText(coverLetter);
+        setShowContent(true);
       }
     } catch (error) {
       setShowLoader(false);
       console.error("Error:", error.message);
     }
   };
-  const [currentDisplayIndex, setCurrentDisplayIndex] = useState(0);
-  const halfwayIndex = Math.floor(currentDisplayIndex / 2);
+  // const [currentDisplayIndex, setCurrentDisplayIndex] = useState(0);
+  // const halfwayIndex = Math.floor(currentDisplayIndex / 2);
+  
 
   const handleShowLetterClick = () => {
     setCurrentDisplayIndex(0); // Reset the display index
     setShowContent(true); // Display the cover letter container
     typeOutCoverLetter();
   };
+  const [currentDisplayIndex, setCurrentDisplayIndex] = useState(0);
+  const [reachedHalfway, setReachedHalfway] = useState(false);
   
   const typeOutCoverLetter = () => {
-    const totalChars = coverLetterText.join(' ' && '/n').length;
+    setCoverLetterText(true);
+    setCurrentDisplayIndex(0);
+    const totalChars = coverLetterText.split(' ');
     console.log(totalChars);
-    let displayIndex = 0;
+    console.log(coverLetterText);
+    let currentIndex= 0;
+    let typeText="";
     const typeInterval = setInterval(() => {
-      if (displayIndex < totalChars) {
-        setCurrentDisplayIndex(displayIndex);
-        displayIndex++;
+      if (currentIndex< totalChars.length) {
+        typeText =totalChars.slice(0,currentIndex+1).join(' ');
+        setTypedCoverLetter(typeText);
+        setCurrentDisplayIndex(currentIndex);
+        console.log(TypedCoverLetter);
+        currentIndex++;
       } else {
         clearInterval(typeInterval);
       }
-    }, 50); 
+    }, 100); 
   };
+   
+  useEffect(() => {
+    if (currentDisplayIndex <= TypedCoverLetter.length / 2 && !reachedHalfway) {
+      setReachedHalfway(true);
+    }
+  }, [currentDisplayIndex, reachedHalfway]);
+  
+
   useEffect(() => {
     const loaderTimer = setTimeout(() => {
       setShowLoader(false);
@@ -998,15 +1006,8 @@ const Register = () => {
           const halfwayIndex = Math.floor(coverLetterText.length / 2);
           return (
             <div className="coverLetterWholeWrapper">
-              {/* Display the cover letter text character by character */}
-              {coverLetterText.slice(0, currentDisplayIndex).map((char, index) => (
-                <React.Fragment key={index}>
-                  {char}
-                  
-                </React.Fragment>
-              ))}
-            
-              {currentDisplayIndex >= halfwayIndex && (
+               <p className="type-writer-cover-letter" >{TypedCoverLetter}</p>
+               {reachedHalfway && (
                 <div className="blur-background">
                   <div className="coverLetterdivwrapper-2">
                     <div id="coverLetterDiv" className="stripe-button-whole-wrapper">  

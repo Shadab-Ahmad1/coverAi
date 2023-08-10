@@ -1082,7 +1082,16 @@ box-sizing: border-box;
   }
   
 }
-
+.type-writer-cover-letter
+{
+  white-space: pre-line;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 60%;
+  translate: 280px 5px 0px;
+  height: 100%;
+}
 .typewriter p {
   overflow: hidden; /* Ensures the content is not revealed until the animation */
   border-right: .15em solid orange; /* The typwriter cursor */
