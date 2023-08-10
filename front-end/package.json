@@ -3,6 +3,7 @@
     "version": "0.1.0",
     "private": true,
     "dependencies": {
+        "@react-pdf/renderer": "^3.1.12",
         "@stripe/stripe-js": "^1.54.2",
         "@testing-library/jest-dom": "^5.16.5",
         "@testing-library/react": "^13.4.0",
@@ -10,6 +11,7 @@
         "axios": "^1.4.0",
         "dotenv": "^16.3.1",
         "http-proxy-middleware": "^2.0.6",
+        "jspdf": "^2.5.1",
         "openai": "^3.3.0",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",

@@ -102,6 +102,9 @@
     height: 50px;
     border-radius: 50%;
     cursor: pointer;
+    position: absolute;
+    top: 0;
+    right: 0;
 }
 
 #download-btn i{
@@ -121,6 +124,9 @@
     height: 50px;
     border-radius: 50%;
     cursor: pointer;
+    right: 70px;
+    top:0;
+    position: absolute;
 }
 
 #copy-btn i{

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
+import jsPDF from 'jspdf';
 import "./thankyou.css";
 
 
@@ -10,7 +11,8 @@ function Thankyou({}) {
     const [paymentDetails, setPaymentDetails] = useState(null);
     const [showCoverLetter, setShowCoverLetter] = useState(false);
     const [typedCoverLetter, setTypedCoverLetter] = useState(""); 
-
+     
+ 
 
     useEffect(() => {
         if (paymentId) {
@@ -44,6 +46,47 @@ function Thankyou({}) {
           }
         }, 100); 
       };
+      const handleDownload = () => {
+        const printWindow = window.open('', '_blank');
+        
+        if (printWindow) {
+          printWindow.document.open();
+          printWindow.document.write(`
+            <!DOCTYPE html>
+            <html>
+              <head>
+                
+                <style>
+                  body {
+                    font-family: "Open Sans", sans-serif;
+                    font-size: 14px;
+                  }
+                  pre {
+                    white-space: pre-wrap;
+                    word-wrap: break-word; 
+                  }
+                </style>
+              </head>
+              <body>
+               
+                <pre>${typedCoverLetter}</pre>
+              </body>
+            </html>
+          `);
+          printWindow.document.close();
+          printWindow.print();
+        }
+      };
+      
+    
+      const handleCopy = () => {
+        const textArea = document.createElement('textarea');
+        textArea.value = typedCoverLetter;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+      };
       
 
  return (
@@ -68,10 +111,10 @@ function Thankyou({}) {
                 </>
               )}
             </div>
-            <button id='download-btn'>
+            <button id='download-btn' onClick={handleDownload}>
             <i className='fa fa-download'></i>
             </button>
-            <button id='copy-btn'>
+            <button id='copy-btn' onClick={handleCopy}>
             <i className='fa fa-copy'></i>
             </button>
           </div>
@@ -82,3 +125,102 @@ function Thankyou({}) {
 }
 
 export default Thankyou;
+
+
+
+// import React, { useState, useEffect } from 'react';
+// import { useLocation } from 'react-router-dom';
+// import axios from 'axios';
+// import "./thankyou.css";
+
+// function Thankyou() {
+//   const location = useLocation();
+//   const paymentId = new URLSearchParams(location.search).get('paymentId');
+//   const [paymentDetails, setPaymentDetails] = useState(null);
+//   const [showCoverLetter, setShowCoverLetter] = useState(false);
+//   const [typedCoverLetter, setTypedCoverLetter] = useState(""); 
+
+//   useEffect(() => {
+//     if (paymentId) {
+//       fetchPaymentDetails(paymentId);
+//     }
+//   }, [paymentId]);
+
+//   const fetchPaymentDetails = async (paymentId) => {
+//     try {
+//       const response = await axios.get(`http://localhost:5000/getCoverletter/${paymentId}`); 
+//       setPaymentDetails(response.data);
+//     } catch (error) {
+//       console.error('Error fetching payment details:', error);
+//     }
+//   };
+
+//   const handleShowCoverLetter = () => {
+//     setShowCoverLetter(true);
+//     const words = paymentDetails?.coverLetter.split(' ');
+//     let currentIndex = 0;
+//     let typedText = "";
+
+//     const typingInterval = setInterval(() => {
+//       if (currentIndex < words.length) {
+//         typedText = words.slice(0, currentIndex + 1).join(' ');
+//         setTypedCoverLetter(typedText);
+//         currentIndex++;
+//       } else {
+//         clearInterval(typingInterval);
+//       }
+//     }, 100); 
+//   };
+
+//   const handleDownload = () => {
+//     const blob = new Blob([typedCoverLetter], { type: 'text/plain' });
+//     const url = URL.createObjectURL(blob);
+//     const a = document.createElement('a');
+//     a.href = url;
+//     a.download = 'cover_letter.txt';
+//     document.body.appendChild(a);
+//     a.click();
+//     document.body.removeChild(a);
+//   };
+
+//   const handleCopy = () => {
+//     const textArea = document.createElement('textarea');
+//     textArea.value = typedCoverLetter;
+//     document.body.appendChild(textArea);
+//     textArea.select();
+//     document.execCommand('copy');
+//     document.body.removeChild(textArea);
+//   };
+
+//   return (
+//     <section className="thankyou-whole-wrapper" id="thankyou-whole-wrapper">
+//       <div className="container-fluid white-rectangle">
+//         <div className="col-sm-6 text-center" id="thankYouContainer">
+//           {/* ... other components */}
+//         </div>
+//         <div className="col-sm-6" id="loadingContainer">
+//           <div className="thank-you" id="coverLetterButton">
+//             {!showCoverLetter ? (
+//               <>
+//                 <button className="btn button7" onClick={handleShowCoverLetter}>Show Letter</button>
+//                 <p>Your Cover letter has been created!</p>
+//               </>
+//             ) : (
+//               <>
+//                 <p className='coverLetterText'>{typedCoverLetter}</p>
+//               </>
+//             )}
+//           </div>
+//           <button id='download-btn' onClick={handleDownload}>
+//             <i className='fa fa-download'></i>
+//           </button>
+//           <button id='copy-btn' onClick={handleCopy}>
+//             <i className='fa fa-copy'></i>
+//           </button>
+//         </div>
+//       </div>
+//     </section>
+//   );
+// }
+
+// export default Thankyou;
