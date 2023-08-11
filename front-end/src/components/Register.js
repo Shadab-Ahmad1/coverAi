@@ -28,17 +28,14 @@ const Register = () => {
 //Local Storage for input
 const handleInputChange = (fieldName, value) => {
   setFormData({ ...formData, [fieldName]: value });
-  
   localStorage.setItem("formData", JSON.stringify(formData));
  
 };
 useEffect(() => {
   const storedData = localStorage.getItem("formData");
-  const storedInputText = localStorage.getItem("inputText");
   if (storedData) {
     setFormData(JSON.parse(storedData));
   }
- 
 }, []);
 
 
@@ -89,6 +86,23 @@ useEffect(() => {
   const [showContent, setShowContent] = useState(false);
   const [coverLetterText, setCoverLetterText] = useState("");
   const [coverLetterSubmitToDb, setCoverLetterSubmitToDb] = useState("");
+  const [messageIndex, setMessageIndex] = useState(0);
+  const messages = [
+    "Sit back, relax, and wait for it...",
+    "Just a moment longer, the perfect cover letter is on its way...",
+    "Thanks for your patience"
+  ];
+
+  const showNextMessage = () => {
+    if (messageIndex < messages.length - 1) {
+      setMessageIndex(prevIndex => prevIndex + 1);
+    }
+  };
+
+  useEffect(() => {
+    const interval = setInterval(showNextMessage, 100);
+    return () => clearInterval(interval);
+  }, [messageIndex]);
 
   const generateCoverLetter = async () => {
     const apiKey = "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";
@@ -163,6 +177,7 @@ useEffect(() => {
   }, [TypedCoverLetter, coverLetterText]);
  
 
+
   useEffect(() => {
     const loaderTimer = setTimeout(() => {
       setShowLoader(false);
@@ -221,6 +236,9 @@ useEffect(() => {
     generateCoverLetter();
     console.log(formData);
     setFormDataArray((prevArray) => [...prevArray, formData]);
+  
+      localStorage.removeItem("formData");
+    
   };
 
   const isButtonEnabled = () => {
@@ -945,13 +963,13 @@ useEffect(() => {
                   <div className="right-container">
                     {/* Show loader until API response is received */}
                     {showLoader && (
-                     <div className="cover-letter-loader-whole">
-                    <div className="cover-loader"></div>
-                    <div className="cover-loader-main">
-                    <p> Your Cover Letter is generating in while</p>
-                    </div>
-                    </div>
-                  )}
+                       <div className="cover-letter-loader-whole">
+                         <div className="cover-loader"></div>
+                         <div className="cover-loader-main">
+                               <p>{messages[messageIndex]}</p>
+                         </div>
+                       </div>
+                    )}
                     {!showLoader && (
               <div className="button-text-center" id="coverLetterButton">
                 <button id="Button" className="show-cover-letter-button" onClick={() => { handleShowLetterClick(); handleNext(); }}>
