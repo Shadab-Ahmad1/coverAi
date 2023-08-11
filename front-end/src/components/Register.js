@@ -25,6 +25,23 @@ const Register = () => {
     fullName: "",
     email: "",
   });
+//Local Storage for input
+const handleInputChange = (fieldName, value) => {
+  setFormData({ ...formData, [fieldName]: value });
+  
+  localStorage.setItem("formData", JSON.stringify(formData));
+ 
+};
+useEffect(() => {
+  const storedData = localStorage.getItem("formData");
+  const storedInputText = localStorage.getItem("inputText");
+  if (storedData) {
+    setFormData(JSON.parse(storedData));
+  }
+ 
+}, []);
+
+
   useEffect(() => {
     const FirstloaderTimeout = setTimeout(() => {
       setShowFirstLoader(false);
@@ -53,6 +70,7 @@ const Register = () => {
       window.removeEventListener('keydown', handleKeyPress);
     };
   }, []);
+
   const handleEmailChange = (e) => {
     const emailValue = e.target.value;
     setFormData({
@@ -61,6 +79,7 @@ const Register = () => {
     });
     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     setIsValidEmail(emailPattern.test(emailValue));
+    
     
   };
   
@@ -415,9 +434,8 @@ const Register = () => {
                 placeholder="Type your answer here"
                 className="input-question-2"
                 value={formData.jobTitle}
-                onChange={(e) =>
-                  setFormData({ ...formData, jobTitle: e.target.value })
-                }
+                onChange={(e) => handleInputChange("jobTitle", e.target.value)}
+                
               />{" "}
               <div className="question-2-btn-main">
                 <div className="question-2-btn ">
@@ -454,9 +472,7 @@ const Register = () => {
                 placeholder="Type your answer here"
                 className="input-question-2"
                 value={formData.companyName}
-                onChange={(e) =>
-                  setFormData({ ...formData, companyName: e.target.value })
-                }
+                onChange={(e) => handleInputChange("companyName", e.target.value)}
               />{" "}
             
               <div className="question-2-btn-main">
@@ -528,12 +544,8 @@ const Register = () => {
                 placeholder="Type your answer here"
                 className="input-question-3"
                 value={formData.keyachievments}
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    keyachievments: e.target.value,
-                  })
-                }
+                onChange={(e) => handleInputChange("keyachievments", e.target.value)}
+                
               />{" "}
         
               <div className="question-3-btn-main">
@@ -582,12 +594,7 @@ const Register = () => {
                 placeholder="Type your answer here"
                 className="input-question-5"
                 value={formData.educationLevel}
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    educationLevel: e.target.value,
-                  })
-                }
+                onChange={(e) => handleInputChange("educationLevel", e.target.value)}
               />{" "}
             
               <div className="question-5-btn-main">
@@ -620,12 +627,7 @@ const Register = () => {
                 placeholder="Type your answer here"
                 className="input-question-5"
                 value={formData.majorOrAreaOfStudy}
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    majorOrAreaOfStudy: e.target.value,
-                  })
-                }
+                onChange={(e) => handleInputChange("majorOrAreaOfStudy", e.target.value)}
               />{" "}
              
               <div className="question-5-btn-main">
@@ -662,12 +664,7 @@ const Register = () => {
                 placeholder="Type your answer here"
                 className="input-question-5"
                 value={formData.notableAccomplishments}
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    notableAccomplishments: e.target.value,
-                  })
-                }
+                onChange={(e) => handleInputChange("notableAccomplishments", e.target.value)}
               />{" "}
             
               <div className="question-5-btn-main">
@@ -703,12 +700,7 @@ const Register = () => {
                 placeholder="Type your answer here"
                 className="input-question-5"
                 value={formData.requiredQualifications}
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    requiredQualifications: e.target.value,
-                  })
-                }
+                onChange={(e) => handleInputChange("requiredQualifications", e.target.value)}
               />{" "}
              
               <div className="question-5-btn-main">
@@ -743,12 +735,7 @@ const Register = () => {
                 placeholder="Type your answer here"
                 className="input-question-5"
                 value={formData.qualificationsMatch}
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    qualificationsMatch: e.target.value,
-                  })
-                }
+                onChange={(e) => handleInputChange("qualificationsMatch", e.target.value)}
               />{" "}
             
               <div className="question-5-btn-main">
@@ -784,12 +771,7 @@ const Register = () => {
                 placeholder="Type your answer here"
                 className="input-question-5"
                 value={formData.interestedforjob}
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    interestedforjob: e.target.value,
-                  })
-                }
+                onChange={(e) => handleInputChange("interestedforjob", e.target.value)}
               />{" "}
             
               <div className="question-5-btn-main">
@@ -826,14 +808,8 @@ const Register = () => {
                 type="text"
                 placeholder="Type your answer here"
                 className="input-question-5"
-                value={formData.motivationStatement}
-                
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    motivationStatement: e.target.value,
-                  })
-                }
+                value={formData.motivationStatement} 
+                onChange={(e) => handleInputChange("motivationStatement", e.target.value)}
               />{" "}
               <h5> Shift⇧ + Enter↵ to make a line break </h5>{" "}
              
