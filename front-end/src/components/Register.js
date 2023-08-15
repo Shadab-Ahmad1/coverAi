@@ -93,16 +93,46 @@ useEffect(() => {
     "Thanks for your patience"
   ];
 
-  const showNextMessage = () => {
-    if (messageIndex < messages.length - 1) {
-      setMessageIndex(prevIndex => prevIndex + 1);
-    }
-  };
+  // useEffect(() => {
+  //   const messageInterval = 2000; // Time to display each message
+  //   const transitionInterval = 1000; // Time to transition between messages
 
+  //   const showNextMessage = () => {
+  //     if (messageIndex < messages.length) {
+  //       setMessageIndex(prevIndex => prevIndex + 1);
+  //     } else {
+  //       setShowLoader(false); // Hide loader after displaying all messages
+  //     }
+  //   };
+
+  //   if (showLoader) {
+  //     const messageTimer = setInterval(showNextMessage, messageInterval + transitionInterval);
+
+  //     // Clear the interval after showing all messages
+  //     if (messageIndex === messages.length) {
+  //       clearInterval(messageTimer);
+  //     }
+
+  //     return () => clearInterval(messageTimer);
+  //   }
+  // }, [showLoader, messageIndex]);
   useEffect(() => {
-    const interval = setInterval(showNextMessage, 100);
-    return () => clearInterval(interval);
-  }, [messageIndex]);
+    const messageInterval = 2000; // Time to display each message
+    const transitionInterval = 1300; // Time to transition between messages
+
+    const showNextMessage = () => {
+      if (messageIndex < messages.length - 1) {
+        setMessageIndex(prevIndex => prevIndex + 1);
+      }
+    };
+
+    if (showLoader) {
+      const messageTimer = setInterval(showNextMessage, messageInterval + transitionInterval);
+
+      // Clear the interval when the loader is hidden
+      return () => clearInterval(messageTimer);
+    }
+  }, [showLoader, messageIndex]);
 
   const generateCoverLetter = async () => {
     const apiKey = "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";
