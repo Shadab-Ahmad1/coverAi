@@ -108,7 +108,7 @@ useEffect(() => {
   }, [showLoader, messageIndex]);
 
   const generateCoverLetter = async () => {
-    const apiKey = "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";
+    const apiKey = "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";
     setShowLoader(true);
     setShowFirstLoader(false)
     const headers = {
@@ -138,7 +138,7 @@ useEffect(() => {
         setShowContent(true);
       }
     } catch (error) {
-      setShowLoader(false);
+      setShowLoader(true);
       console.error("Error:", error.message);
     }
   };
