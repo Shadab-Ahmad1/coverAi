@@ -19,7 +19,7 @@ function Login() {
       });
 
       if (response.ok) {
-        window.location.href = "/register";
+        window.location.href = "/client/dashboard";
       } else {
         // Handle login error
         console.error("Login failed");
