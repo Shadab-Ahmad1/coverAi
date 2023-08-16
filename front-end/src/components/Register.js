@@ -101,8 +101,11 @@ useEffect(() => {
         setMessageIndex(prevIndex => prevIndex + 1);
       }
     };
+
     if (showLoader) {
       const messageTimer = setInterval(showNextMessage, messageInterval + transitionInterval);
+
+      // Clear the interval when the loader is hidden
       return () => clearInterval(messageTimer);
     }
   }, [showLoader, messageIndex]);
@@ -138,7 +141,7 @@ useEffect(() => {
         setShowContent(true);
       }
     } catch (error) {
-      setShowLoader(true);
+      setShowLoader(false);
       console.error("Error:", error.message);
     }
   };

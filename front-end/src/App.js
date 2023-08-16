@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Route, Routes } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Route, Routes,useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
@@ -16,6 +16,8 @@ import Privacy from "./components/Privacy";
 import Cookies from "./components/Cookies";
 import Viewletter from "./components/Viewletter";
 import Thankyou from "./components/thankyou";
+import Dashboard from "./components/client/dashboard";
+
 
 function App() {
 
@@ -23,12 +25,26 @@ function App() {
   const location = useLocation();
   const isRegisterPage = location.pathname.includes("/Register");
   const isThankYou = location.pathname.includes("/thank-you");
-  const isViewletter = location.pathname.includes("/Viewletter");
+  const isDashboard =location.pathname.includes("/client/dashboard");
+
+ 
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isThankYou) {
+      const searchParams = new URLSearchParams(location.search);
+      const paymentId = searchParams.get("paymentId");
+      if (!paymentId) {
+      
+        navigate("/Register");
+      }  
+    }
+  }, [location, isThankYou, navigate]);
 
   return (
     <>
       {" "}
-      {!isRegisterPage && !isThankYou && <Navbar />}{" "}
+      {!isRegisterPage && !isThankYou && !isDashboard && <Navbar />}{" "}
       <Routes>
         <Route path="/" element={<Home />} />{" "}
         <Route path="/Register" element={<Register />} />{" "}
@@ -43,10 +59,11 @@ function App() {
         <Route path="/Forget" element={<Forget />} />{" "}
         <Route path="/Viewletter" element={<Viewletter />} />{" "}
         <Route path="/thank-you"  element={<Thankyou />} />{" "}
+        <Route path="/client/dashboard" element={<Dashboard/>}/>
+        
       </Routes>{" "}
-      {!isRegisterPage && !isThankYou && <Footer />}{" "}
+      {!isRegisterPage && !isThankYou && !isDashboard && <Footer />}{" "}
     </>
   );
 }
-
 export default App;
