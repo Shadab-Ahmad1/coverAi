@@ -2,152 +2,122 @@
     background-image: url(../assets/background.jpeg);
     background-size: 100%;
     background-repeat: no-repeat;
-    padding-bottom: 10px;
+    padding-bottom: 95px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
 }
 
-.container-bhai {
-    height: 800px;
-    width: 1210px;
-    padding: 20px 20px 20px 20px;
-    min-height: 100%;
-    display: flex;
-    margin-bottom: 10%;
-    transform: matrix(1, 0, 0, 1, 0, 0);
-    border-radius: 10px 10px 10px 10px;
-    overflow: hidden;
+.login-container {
+
+    padding: 20px;
+    border-radius: 10px;
+    padding-top: 12.5rem;
 }
 
-.Register-h1 {
+.login-container .Register-h1 {
     font-size: 48px;
     font-weight: 700;
-    margin-left: 40%;
-}
+    margin: 0;
+    color: #3d3d3d;
 
-.Register-div {
-    margin-top: 20%;
-    background-color: #ffffff;
-    width: 660px;
-    height: 400px;
-    margin-left: -38%;
-    box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.1);
+}
+.login-form-wrapper{
+    display: flex;
+    flex-direction: column;
     animation-name: slideIn;
     animation-duration: 1s;
     animation-timing-function: ease-in-out;
+}
+.Register-div {
+    margin-top: 3rem;
+    background-color: #ffffff;
+    width: 600px;
+    min-height: 350px;
+    box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.1);
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
 }
 
 .input {
-    width: 60%;
-    height: 30px;
-    margin-left: 10%;
-    margin-top: 20px;
+    padding: 2.8em;
+    padding-top: 3.5em;
 }
 
 .input-email {
-    width: 60%;
-    height: 30px;
-    margin-left: 18%;
-    margin-top: 20%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 2px solid #F6F6F6;
-    background-color: #F6F6F6;
-    border-radius: 4px;
+    background-color: #f6f6f6;
+    width: 87%;
+    border-radius: 5px;
+    padding: 17px 32px;
+    margin-bottom: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    font-size: 18px;
+    outline: none;
+    border: 2px solid #f6f6f6;
+}
+.input input[type="password"] {
     font-size: 16px;
+    padding: 17.5px 32px;
 }
 
 .regsiter-form {
-    width: 660px;
-    height: 500px;
     background-color: #ffffff;
     border-radius: 5px;
     box-shadow: 1px solid #ccc;
 }
 
 .Register-div2 {
-    width: 660px;
-    margin-left: 3.2%;
+    padding: 31px;
     background-color: #555555;
-    height: 200px;
-    margin-top: -25%;
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
 }
 
 .Register-div2-p {
-    margin-left: 35%;
-    margin-top: 10%;
-    align-items: center;
     color: #ffffff;
+    text-align: center;
 }
 
 .Register-endbutton {
-    margin-left: 13px;
-    font-family: "Open Sans", sans-serif;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 700;
-    line-height: 38px;
-    text-align: center;
-    white-space: 1px;
-    background-position: 0% 0%;
     color: #FFFFFF;
-    height: 50px;
-    width: 152px;
+    height: 47px;
+    width: 145px;
     position: relative;
-    display: block;
-    cursor: pointer;
-    transform: none;
-    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border-radius: 25px;
-    border-top-left-radius: 25px;
-    border-top-right-radius: 25px;
-    border-bottom-left-radius: 25px;
-    border-bottom-right-radius: 25px;
     text-decoration: none;
-    margin-top: 4%;
-    margin-left: 37%;
-    color: white;
+    margin: 0 auto;
     background-color: #B22222;
 }
 
 .forget {
-    margin-top: 15%;
-    margin-left: 20%;
-    width: 500px;
-    text-decoration: underline;
-    color: 2px;
+    margin-top: 35px;
+    text-align: center;
+        color: #807f7d;
 }
 
 .connect {
-    margin-top: 7%;
-    margin-left: 55%;
-    margin-left: 10px;
-    font-family: "Open Sans", sans-serif;
-    font-size: 16px;
+    margin-top: 3.5%;
+    margin-right: auto;
+    font-size: 18px;
     font-weight: 700;
-    line-height: 38px;
     text-align: center;
-    background-position: 0% 0%;
-    color: #FFFFFF;
-    height: 50px;
-    width: 152px;
-    position: relative;
+    height: 45px;
+    width: 153px;
     display: block;
     cursor: pointer;
-    box-sizing: border-box;
     border-radius: 25px;
-    border-top-left-radius: 25px;
-    border-top-right-radius: 25px;
-    border-bottom-left-radius: 25px;
-    border-bottom-right-radius: 25px;
-    text-decoration: none;
-    margin-left: 45%;
-    color: white;
+    margin-left: auto;
+    color: #fff;
+    border: navajowhite;
     background-color: #1c545f;
+    box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.2);
 }
 
 @media (max-width: 767px) {
@@ -161,7 +131,7 @@
         justify-content: center;
         overflow: scroll;
     }
-    .container-bhai {
+    .login-container {
         margin-top: 30%;
         height: 790px;
         width: 300px;

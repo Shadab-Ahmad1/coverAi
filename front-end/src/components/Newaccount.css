@@ -1,27 +1,23 @@
 .regsiter-section1 {
     background-image: url(../assets/background.jpeg);
-    background-size: 100%;
+    background-size: cover;
     background-position: right;
     background-repeat: no-repeat;
-    padding-bottom: 10px;
+    padding-bottom: 40px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    margin-bottom: 250px;
+    margin-bottom: 80px;
 }
 
 .newaccount-h1 {
     margin-top: 20%;
     font-size: 48px;
     font-weight: 700;
+    padding-top: 4rem;
 }
 
-.container-register {
-    margin-left: 5%;
-    max-width: 650px;
-}
-
-.container-register h1 {
+.container-register-wrapper h1 {
     color: #333333
 }
 
@@ -36,45 +32,43 @@
 }
 
 .container-2-Register {
-    margin-left: -2%;
     margin-top: 5rem;
-    width: 668px;
-    height: 500px;
+    width: 600px;
+    min-height: 432px;
     background: #FFFFFF;
     border-radius: 10px;
     color: #555555;
     background-color: #fff;
-    border: 0.5px solid #ccc;
+    box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.1);
 }
-.form>
-input[type="text"],
-input[type="password"] {
-    width: 110%;
-    height: 30px;
-    margin-left: 10%;
-    margin-top: 20px;
-    padding: 10px;
-    margin-bottom: 10px;
+#container-2-Register .form-main .form input {
+    background-color: #f6f6f6;
+    border: none;
+    width: 74.8%;
+    border-radius: 5px;
+    padding: 18.5px 32px;
+    margin-bottom: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
     font-size: 16px;
-    border-bottom: 1px solid #ccc;
-    box-shadow: none;
-}
-.form>
-input[type="text"]:focus,
-input[type="password"]:focus {
     outline: none;
-    border-color: #B22222;
-    border-bottom: 2px solid #B22222;
+    border: 2px solid #f6f6f6;
+}
+#container-2-Register .form-main .form input:placeholder{
+    color: #0d0d0d;
 }
 
-.newaccount-already {
-    margin-left: -60%;
-}
 
 .text {
-    margin-top: 10%;
-    align-items: center;
-    margin-left: 9rem;
+    margin-top: 5%;
+}
+.text .newaccount-already{
+    padding-left: 2rem;
+    color: #807f7d
+}
+.text .newaccount-already a{
+    color: #807f7d
 }
 
 h1 {
@@ -82,9 +76,6 @@ h1 {
     color: #555555;
 }
 
-.text {
-    text-align: center;
-}
 
 .home4-button {
     margin-top: 5%;
@@ -94,45 +85,47 @@ h1 {
     margin-top: -20%;
 }
 
-.form {
+#container-2-Register .form-main .form {
     margin-top: 30%;
-    width: 500px;
-    height: 50px;
+    padding: 3em;
 }
-
 .account-1 {
     text-align: center;
     color: white;
 }
 
 .button-register {
-    margin-left: 10px;
     font-family: "Open Sans", sans-serif;
-    font-size: 16px;
     font-weight: 700;
-    line-height: 38px;
-    text-align: center;
-    white-space: 1px;
-    background-position: 0% 0%;
     color: #FFFFFF;
-    height: 50px;
-    width: 152px;
+    margin: auto;
     position: relative;
     display: block;
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 1.42857143;
+    padding: 10px 40px;
     cursor: pointer;
-    transform: none;
-    box-sizing: border-box;
+    border: none;
     border-radius: 25px;
-    border-top-left-radius: 25px;
-    border-top-right-radius: 25px;
-    border-bottom-left-radius: 25px;
-    border-bottom-right-radius: 25px;
-    text-decoration: none;
-    margin-top: 6%;
-    margin-left: 37%;
     color: white;
     background-color: #B22222;
 }
+
+.disabled-button {
+    background-color: #b2222294 ;
+    color: white;
+    cursor: not-allowed;
+  }
+  .error{
+    color: red;
+    font-size: 15px;
+    margin: 4px;
+    text-align: center;
+    margin-top: -15px;
+    margin-bottom: 15px;
+  }
+  
 
 @media (max-width:767px) {
     .regsiter-section1 {
@@ -151,29 +144,6 @@ h1 {
         margin-top: 30%;
         font-size: 30px;
         text-align: center;
-    }
-    .container-2-Register {
-        margin-top: 15%;
-        background-color: #ffffff;
-        width: 300px;
-        height: 500px;
-        box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.1);
-        margin-left: -3%;
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
-    }
-    input[type="text"],
-    input[type="password"] {
-        width: 100%;
-        height: 30px;
-        margin-left: 8%;
-        margin-top: 20px;
-        padding: 10px;
-        margin-bottom: 10px;
-        border: 0.5px solid #ccc;
-        background-color: #F6F6F6;
-        border-radius: 4px;
-        font-size: 16px;
     }
     .text {
         margin-left: -25%;

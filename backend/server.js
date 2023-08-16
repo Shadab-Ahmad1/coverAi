@@ -3,6 +3,8 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const nodemailer = require('nodemailer');
+const bcrypt = require('bcrypt');
+const jwt = require("jsonwebtoken");
 const app = express();
 app.use(express.json());
 app.use(cors());
@@ -32,8 +34,20 @@ const paymentSchema = new mongoose.Schema({
   timestamp: Date,
 });
 
+
+// Define a mongoose schema for users
+const userSchema = new mongoose.Schema({
+  email: String,
+  password: String,
+});
+
+
+const User = mongoose.model('User', userSchema);
+
+
 const Payment = mongoose.model('Payment', paymentSchema);
 
+// API route for stripe checkout session
 app.post('/create-checkout-session', async (req, res) => {
   try {
     const newPayment = new Payment({
@@ -114,8 +128,8 @@ const info = await transporter.sendMail(mailOptions);
   }
 });
 
-
-app.get('/getCoverletter/:paymentId', async (req, res) => {
+// API route for displaying cover Letter on thank you component
+ app.get('/getCoverletter/:paymentId', async (req, res) => {
   try {
     const paymentId = req.params.paymentId;
 
@@ -135,5 +149,58 @@ app.get('/getCoverletter/:paymentId', async (req, res) => {
   }
 });
 
+
+// API route for user registration
+app.post('/register', async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    // Check if the user already exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ error: 'User already exists' });
+    }
+
+        const saltRounds = 10;
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+    // Create a new user document
+    const newUser = new User({
+      email,
+      password: hashedPassword 
+    });
+
+     await newUser.save();
+
+    res.status(201).json({ message: 'User registered successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred on the server.' });
+  }
+});
+
+app.post("/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(401).json({ error: "Invalid credentials" });
+    }
+
+    const passwordMatch = await bcrypt.compare(password, user.password);
+    if (!passwordMatch) {
+      return res.status(401).json({ error: "Invalid credentials" });
+    }
+
+    // Generate a JWT token
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
+    res.status(200).json({ token });
+    
+  } catch (error) {
+    console.error("Error logging in:", error);
+    res.status(500).json({ error: "An error occurred while logging in" });
+  }
+});
 
 app.listen(5000, () => console.log('Running on port 5000'));
