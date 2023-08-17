@@ -37,7 +37,7 @@
 .left-dashboard-second-container-button {
     display: flex;
     align-items: center;
-    margin-left: 20px;
+    cursor: pointer;
     background-color: #FFFFFF;
     box-shadow: 0px 2px 9px #0000002b!important;
     border-radius: 100px;
@@ -48,9 +48,15 @@
     color: #EB4553;
     font-family: 'Open Sans', sans-serif;
     width: fit-content; /* Adjust width based on content */
-    padding: 10px 16px; /* Adjust padding for better spacing */
+    padding: 6px 10px; /* Adjust padding for better spacing */
     white-space: nowrap;
     text-decoration: none; /* Remove default link styling */
+   
+}
+.left-dashboard-second-container
+{ 
+    padding: 30px 30px;
+    border-bottom: 1.3px solid #E8E8ED;
 }
 
 .left-dashboard-second-container-button .circle {
@@ -95,17 +101,16 @@
 .left-dashboard-second-container-button span i:before {
     content: "\f067";
 }
-
-hr
+.left-dashboard-3-container
 {
-    color: #E9E9E9;
+    border-bottom: 1.3px solid #E8E8ED;
 }
 .left-dashboard-3-container a
 {
     display: flex;
     margin: 15px;
-    margin-top: 29px;
-    margin-bottom: -18px;
+    
+   
      
 }
 .left-dashboard-3-container-button
@@ -114,13 +119,14 @@ hr
     align-items: center;
     margin-left: 20px;
     background-color: #FFFFFF;
-   
+    cursor: pointer;
     font-size: 14px;
     text-align: center;
     letter-spacing: 0.02em;
     color: #EB4553;
     font-family: 'Open Sans', sans-serif;
     width: fit-content;
+    text-decoration: none;
 
  
 }
@@ -135,24 +141,60 @@ hr
 {
     margin: 0px ;
 }
-.left-dashboard-4-container-button {
+.left-dashboard-4-container > a:hover
+{
+    color: #EB4553;
+    background-position-x: 40px;
+
+}
+.left-dashboard-4-container> a
+{
+display: flex;
+position: absolute;
+bottom: 0;
+align-items: center;
+justify-content: center;
+width: 100%;
+margin-left: -70px;
+ 
+
+    
+}
+.left-dashboard-4-container:hover .left-dashboard-4-container-button .logout-img {
+    animation: 0.15s;
+  background-position-x: 25px; 
+}
+
+.left-dashboard-4-container:hover .left-dashboard-4-container-button .label-class {
+    color: #EB4553;
+}
+
+
+.left-dashboard-4-container-button 
+{
+    color: #5B5B62;
+  
+}
+
+.left-dashboard-4-container-button div{
+    background-image: url(../../assets/logout.png);
+    background-repeat: no-repeat;
+    margin: 0px;
+    width: 30px;
+    height: 30px;
     display: block;
     font-style: normal;
     font-weight: 500;
     font-size: 14px;
     line-height: 190px;
     letter-spacing: 0.02em;
-    padding: 25px 15px;
+    padding: 30px 15px;
     color: #5B5B62;
-}
-.third-img
-{
-   
-    width: 50px;
-    height: 30px;
-    transition: 0.1s;
     background-position-y: 30px;
-    background-position-x: 30px;
+    background-position-x: -30px;
+
+   
+
     
 }
 .right-dashboard-container {
@@ -163,4 +205,37 @@ hr
     position: absolute;
     right: 0;
     top: 0;
+   
+}
+.right-card-container
+{
+    display: flex;
+    max-width: 1000px;
+    flex-wrap: wrap;
+    width: 100%;
+    margin: 5em auto 4em;
+}
+.p-box
+{
+    width: 100%;
+    cursor: pointer;
+    padding: 1em 2em;
+    transition: 0.3s ease-in-out;
+    margin-bottom: 1em;
+    background: #FFFFFF;
+    box-shadow: 0px 2px 17px rgba(0, 0, 0, 0.06);
+    border-radius: 4px;
+    color: #1c545f;
+    font-size: 16px;
+    line-height: 30px;
+    font-family: "Open Sans", sans-serif;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+};
+
+.empty
+{
+    display: block;
 }
