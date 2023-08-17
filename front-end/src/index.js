@@ -3,14 +3,18 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import { AuthProvider } from "./AuthContext"; // Path to your AuthContext.js
+
 
 import { BrowserRouter as Router } from "react-router-dom";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Router>
+  <AuthProvider>
     <App />
-  </Router>
+  </AuthProvider>
+</Router>,
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -185,16 +185,17 @@ app.post("/login", async (req, res) => {
 
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(401).json({ error: "Invalid credentials" });
+      return res.status(401).json({ error: "Invalid email credentials" });
     }
+    console.log("Retrieved User:", user);
 
-    const passwordMatch = await bcrypt.compare(password, user.password);
+    const passwordMatch = bcrypt.compare(password, user.password);
     if (!passwordMatch) {
-      return res.status(401).json({ error: "Invalid credentials" });
+      return res.status(401).json({ error: "Invalid password credentials" });
     }
 
     // Generate a JWT token
-    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
+    const token = jwt.sign({ userId: user._id, email: user.email }, process.env.JWT_SECRET);
     res.status(200).json({ token });
     
   } catch (error) {
@@ -202,5 +203,37 @@ app.post("/login", async (req, res) => {
     res.status(500).json({ error: "An error occurred while logging in" });
   }
 });
+
+const verifyToken = (req, res, next) => {
+  const token = req.headers.authorization?.split(' ')[1];
+
+  if (!token) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+
+  jwt.verify(token, process.env.JWT_SECRET, (err, decodedToken) => {
+    if (err) {
+      return res.status(401).json({ error: 'Invalid token' });
+    }
+
+    req.userId = decodedToken.userId;
+    req.userEmail = decodedToken.email;
+    next();
+  });
+};
+
+app.get('/dashboard', verifyToken, async (req, res) => {
+  try {
+    const user = await User.findById(req.userId);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    res.status(200).json({ email: user.email });
+  } catch (error) {
+    console.error('Error fetching user:', error);
+    res.status(500).json({ error: 'An error occurred on the server.' });
+  }
+});
+
 
 app.listen(5000, () => console.log('Running on port 5000'));

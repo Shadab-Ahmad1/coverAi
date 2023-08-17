@@ -1,18 +1,26 @@
-import React from 'react'
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import logo from "../../assets/logo.png";
 import img from "../../assets/icon-cover.png";
 import './dashboard.css';
 import logoutImg from "../../assets/logout.png";
+import { useAuth } from "../../AuthContext"; // Path to your AuthContext.js
 
 function Dashboard() {
+
+  const { user } = useAuth();
+
+  useEffect(() => {
+    console.log('User in Dashboards email', user);
+  }, [user]);
+
   return (
     <>
     <div className='dashboard-whole-container'>
       <div className='left-dashboard-container'>
         <div className='left-dashboard-logo'>
            <Link to="/">  <img src={logo} alt="Logo" className="dashboard-logo" /></Link>
-           <h6 className='dashboard-email'>aliimran98887@gmail.com</h6>
+           <h6 className='dashboard-email'>{user}</h6>
         </div>
         <div className='left-dashboard-second-container'>
         <a className='left-dashboard-second-container-button'>
