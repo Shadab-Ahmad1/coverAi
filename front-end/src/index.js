@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { AuthProvider } from "./AuthContext"; // Path to your AuthContext.js
+import { AuthProvider } from "./AuthContext";
 
 
 import { BrowserRouter as Router } from "react-router-dom";

@@ -1,4 +1,3 @@
-// AuthContext.js
 import React, { createContext, useContext, useEffect, useState } from "react";
 
 const AuthContext = createContext();
@@ -19,19 +18,22 @@ export const AuthProvider = ({ children }) => {
 
     if (response.ok) {
       const data = await response.json();
-      console.log("Fetched user data:", data); 
       setUser(data.email);
     }
+  };
+
+  const logout = () => {
+    localStorage.removeItem("authToken");
+    setUser(null);
   };
 
   useEffect(() => {
     fetchUserData();
   }, []);
 
-  console.log("User in AuthProvider:", user); 
 
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated }}>
+    <AuthContext.Provider value={{ user, isAuthenticated,logout  }}>
       {children}
     </AuthContext.Provider>
   );

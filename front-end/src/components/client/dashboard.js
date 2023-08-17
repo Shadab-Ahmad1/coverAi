@@ -6,22 +6,21 @@ import img from "../../assets/icon-cover.png";
 import './dashboard.css';
 import Register from '../Register';
 
-import { useAuth } from "../../AuthContext"; // Path to your AuthContext.js
+import { useAuth } from "../../AuthContext"; 
 
 function Dashboard() {
-  const [showRegister, setShowRegister] = useState(false); // State to manage whether to show Register component
-
-  // Function to handle clicking on "Create New Cover Letter" button
+  const [showRegister, setShowRegister] = useState(false); 
   const handleCreateNewCoverLetter = () => {
     setShowRegister(true);
   };
-
-
-
+  const { logout } = useAuth();
   const { user } = useAuth();
 
+  const handleLogout = () => {
+    logout();
+    window.location.href= ("/");
+  };
   useEffect(() => {
-    console.log('User in Dashboards email', user);
   }, [user]);
 
   return (
@@ -49,7 +48,7 @@ function Dashboard() {
           </a>
         </div>
         <div className='left-dashboard-4-container'>
-          <a className='left-dashboard-4-container-button'>
+          <a className='left-dashboard-4-container-button' onClick={handleLogout}>
             <div className='logout-img'></div>
            <lable className='label-class'>Logout</lable> 
           </a>

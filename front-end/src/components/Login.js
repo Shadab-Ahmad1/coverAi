@@ -21,10 +21,8 @@ function Login() {
       if (response.ok) {
         const data = await response.json();
         const token = data.token;
-        // Store the token in local storage
         localStorage.setItem("authToken", token);
 
-        // Redirect to dashboard on successful login
         window.location.href = "/client/dashboard";
       } else {
         console.error("Login failed");

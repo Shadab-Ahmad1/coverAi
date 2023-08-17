@@ -141,66 +141,48 @@
 {
     margin: 0px ;
 }
-.left-dashboard-4-container > a:hover
-{
-    color: #EB4553;
-    background-position-x: 40px;
 
+.left-dashboard-4-container .left-dashboard-4-container-button{
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    align-items: center;
+    padding: 25px 15px;
+    gap: 14px;
+    cursor: pointer;
 }
-.left-dashboard-4-container> a
-{
-display: flex;
-position: absolute;
-bottom: 0;
-align-items: center;
-justify-content: center;
-width: 100%;
-margin-left: -70px;
- 
-
-    
-}
-.left-dashboard-4-container:hover .left-dashboard-4-container-button .logout-img {
-    animation: 0.15s;
-  background-position-x: 25px; 
+.left-dashboard-4-container .left-dashboard-4-container-button:hover .logout-img{
+    background-position-x: 0px;  
 }
 
-.left-dashboard-4-container:hover .left-dashboard-4-container-button .label-class {
+.left-dashboard-4-container .left-dashboard-4-container-button:hover .label-class{
     color: #EB4553;
 }
 
 
-.left-dashboard-4-container-button 
-{
+.left-dashboard-4-container-button {
     color: #5B5B62;
   
 }
 
-.left-dashboard-4-container-button div{
+.left-dashboard-4-container-button .logout-img{
     background-image: url(../../assets/logout.png);
-    background-repeat: no-repeat;
     margin: 0px;
-    width: 30px;
-    height: 30px;
     display: block;
     font-style: normal;
     font-weight: 500;
     font-size: 14px;
-    line-height: 190px;
-    letter-spacing: 0.02em;
-    padding: 30px 15px;
     color: #5B5B62;
+    width: 30px;
+    height: 30px;
+    transition: 0.1s;
     background-position-y: 30px;
-    background-position-x: -30px;
-
-   
-
-    
+    background-position-x: 30px;    
 }
 .right-dashboard-container {
     background-image: url('../../assets/background.jpeg');
-    background-size: cover; /* Use cover to maintain aspect ratio */
-    width: calc(100% - 261px); /* Adjust the width to account for the left container */
+    background-size: cover;
+    width: calc(100% - 261px); 
     height: 100vh;
     position: absolute;
     right: 0;
