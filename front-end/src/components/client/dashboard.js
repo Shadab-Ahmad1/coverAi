@@ -1,7 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 import logo from "../../assets/logo.png";
+import img from "../../assets/icon-cover.png";
 import './dashboard.css';
+import logoutImg from "../../assets/logout.png";
 
 function Dashboard() {
   return (
@@ -13,21 +15,20 @@ function Dashboard() {
            <h6 className='dashboard-email'>aliimran98887@gmail.com</h6>
         </div>
         <div className='left-dashboard-second-container'>
-          <a className='left-dashboard-second-container-button'>
-            <span>
-              <i className='fa fa-plus'></i>
-              
-            </span>
-            New cover Letter
-          </a>
+        <a className='left-dashboard-second-container-button'>
+        <span className='circle'>
+            <i className='fa fa-plus'></i>
+        </span>
+          New cover Letter
+        </a> 
         </div>
         <br></br>
         <br></br>
         <hr className='line'/>
         <div className='left-dashboard-3-container'>
           <a className='left-dashboard-3-container-button'>
-            <span>
-            <i></i>
+            <span className='second-span'>
+            <i> <img className='second-img' src={img} /></i>
             </span>
             Cover Letter
           </a>
@@ -37,15 +38,18 @@ function Dashboard() {
         <hr className='line'/>
         <div className='left-dashboard-4-container'>
           <a className='left-dashboard-4-container-button'>
-            <span>
-            <i></i>
+            <span >
+              <img  className='third-img' src= {logoutImg} alt='no img' />
             </span>
             Logout
           </a>
         </div>
-      </div>
-      <div className='right-dashboard-container'>
-
+       </div>
+       <div className='right-dashboard-container'>
+       <div className='right-dashboard-second-container'>
+       
+       </div>
+       
       </div>
     </div>
     </>
