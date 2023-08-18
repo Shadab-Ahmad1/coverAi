@@ -23,7 +23,7 @@
         "web-vitals": "^2.1.4"
     },
     "scripts": {
-        "proxy": "http://localhost:5000",
+        "proxy": "https://cover-ai-tau.vercel.app/",
         "start": "react-scripts start",
         "build": "react-scripts build",
         "test": "react-scripts test",
