@@ -85,8 +85,8 @@ app.post('/create-checkout-session', async (req, res) => {
    host: "smtp.ethereal.email",
    port: 587,
    auth: {
-     user: "antwon.connelly74@ethereal.email",
-     pass: "Ra9DDrw9mp6xs8G69R",
+     user: "morgan31@ethereal.email",
+     pass: "aggUGt5g8hq9uCZUwr",
    },
  });
 
@@ -149,7 +149,6 @@ const info = await transporter.sendMail(mailOptions);
   }
 });
 
-
 // API route for user registration
 app.post('/register', async (req, res) => {
   try {
@@ -179,6 +178,7 @@ app.post('/register', async (req, res) => {
   }
 });
 
+// API route for user logged in
 app.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -187,9 +187,8 @@ app.post("/login", async (req, res) => {
     if (!user) {
       return res.status(401).json({ error: "Invalid email credentials" });
     }
-    console.log("Retrieved User:", user);
 
-    const passwordMatch = bcrypt.compare(password, user.password);
+    const passwordMatch = await bcrypt.compare(password, user.password);
     if (!passwordMatch) {
       return res.status(401).json({ error: "Invalid password credentials" });
     }
@@ -222,6 +221,7 @@ const verifyToken = (req, res, next) => {
   });
 };
 
+// API route for user logged in to dashboard with JWT Token
 app.get('/dashboard', verifyToken, async (req, res) => {
   try {
     const user = await User.findById(req.userId);
@@ -234,6 +234,7 @@ app.get('/dashboard', verifyToken, async (req, res) => {
     res.status(500).json({ error: 'An error occurred on the server.' });
   }
 });
+
 
 
 app.listen(5000, () => console.log('Running on port 5000'));

@@ -51,7 +51,14 @@ const validateForm = () => {
       } else {
         const data = await response.json();
         setErrors({ ...errors, server: data.error });
-        console.error("Registration failed:", data.error);
+
+        setEmail("");
+        setPassword("");
+        setConfirmPassword("");
+
+            setTimeout(() => {
+            setErrors("");
+            }, 5000);
       }
     } catch (error) {
       console.error("An error occurred:", error);

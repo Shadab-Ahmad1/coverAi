@@ -4,8 +4,11 @@ import logo from "../assets/logo.png";
 import "./Navbar.css";
 import menuIcon from "../assets/menu-icon.png";
 import "../assets/menu-icon.png";
+import { useAuth } from "../AuthContext";
 
 function Navbar() {
+
+  const { isAuthenticated } = useAuth();
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolling, setScrolling] = useState(false);
 
@@ -60,9 +63,15 @@ function Navbar() {
           >
             <img src={menuIcon} alt="Menu" />
           </button>{" "}
-          <Link to="/Login" className="login-button">
-            Log in
-          </Link>{" "}
+          {isAuthenticated() ? (
+            <Link to="/client/dashboard" className="login-button">
+              Dashboard
+            </Link>
+          ) : (
+            <Link to="/Login" className="login-button">
+              Log in
+            </Link>
+          )}
         </div>{" "}
       </nav>{" "}
       {isMobileMenuOpen && (
