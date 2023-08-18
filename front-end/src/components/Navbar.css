@@ -140,10 +140,7 @@
     font-family: "Open Sans", sans-serif;
     font-size: 16px;
     font-weight: 700;
-    line-height: 38px;
     text-decoration: none;
-    text-align: center;
-    white-space: 1px;
     background-position: 0% 0%;
     color: #ffffff;
     background-color: #b22222;
@@ -151,11 +148,13 @@
     width: 152px;
     border: 5px solid #b22222;
     position: relative;
-    display: block;
     cursor: pointer;
     transform: none;
     box-sizing: border-box;
     border-radius: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .mobile-menu {

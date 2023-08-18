@@ -7,9 +7,16 @@ function Login() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
 
   const handleLogin = async () => {
     try {
+      if (!email || !password) {
+        setError("Please provide both email and password");
+        return;
+      }
+
       const response = await fetch("http://localhost:5000/login", {
         method: "POST",
         headers: {
@@ -25,11 +32,19 @@ function Login() {
 
         window.location.href = "/client/dashboard";
       } else {
-        console.error("Login failed");
+        setError("Invalid credentials.Please try again.");
+        setTimeout(() => {
+          setEmail("");
+          setPassword("");
+        }, 2000);
       }
     } catch (error) {
-      console.error("An error occurred:", error);
+      setError("An error occurred. Please try again later.");
     }
+  };
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+    setError("");
   };
 
 
@@ -47,7 +62,7 @@ function Login() {
                   placeholder="Email address"
                   className="input-email"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={handleEmailChange}
                   width={22}
                 />{" "}
                 <input
@@ -58,6 +73,8 @@ function Login() {
                   onChange={(e) => setPassword(e.target.value)}
                   width={22}
                 />{" "}
+                {error && <p className="error">{error}</p>}
+
                 <div className="forget">
                   <Link to="../Forget" className="forget">
                     {" "}

@@ -16,78 +16,73 @@
  }
  
  .forget-h1 {
-     margin-top: 20%;
-     font-size: 48px;
-     font-weight: 700;
-     line-height: 55px;
-     margin-left: 18%;
-     color: #3D3D3D;
-     height: 124px;
-     width: 800px;
-     text-align: center;
+    margin-top: 15.5%;
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 55px;
+    margin-left: 18%;
+    color: #3D3D3D;
+    width: 800px;
+    text-align: center;
  }
  
  .forget-div2 {
-     margin-top: -3%;
-     width: 600px;
-     height: 369px;
-     background: #FFFFFF;
-     border-radius: 10px;
-     background-color: #fff;
-     border: 0.5px solid #ccc;
-     animation-name: slideIn;
-     animation-duration: 1s;
-     animation-timing-function: ease-in-out;
-     box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 20px 0px;
-     align-items: center;
-     margin-left: 26%;
+    width: 42%;
+    background: #FFFFFF;
+    border-radius: 10px;
+    background-color: #fff;
+    animation-name: slideIn;
+    animation-duration: 1s;
+    animation-timing-function: ease-in-out;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 20px 0px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 3em;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
  }
  
  .forget-p {
-     font-size: 16px;
-     line-height: 30px;
-     color: #575A73;
-     text-align: center;
-     margin-left: 12%;
-     margin-right: 12%;
+    font-size: 16px;
+    line-height: 30px;
+    color: #575a73;
+    padding: 0 21px;
+    margin: 0;
  }
  
- input [type="email"] {
-     width: 60%;
-     height: 30px;
-     margin-left: 18%;
-     margin-top: 10px;
-     padding: 10px;
-     margin-bottom: 10px;
-     border: 2px solid #F6F6F6;
-     background-color: #F6F6F6;
-     border-radius: 4px;
-     font-size: 16px;
+ .forget-div2 .forget-email-type {
+    width: 73%;
+    height: 30px;
+    padding: 13px 32px;
+    background-color: #F6F6F6;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    border-radius: 5px;
+    font-size: 16px;
+    border: 2px solid #f6f6f6;
+    margin: 0;
+    outline: none;
  }
  
  .forget-button {
-     margin-top: 7%;
-     font-family: "Open Sans", sans-serif;
-     margin-left: 30%;
-     font-size: 16px;
-     font-weight: 700;
-     line-height: 38px;
-     text-align: center;
-     background-position: 0% 0%;
-     color: #FFFFFF;
-     height: 50px;
-     width: 152px;
-     position: relative;
-     display: block;
-     cursor: pointer;
-     box-sizing: border-box;
-     border-radius: 25px;
-     border-top-left-radius: 25px;
-     border-top-right-radius: 25px;
-     border-bottom-left-radius: 25px;
-     border-bottom-right-radius: 25px;
-     text-decoration: none;
-     color: white;
-     background-color: #1c545f;
-     width: 250px;
+    font-family: "Open Sans", sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    text-align: center;
+    color: #FFFFFF;
+    height: 47px;
+    position: relative;
+    display: block;
+    cursor: pointer;
+    box-sizing: border-box;
+    border-radius: 25px;
+    text-decoration: none;
+    background-color: #1c545f;
+    width: 213px;
+    border: none;
+    margin-top: 20px;
+    margin-bottom: 20px;
  }
