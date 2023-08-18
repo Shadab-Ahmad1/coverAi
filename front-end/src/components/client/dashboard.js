@@ -32,7 +32,7 @@ function Dashboard() {
            <h6 className='dashboard-email'>{user}</h6>
         </div>
         <div className='left-dashboard-second-container'>
-        <a className='left-dashboard-second-container-button' onClick={handleCreateNewCoverLetter}>
+        <a className='left-dashboard-second-container-button' onClick={handleCreateNewCoverLetter} href='/client/view-letter'>
         <span className='circle'>
             <i className='fa fa-plus'></i>
         </span>
@@ -44,7 +44,7 @@ function Dashboard() {
             <span className='second-span'>
             <i> <img className='second-img' src={img} /></i>
             </span>
-            Cover Letter
+            Cover Letters
           </a>
         </div>
         <div className='left-dashboard-4-container'>
@@ -56,9 +56,6 @@ function Dashboard() {
        </div>
        <div className='right-dashboard-container'>
        <div className='right-dashboard-second-container'>
-       {showRegister ? (
-              <Register />
-            ) : (
        <div className='right-card-container'>
         <p className='p-box empty'>
         Looks like you haven't created a cover letter yet ! Please click on  
@@ -66,7 +63,6 @@ function Dashboard() {
         button to create one.
         </p>
        </div>
-            )}
        </div>
        
       </div>

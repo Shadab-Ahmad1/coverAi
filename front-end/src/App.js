@@ -17,15 +17,18 @@ import Cookies from "./components/Cookies";
 import Viewletter from "./components/Viewletter";
 import Thankyou from "./components/thankyou";
 import Dashboard from "./components/client/dashboard";
+import ViewLetter from "./components/client/view-letter";
 
 
 function App() {
-
+  
   const [formData, setFormData] = useState("");
   const location = useLocation();
   const isRegisterPage = location.pathname.includes("/Register");
   const isThankYou = location.pathname.includes("/thank-you");
   const isDashboard =location.pathname.includes("/client/dashboard");
+  const isViewLetter =location.pathname.includes("/client/view-letter");
+  
 
  
   const navigate = useNavigate();
@@ -44,7 +47,7 @@ function App() {
   return (
     <>
       {" "}
-      {!isRegisterPage && !isThankYou && !isDashboard && <Navbar />}{" "}
+      {!isRegisterPage && !isThankYou && !isDashboard  && !isViewLetter && <Navbar />}{" "}
       <Routes>
         <Route path="/" element={<Home />} />{" "}
         <Route path="/Register" element={<Register />} />{" "}
@@ -60,10 +63,12 @@ function App() {
         <Route path="/Viewletter" element={<Viewletter />} />{" "}
         <Route path="/thank-you"  element={<Thankyou />} />{" "}
         <Route path="/client/dashboard" element={<Dashboard/>}/>
+        <Route path="/client/view-letter" element={<ViewLetter/>}/>
         
       </Routes>{" "}
-      {!isRegisterPage && !isThankYou && !isDashboard && <Footer />}{" "}
+      {!isRegisterPage && !isThankYou && !isDashboard && !isViewLetter && <Footer />}{" "}
     </>
   );
 }
 export default App;
+
