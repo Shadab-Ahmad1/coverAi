@@ -15,7 +15,7 @@ import icon11 from "../assets/icon11.svg";
 import icon12 from "../assets/icon12.png";
 import icon13 from "../assets/icon13.svg";
 import icon14 from "../assets/icon14.svg";
-import Register from "../components/Register";
+import CreateLetter from "./create-letter";
 import { Link } from "react-router-dom";
 import Prices from "./Prices";
 import Unsubscribe from "./Unsubscribe";
@@ -31,7 +31,7 @@ function Home() {
                 <h1 className="h1"> Your Unique Cover letter </h1>{" "}
               </div>{" "}
               {/* <button className='home-left1-button' onClick={navigate} > Generate Now</button> */}{" "}
-              <Link to="/Register" className="home-left1-button">
+              <Link to="/create-letter" className="home-left1-button">
                 {" "}
                 Generate now{" "}
               </Link>{" "}

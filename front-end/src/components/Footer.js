@@ -5,7 +5,7 @@ import icon11 from "../assets/icon11.svg";
 import icon12 from "../assets/icon12.png";
 import icon13 from "../assets/icon13.svg";
 import icon14 from "../assets/icon14.svg";
-import Register from "../components/Register";
+import Register from "./create-letter";
 
 import Prices from "./Prices";
 import Unsubscribe from "./Unsubscribe";

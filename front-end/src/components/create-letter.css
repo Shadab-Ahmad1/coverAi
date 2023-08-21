@@ -194,8 +194,9 @@
 .question-1-header >p{
   translate: -28px 0px 0px;
 }
-.question-1-header > input {
+.question-1-header > input:focus {
   translate: -30px 11px 0px;
+  box-shadow: rgb(67,126,147) 0px 2px;
 }
 @keyframes fadeIn {
   0% {
@@ -612,6 +613,10 @@
   box-shadow: rgba(4, 55, 73, 0.3) 0px 1px;
   background-color: transparent !important;
   translate: -88px 21px 0px;
+  /* box-shadow: rgb(67,126,147) 0px 2px; */
+}
+.input-question-3:focus
+{
   box-shadow: rgb(67,126,147) 0px 2px;
 }
 
@@ -914,6 +919,9 @@
   text-align: center;
 
 }
+.cover-loader-main p{
+  color: #3d3d3d;
+}
 
 @keyframes spin {
   0% {
@@ -970,7 +978,7 @@ cursor: pointer;
 {
   translate: -87px 95px 0px
 }
-.button-text-center>p{
+.button-text-center p{
 translate: -51px 0px 0px;
 max-width: 280px;
 margin: auto;

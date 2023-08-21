@@ -2,11 +2,11 @@ import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import logo from "../../assets/logo.png";
-import './view-letter.css';
-import Register from '../Register';
+import './new-letter.css';
+import NewCreateLetter from '../new-create-letter';
 import { useAuth } from "../../AuthContext"; 
 
-function ViewLetter() {
+function NewLetter() {
     const [showRegister, setShowRegister] = useState(false); 
     const handleCreateNewCoverLetter = () => {
       setShowRegister(true);
@@ -51,7 +51,7 @@ function ViewLetter() {
          </div>
          <div className='right-dashboard-container'>
          <div className='right-dashboard-second-container'>
-            <Register />
+            <NewCreateLetter />
          </div>
          
         </div>
@@ -59,4 +59,4 @@ function ViewLetter() {
       </>
     )
 }
-export default ViewLetter
+export default NewLetter

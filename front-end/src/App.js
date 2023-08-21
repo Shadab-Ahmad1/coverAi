@@ -3,7 +3,7 @@ import { Route, Routes,useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
-import Register from "./components/Register";
+import CreateLetter from "./components/create-letter";
 import Newaccount from "./components/Newaccount";
 import Login from "./components/Login";
 import Prices from "./components/Prices";
@@ -16,39 +16,21 @@ import Privacy from "./components/Privacy";
 import Cookies from "./components/Cookies";
 import Viewletter from "./components/Viewletter";
 import Thankyou from "./components/thankyou";
+import NewLetter from "./components/client/new-letter";
 import Dashboard from "./components/client/dashboard";
-import ViewLetter from "./components/client/view-letter";
+
+
 function App() {
   
   const [formData, setFormData] = useState("");
   const location = useLocation();
-  const isRegisterPage = location.pathname.includes("/Register");
+  const isCreateLetter = location.pathname.includes("/create-letter");
   const isThankYou = location.pathname.includes("/thank-you");
   const isDashboard =location.pathname.includes("/client/dashboard");
-  const isViewLetter =location.pathname.includes("/client/view-letter");
+  const isNewLetter =location.pathname.includes("/client/new-letter");
   
 
-const useAuth = () => {
-  // Simulated user object for example
-  const user = "exampleuser";
-  const logout = () => {
-    // Simulated logout logic
-  };
-
-  return { user, logout };
-};
-
-function PrivateRoute({ element: Element, ...rest }) {
-  const { user } = useAuth();
-
-  if (!user) {
-    return <Navigate to="/login" />;
-  }
-
-  return <Element {...rest} />;
-}
  
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -65,10 +47,10 @@ function PrivateRoute({ element: Element, ...rest }) {
   return (
     <>
       {" "}
-      {!isRegisterPage && !isThankYou && !isDashboard  && !isViewLetter && <Navbar />}{" "}
+      {!isCreateLetter && !isThankYou && !isDashboard  && !isNewLetter && <Navbar />}{" "}
       <Routes>
         <Route path="/" element={<Home />} />{" "}
-        <Route path="/Register" element={<Register />} />{" "}
+        <Route path="/create-letter" element={<CreateLetter />} />{" "}
         <Route path="/Newaccount" element={<Newaccount />} />{" "}
         <Route path="/Login" element={<Login />} />{" "}
         <Route path="/Prices" element={<Prices />} />{" "}
@@ -80,19 +62,13 @@ function PrivateRoute({ element: Element, ...rest }) {
         <Route path="/Forget" element={<Forget />} />{" "}
         <Route path="/Viewletter" element={<Viewletter />} />{" "}
         <Route path="/thank-you"  element={<Thankyou />} />{" "}
-        <Route
-        path="/client/dashboard"
-        element={<PrivateRoute element={<Dashboard />} />} 
-        />
-        <Route
-        path="/client/view-letter"
-        element={<PrivateRoute element={<ViewLetter />} />}
-        />
         <Route path="/client/dashboard" element={<Dashboard/>}/>
-        <Route path="/client/view-letter" element={<ViewLetter/>}/>
-       </Routes>{" "}
-      {!isRegisterPage && !isThankYou && !isDashboard && !isViewLetter && <Footer />}{" "}
+        <Route path="/client/new-letter" element={<NewLetter/>}/>
+        
+      </Routes>{" "}
+      {!isCreateLetter && !isThankYou && !isDashboard && !isNewLetter && <Footer />}{" "}
     </>
   );
 }
 export default App;
+

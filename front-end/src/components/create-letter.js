@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "./Register.css";
+import "./create-letter.css";
 
 
-const Register = () => {
+const CreateLetter = () => {
   const [inputText, setInputText] = useState("");
   const [step, setStep] = useState(1);
   const [errorMessage, setErrorMessage] = useState("");
@@ -88,6 +88,7 @@ useEffect(() => {
   const [coverLetterSubmitToDb, setCoverLetterSubmitToDb] = useState("");
   const [messageIndex, setMessageIndex] = useState(0);
   const messages = [
+    "Machines working hard to generate your cover letter",
     "Sit back, relax, and wait for it...",
     "Just a moment longer, the perfect cover letter is on its way...",
     "Thanks for your patience"
@@ -1040,5 +1041,5 @@ useEffect(() => {
 );
 };
 
-export default Register;
+export default CreateLetter;
 
