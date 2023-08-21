@@ -18,8 +18,6 @@ import Viewletter from "./components/Viewletter";
 import Thankyou from "./components/thankyou";
 import Dashboard from "./components/client/dashboard";
 import ViewLetter from "./components/client/view-letter";
-
-
 function App() {
   
   const [formData, setFormData] = useState("");
@@ -30,7 +28,27 @@ function App() {
   const isViewLetter =location.pathname.includes("/client/view-letter");
   
 
+const useAuth = () => {
+  // Simulated user object for example
+  const user = "exampleuser";
+  const logout = () => {
+    // Simulated logout logic
+  };
+
+  return { user, logout };
+};
+
+function PrivateRoute({ element: Element, ...rest }) {
+  const { user } = useAuth();
+
+  if (!user) {
+    return <Navigate to="/login" />;
+  }
+
+  return <Element {...rest} />;
+}
  
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -62,13 +80,19 @@ function App() {
         <Route path="/Forget" element={<Forget />} />{" "}
         <Route path="/Viewletter" element={<Viewletter />} />{" "}
         <Route path="/thank-you"  element={<Thankyou />} />{" "}
+        <Route
+        path="/client/dashboard"
+        element={<PrivateRoute element={<Dashboard />} />} 
+        />
+        <Route
+        path="/client/view-letter"
+        element={<PrivateRoute element={<ViewLetter />} />}
+        />
         <Route path="/client/dashboard" element={<Dashboard/>}/>
         <Route path="/client/view-letter" element={<ViewLetter/>}/>
-        
-      </Routes>{" "}
+       </Routes>{" "}
       {!isRegisterPage && !isThankYou && !isDashboard && !isViewLetter && <Footer />}{" "}
     </>
   );
 }
 export default App;
-
