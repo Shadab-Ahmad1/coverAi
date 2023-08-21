@@ -2,9 +2,11 @@ import React from "react";
 import  { useState, useEffect } from "react";
 import axios from "axios";
 import "./new-create-letter.css";
+import { useAuth } from "../AuthContext"; 
 
 function NewCreateLetter()
 {
+    const { user } = useAuth();
     const [step, setStep] = useState(1);
     const [errorMessage, setErrorMessage] = useState("");
     const [formDataArray, setFormDataArray] = useState([]);
@@ -23,6 +25,9 @@ function NewCreateLetter()
       interestedforjob: "",
       motivationStatement: "",
     });
+
+
+    console.log(user);
   //Local Storage for input
   const handleInputChange = (fieldName, value) => {
     setFormData({ ...formData, [fieldName]: value });
@@ -186,18 +191,18 @@ function NewCreateLetter()
   
     const stripefunction = async () => {
   
-        const response = await fetch('http://localhost:5000/create-checkout-session', {
+        const response = await fetch('http://localhost:5000/create-checkout-session-auth', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
+            'Authorization': `Bearer ${user.token}`
           },
           body: JSON.stringify({
             items:[
               {id:1, amount: 1000 }
             ],
-            email:formData.email,
-            name:formData.fullName,
-            coverLetterResponse: coverLetterSubmitToDb
+            coverLetterResponse: coverLetterSubmitToDb,
+            userEmail: user
           }),
         }).then( res => {
           if(res.ok) return res.json()

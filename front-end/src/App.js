@@ -18,6 +18,7 @@ import Viewletter from "./components/Viewletter";
 import Thankyou from "./components/thankyou";
 import NewLetter from "./components/client/new-letter";
 import Dashboard from "./components/client/dashboard";
+import NewLetterThankYou from "./components/client/typeform-thank-you";
 
 
 function App() {
@@ -64,6 +65,7 @@ function App() {
         <Route path="/thank-you"  element={<Thankyou />} />{" "}
         <Route path="/client/dashboard" element={<Dashboard/>}/>
         <Route path="/client/new-letter" element={<NewLetter/>}/>
+        <Route path="/client/typeform-thank-you" element={< NewLetterThankYou/>}/>
         
       </Routes>{" "}
       {!isCreateLetter && !isThankYou && !isDashboard && !isNewLetter && <Footer />}{" "}

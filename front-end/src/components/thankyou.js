@@ -44,8 +44,8 @@ function Thankyou() {
         currentIndex++;
       } else {
         clearInterval(typingInterval);
-        setShowDownloadButton(true); // Show download button after cover letter is fully rendered
-        setShowCopyButton(true); // Show copy button after cover letter is fully rendered
+        setShowDownloadButton(true); 
+        setShowCopyButton(true); 
       }
     }, 100);
   };

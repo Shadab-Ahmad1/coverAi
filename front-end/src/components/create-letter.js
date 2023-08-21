@@ -210,7 +210,9 @@ useEffect(() => {
         },
         body: JSON.stringify({
           items:[
-            {id:1, amount: 1000 }
+            {id:1,
+             amount: 1000 ,
+            }
           ],
           email:formData.email,
           name:formData.fullName,
