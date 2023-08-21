@@ -20,7 +20,6 @@ function ViewLetter() {
     };
     useEffect(() => {
     }, [user]);
-  
     return (
       <>
       <div className='dashboard-whole-container'>
@@ -60,5 +59,4 @@ function ViewLetter() {
       </>
     )
 }
-
 export default ViewLetter
