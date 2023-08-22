@@ -101,7 +101,11 @@ function Thankyou() {
             {/* ... Other content ... */}
             <h1 className="thanks text-center">Thank You !</h1>
             <p className="user-email-text">
-            Thank you for choosing CoverAi.<br /> Please check your email <br /><b>{paymentDetails.email}</b>          
+            {paymentDetails && (
+            <p className="user-email-text">
+             Thank you for choosing CoverAi.<br /> Please check your email <br /><b>{paymentDetails.email}</b>
+           </p>
+            )}      
             </p>
             <p className="thanks-description"> You have been sent a link to view your cover letter.
            If you do not receive any email Please contact our customer service team at <a href="mailto:info+coverai@yeesshh.com">info+coverai@yeesshh.com</a>.</p>

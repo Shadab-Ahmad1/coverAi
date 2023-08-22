@@ -12,34 +12,11 @@ function Unsubscribe() {
             <div className="container-unsubscribe">
               <p className="unsub-p">
                 {" "}
-                Your subscription will be canceled immediately following your
-                request.No additional fees will be charged to your card.If the
-                subscription to the service has already been taken{" "}
+                Your subscription will be canceled immediately following your request. No additional fees will be charged to your card.
+                If the subscription to the service has already been taken for the period to come, you can continue to access the site and its services until the end of the period.
               </p>{" "}
-              <input
-                type="email"
-                placeholder="Email used during subscription"
-              />{" "}
-              <button className="button"> I Confirm My Subscription </button>{" "}
-              <p className="p-center">
-                {" "}
-                If you cannot find the email address used when you registered,
-                please contact us by email or by phone so that we can help you
-                finalize your unsubscription.{" "}
-              </p>{" "}
-              <input
-                className="card-num"
-                type="email"
-                maxLength="6"
-                placeholder="the first 6 digit of the card"
-              />{" "}
-              <input
-                className="card-num"
-                type="email"
-                maxLength="4"
-                placeholder="the last 4 digit of the card"
-              />{" "}
-              <button className="button"> I Confirm My Unsubscription </button>{" "}
+            
+              <button className="button"> Click Here To Unsubscribe </button>{" "}
             </div>{" "}
           </div>{" "}
         </div>{" "}

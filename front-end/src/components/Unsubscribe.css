@@ -28,7 +28,7 @@
     margin-top: 20%;
     background-color: #ffffff;
     width: 600px;
-    height: 1200px;
+    height: 370px;
     margin-left: -44%;
     box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.1);
 }
@@ -138,12 +138,18 @@ input[type="email"] {
         margin-left: 2%;
     }
     .unsub-p {
-        margin-left: auto;
+     
         margin-right: auto;
         text-align: center;
-        font-size: 14px;
+        font-size: 17px;
         width: 100%;
         max-width: 260px;
+        line-height: 20px;
+        display: block;
+        margin-block-start: 1em;
+        margin-block-end: 1em;
+        margin-inline-start: 0px;
+        margin-inline-end: 0px;
     }
     input[type="email"] {
         margin-top: 15%;
