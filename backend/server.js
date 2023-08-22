@@ -277,7 +277,95 @@ app.get('/dashboard', verifyToken, async (req, res) => {
     res.status(500).json({ error: 'An error occurred on the server.' });
   }
 });
+// app.post('/forgot', async (req, res) => {
+//   try {
+//     const { email } = req.body;
 
+//     const user = await User.findOne({ email });
+//     if (!user) {
+//       return res.status(404).json({ error: 'User not found' });
+//     }
+//     const token = jwt.sign({ userId: user._id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '60s' });
+//     console.log('your email',email);
+//     console.log("token",token);
+//     // Send email with reset link
+//     // You can use a library like Nodemailer to send emails
+//     // Include the token in the reset link URL, e.g., https://yourapp.com/reset-password?token=...
 
+//     res.status(200).json({ message: 'We have emailed your password reset link!' });
+//   } catch (error) {
+//     console.error('Error sending reset link:', error);
+//     res.status(500).json({ error: 'An error occurred on the server.' });
+//   }
+// });
+app.post('/forgot', async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    const token = jwt.sign({ userId: user._id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    console.log("Email :",email);
+    console.log('Token :' , token)
+
+    // Log the reset link to the console
+    const resetLink = `${process.env.RESET_LINK_BASE_URL}/reset-password/${token}`;
+    console.log("Password reset link:", resetLink);
+
+    res.status(200).json({ message: 'Password reset link generated successfully' });
+
+  } catch (error) {
+    console.error('Error generating reset link:', error);
+    res.status(500).json({ error: 'An error occurred on the server.' });
+  }
+});
+
+app.post('/reset-password', async (req, res) => {
+  const { token, newPassword } = req.body;
+
+  if (!token || !newPassword) {
+    return res.status(400).json({ error: 'Token and newPassword are required.' });
+  }
+
+  try {
+    const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+
+    const user = await User.findOne({ email: decodedToken.email });
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found.' });
+    }
+
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(newPassword, saltRounds);
+
+    // Update the user's password
+    user.password = hashedPassword;
+    await user.save();
+
+    res.status(200).json({ message: 'Your Password reset successfully.' });
+  } catch (error) {
+    console.error('Error resetting password:', error);
+    res.status(500).json({ error: 'An error occurred while resetting the password.' });
+  }
+});
+app.get('/get-user-email/:token', async (req, res) => {
+  try {
+    const decodedToken = jwt.verify(req.params.token, process.env.JWT_SECRET);
+    
+    const user = await User.findOne({ email: decodedToken.email });
+    
+    if (!user) {
+      return res.status(404).json({ error: 'User not found.' });
+    }
+
+    res.status(200).json({ email: user.email });
+  } catch (error) {
+    console.error('Error fetching user email:', error);
+    res.status(500).json({ error: 'An error occurred while fetching user email.' });
+  }
+});
 
 app.listen(5000, () => console.log('Running on port 5000'));

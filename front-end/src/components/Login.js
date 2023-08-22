@@ -29,7 +29,6 @@ function Login() {
         const data = await response.json();
         const token = data.token;
         localStorage.setItem("authToken", token);
-
         window.location.href = "/client/dashboard";
       } else {
         setError("Invalid credentials.Please try again.");

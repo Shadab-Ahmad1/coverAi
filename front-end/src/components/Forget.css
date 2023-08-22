@@ -45,7 +45,13 @@
     align-items: center;
     gap: 25px;
  }
- 
+
+ .forget-div2 input
+ {
+   width:80%;
+   margin-left: 0px;
+   margin-bottom: -16px;
+ }
  .forget-p {
     font-size: 16px;
     line-height: 30px;
@@ -85,4 +91,20 @@
     border: none;
     margin-top: 20px;
     margin-bottom: 20px;
+ }
+ .success-message
+ { width: 94%;
+   padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+ }
+ .not-found-user
+ {
+   color: red;
+    font-size: 15px;
+    font-weight: bold;
  }

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import logo from "../../assets/logo.png";
 import './new-letter.css';
@@ -18,6 +19,10 @@ function NewLetter() {
       logout();
       window.location.href= ("/");
     };
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const userEmailFromURL = searchParams.get('userEmail'); 
+  const userEmail = userEmailFromURL || user;
     useEffect(() => {
     }, [user]);
     return (
@@ -26,7 +31,7 @@ function NewLetter() {
         <div className='left-dashboard-container'>
           <div className='left-dashboard-logo'>
              <Link to="/">  <img src={logo} alt="Logo" className="dashboard-logo" /></Link>
-             <h6 className='dashboard-email'>{user}</h6>
+             <h6 className='dashboard-email'>{userEmail}</h6>
           </div>
           <div className='left-dashboard-second-container'>
           <a className='left-dashboard-second-container-button' href='/client/view-letter' onClick={handleCreateNewCoverLetter}>

@@ -19,6 +19,7 @@ import Thankyou from "./components/thankyou";
 import NewLetter from "./components/client/new-letter";
 import Dashboard from "./components/client/dashboard";
 import NewLetterThankYou from "./components/client/typeform-thank-you";
+import ResetPassword from "./components/Resetpassword";
 
 
 function App() {
@@ -29,7 +30,6 @@ function App() {
   const isThankYou = location.pathname.includes("/thank-you");
   const isDashboard =location.pathname.includes("/client/dashboard");
   const isNewLetter =location.pathname.includes("/client/new-letter");
-  
 
  
   const navigate = useNavigate();
@@ -66,9 +66,10 @@ function App() {
         <Route path="/client/dashboard" element={<Dashboard/>}/>
         <Route path="/client/new-letter" element={<NewLetter/>}/>
         <Route path="/client/typeform-thank-you" element={< NewLetterThankYou/>}/>
+        <Route path="Resetpassword/reset-password/:token" element={< ResetPassword/>} />
         
       </Routes>{" "}
-      {!isCreateLetter && !isThankYou && !isDashboard && !isNewLetter && <Footer />}{" "}
+      {!isCreateLetter && !isThankYou && !isDashboard && !isNewLetter  && <Footer />}{" "}
     </>
   );
 }
