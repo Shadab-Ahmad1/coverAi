@@ -19,8 +19,18 @@ import CreateLetter from "./create-letter";
 import { Link } from "react-router-dom";
 import Prices from "./Prices";
 import Unsubscribe from "./Unsubscribe";
+import { useAuth } from '../AuthContext';
 
 function Home() {
+  const { isAuthenticated } = useAuth();
+  const generateButtonOnClick = () => {
+    // If authenticated and in dashboard, redirect to the new cover letter page
+    if (isAuthenticated()) {
+      window.location.href = '/client/new-letter';
+    } else {
+      window.location.href = '/create-letter';
+    }
+  };
   return (
     <>
       <section className="home">
@@ -30,11 +40,7 @@ function Home() {
               <div className="home-left2">
                 <h1 className="h1"> Your Unique Cover letter </h1>{" "}
               </div>{" "}
-              {/* <button className='home-left1-button' onClick={navigate} > Generate Now</button> */}{" "}
-              <Link to="/create-letter" className="home-left1-button">
-                {" "}
-                Generate now{" "}
-              </Link>{" "}
+             <button className="home-left1-button" onClick={generateButtonOnClick }>  Generate now</button>
             </div>{" "}
           </div>{" "}
           <div className="home-right">

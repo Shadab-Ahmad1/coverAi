@@ -130,12 +130,18 @@ const info = await transporter.sendMail(mailOptions);
   }
 });
 
-// Another Api call for new-create-letter for stripe
 app.post('/create-checkout-session-auth', async (req, res) => {
   try {
     const userEmail = req.body.userEmail;
+    const payment = await Payment.findOne({ email: userEmail });
+
+    if (payment) {
+      return res.json({ url: '', paymentId: payment._id });
+      console.log(res);
+      console.log(payment);
+    }
     const newPayment = new Payment({
-      email:req.body.email,
+      email: req.body.userEmail,
       name: req.body.name,
       coverLetter: req.body.coverLetterResponse,
       amount: storeItems.get(req.body.items[0].id).priceInCents,
@@ -161,7 +167,7 @@ app.post('/create-checkout-session-auth', async (req, res) => {
           quantity: 1,
         };
       }),
-      success_url: `${process.env.SERVER_URL}/client/typeform-thank-you?paymentId=${savedPayment._id.toString()}`,
+      success_url: `${process.env.SERVER_URL}/client/dashboard?paymentId=${savedPayment._id.toString()}`,
       cancel_url: `${process.env.SERVER_URL}/cancel`,
     });
     res.json({ url: session.url, paymentId: savedPayment._id });
@@ -170,7 +176,40 @@ app.post('/create-checkout-session-auth', async (req, res) => {
     res.status(500).json({ error: 'An error occurred on the server.' });
   }
 });
+// Dashboard user coverletter
+app.get('/getCoverLetters', async (req, res) => {
+  const userEmail = req.query.userEmail;
 
+  try {
+    const coverLetters = await Payment.find({ email: userEmail }).select('coverLetter timestamp');
+    res.json(coverLetters);
+  } catch (error) {
+    console.error('Error fetching cover letters:', error);
+    res.status(500).json({ error: 'An error occurred on the server.' });
+  }
+});
+
+
+app.get('/api/fetch-cover-letter', async (req, res) => {
+  try {
+    const userEmail = req.query.userEmail;
+    const paymentId = req.query.paymentId;
+
+    // Fetch the cover letter content based on userEmail and paymentId
+    const payment = await Payment.findOne({ email: userEmail, _id: paymentId });
+
+    if (payment) {
+      // Assuming you have a 'coverLetter' field in your Payment schema
+      const coverLetter = payment.coverLetter;
+      res.json({ coverLetter });
+    } else {
+      res.status(404).json({ error: 'Cover letter not found.' });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred on the server.' });
+  }
+});
 // API route for displaying cover Letter on thank you component
  app.get('/getCoverletter/:paymentId', async (req, res) => {
   try {
@@ -192,7 +231,6 @@ app.post('/create-checkout-session-auth', async (req, res) => {
   }
 });
 
-// API route for user registration
 app.post('/register', async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -277,27 +315,7 @@ app.get('/dashboard', verifyToken, async (req, res) => {
     res.status(500).json({ error: 'An error occurred on the server.' });
   }
 });
-// app.post('/forgot', async (req, res) => {
-//   try {
-//     const { email } = req.body;
 
-//     const user = await User.findOne({ email });
-//     if (!user) {
-//       return res.status(404).json({ error: 'User not found' });
-//     }
-//     const token = jwt.sign({ userId: user._id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '60s' });
-//     console.log('your email',email);
-//     console.log("token",token);
-//     // Send email with reset link
-//     // You can use a library like Nodemailer to send emails
-//     // Include the token in the reset link URL, e.g., https://yourapp.com/reset-password?token=...
-
-//     res.status(200).json({ message: 'We have emailed your password reset link!' });
-//   } catch (error) {
-//     console.error('Error sending reset link:', error);
-//     res.status(500).json({ error: 'An error occurred on the server.' });
-//   }
-// });
 app.post('/forgot', async (req, res) => {
   try {
     const { email } = req.body;

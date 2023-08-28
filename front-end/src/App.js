@@ -20,6 +20,8 @@ import NewLetter from "./components/client/new-letter";
 import Dashboard from "./components/client/dashboard";
 import NewLetterThankYou from "./components/client/typeform-thank-you";
 import ResetPassword from "./components/Resetpassword";
+import { AuthProvider } from "./AuthContext";
+import { useAuth } from "./AuthContext";
 
 
 function App() {
@@ -30,10 +32,8 @@ function App() {
   const isThankYou = location.pathname.includes("/thank-you");
   const isDashboard =location.pathname.includes("/client/dashboard");
   const isNewLetter =location.pathname.includes("/client/new-letter");
-
- 
+  const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
-
   useEffect(() => {
     if (isThankYou) {
       const searchParams = new URLSearchParams(location.search);
@@ -44,7 +44,6 @@ function App() {
       }  
     }
   }, [location, isThankYou, navigate]);
-
   return (
     <>
       {" "}
@@ -63,8 +62,13 @@ function App() {
         <Route path="/Forget" element={<Forget />} />{" "}
         <Route path="/Viewletter" element={<Viewletter />} />{" "}
         <Route path="/thank-you"  element={<Thankyou />} />{" "}
-        <Route path="/client/dashboard" element={<Dashboard/>}/>
-        <Route path="/client/new-letter" element={<NewLetter/>}/>
+        {isAuthenticated() && (
+          <>
+            <Route path="/client/dashboard" element={<Dashboard />} />
+            <Route path="/client/new-letter" element={<NewLetter />} />
+            {/* ... other authenticated routes ... */}
+          </>
+        )}
         <Route path="/client/typeform-thank-you" element={< NewLetterThankYou/>}/>
         <Route path="Resetpassword/reset-password/:token" element={< ResetPassword/>} />
         

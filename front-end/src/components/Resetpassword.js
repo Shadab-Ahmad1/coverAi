@@ -52,7 +52,7 @@ function ResetPassword() {
   
       if (response.ok) {
         setMessage(data.message);
-        navigate(`/client/dashboard?userEmail=${encodeURIComponent(userEmail)}`);
+        navigate(`/Login`);
       } else {
         setMessage("An error occurred while resetting the password.");
       }

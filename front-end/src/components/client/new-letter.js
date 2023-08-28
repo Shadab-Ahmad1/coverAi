@@ -9,6 +9,8 @@ import { useAuth } from "../../AuthContext";
 
 function NewLetter() {
     const [showRegister, setShowRegister] = useState(false); 
+    
+
     const handleCreateNewCoverLetter = () => {
       setShowRegister(true);
     };
@@ -34,7 +36,7 @@ function NewLetter() {
              <h6 className='dashboard-email'>{userEmail}</h6>
           </div>
           <div className='left-dashboard-second-container'>
-          <a className='left-dashboard-second-container-button' href='/client/view-letter' onClick={handleCreateNewCoverLetter}>
+          <a className='left-dashboard-second-container-button' href='/client/new-letter' onClick={handleCreateNewCoverLetter}>
           <span className='circle'>
               <i className='fa fa-plus'></i>
           </span>

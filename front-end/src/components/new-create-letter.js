@@ -96,8 +96,6 @@ function NewCreateLetter()
   
       if (showLoader) {
         const messageTimer = setInterval(showNextMessage, messageInterval + transitionInterval);
-  
-        // Clear the interval when the loader is hidden
         return () => clearInterval(messageTimer);
       }
     }, [showLoader, messageIndex]);
@@ -137,8 +135,6 @@ function NewCreateLetter()
         console.error("Error:", error.message);
       }
     };
-  
-  
     const handleShowLetterClick = () => {
       setCurrentDisplayIndex(0); 
       setShowContent(true); 
@@ -154,7 +150,7 @@ function NewCreateLetter()
       let currentIndex= 0;
       let typeText="";
       const typeInterval = setInterval(() => {
-        const halfwayIndex = Math.floor(totalChars.length / 2); 
+        const halfwayIndex = Math.floor(totalChars.length); 
         if (currentIndex< halfwayIndex) {
           typeText =totalChars.slice(0,currentIndex+1).join(' ');
           setTypedCoverLetter(typeText);
@@ -173,8 +169,36 @@ function NewCreateLetter()
         setTypedCoverLetter(false);
       }
     }, [TypedCoverLetter, coverLetterText]);
-   
+    const [responseOk, setResponseOk] = useState(false);
+
   
+    const stripefunction = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/create-checkout-session-auth', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${user.token}`,
+          },
+          body: JSON.stringify({
+            items: [{ id: 1, amount: 1000 }],
+            coverLetterResponse: coverLetterSubmitToDb,
+            userEmail: user,
+          }),
+        });
+  
+        if (response.ok) {
+          setResponseOk(true); 
+          const { url } = await response.json();
+          window.location = url;
+        } else {
+          const json = await response.json();
+          console.log(json.error);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
   
     useEffect(() => {
       const loaderTimer = setTimeout(() => {
@@ -186,34 +210,6 @@ function NewCreateLetter()
         clearTimeout(loaderTimer);
       };
     }, [coverLetterText]);
-
-    
-  
-    const stripefunction = async () => {
-  
-        const response = await fetch('http://localhost:5000/create-checkout-session-auth', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${user.token}`
-          },
-          body: JSON.stringify({
-            items:[
-              {id:1, amount: 1000 }
-            ],
-            coverLetterResponse: coverLetterSubmitToDb,
-            userEmail: user
-          }),
-        }).then( res => {
-          if(res.ok) return res.json()
-          return res.json().then(json => Promise.reject(json))
-        }).then(({ url })=>{
-          window.location = url
-        }).catch(e =>{
-          console.log(e.error);
-        })
-    };
-  
   
     const handleNext = (data) => {
       if (step === 19) {

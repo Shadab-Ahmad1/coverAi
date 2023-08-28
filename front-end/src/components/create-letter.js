@@ -352,7 +352,12 @@ useEffect(() => {
       case 2:
         return (
           <div className="question-1-header">
-            <h2> Before we start, can we get your first name ? </h2>{" "}
+            <span>
+              <span></span>
+            </span>
+            <div className="count"> 1 → 
+            <h2>  Before we start, can we get your first name ? </h2>{" "}
+            </div>
             <input
               type="text"
               placeholder="Type your answer here"

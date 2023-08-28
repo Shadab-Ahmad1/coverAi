@@ -5,14 +5,13 @@ import { Link } from 'react-router-dom';
 import logo from "../../assets/logo.png";
 import img from "../../assets/icon-cover.png";
 import './dashboard.css';
-
 import { useAuth } from "../../AuthContext"; 
-
 function Dashboard() {
   const [showRegister, setShowRegister] = useState(false); 
   const handleCreateNewCoverLetter = () => {
     setShowRegister(true);
   };
+
   const { logout } = useAuth();
   const { user } = useAuth();
 
@@ -26,6 +25,10 @@ function Dashboard() {
   const userEmail = userEmailFromURL || user;
   useEffect(() => {
   }, [user]);
+  const [successfulPayments, setSuccessfulPayments] = useState([]);
+  const [selectedCoverLetter, setSelectedCoverLetter] = useState(null);
+
+  
 
   return (
     <>
@@ -44,7 +47,7 @@ function Dashboard() {
         </a> 
         </div>
         <div className='left-dashboard-3-container'>
-          <a className='left-dashboard-3-container-button' href='/client/dashboard'>
+          <a className='left-dashboard-3-container-button' href='/client/dashboard' >
             <span className='second-span'>
             <i> <img className='second-img' src={img} /></i>
             </span>
@@ -61,18 +64,24 @@ function Dashboard() {
        <div className='right-dashboard-container'>
        <div className='right-dashboard-second-container'>
        <div className='right-card-container'>
+     
         <p className='p-box empty'>
         Looks like you haven't created a cover letter yet ! Please click on  
         <strong> New Cover Letter </strong>
         button to create one.
         </p>
        </div>
+         
+    
+      {/* Render the selected cover letter */}
+      {selectedCoverLetter &&
+       <div>
+        {selectedCoverLetter}
+       </div>}
        </div>
-       
+       </div>
       </div>
-    </div>
     </>
   )
 }
-
 export default Dashboard
