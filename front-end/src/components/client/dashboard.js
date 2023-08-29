@@ -6,6 +6,7 @@ import logo from "../../assets/logo.png";
 import img from "../../assets/icon-cover.png";
 import './dashboard.css';
 import { useAuth } from "../../AuthContext"; 
+import axios from 'axios';
 function Dashboard() {
   const [showRegister, setShowRegister] = useState(false); 
   const handleCreateNewCoverLetter = () => {
@@ -22,12 +23,28 @@ function Dashboard() {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const userEmailFromURL = searchParams.get('userEmail'); 
-  const userEmail = userEmailFromURL || user;
+  const [error, setError] = useState('');
   useEffect(() => {
+   
   }, [user]);
+  useEffect(() => {
+    fetchCoverLetters();
+  }, []);
+ 
   const [successfulPayments, setSuccessfulPayments] = useState([]);
+  const [coverLetters, setCoverLetters] = useState([]);
   const [selectedCoverLetter, setSelectedCoverLetter] = useState(null);
-
+  const userEmail=user;
+  const fetchCoverLetters = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/getCoverLetters', {
+        params: { userEmail }
+      });    
+      setCoverLetters(response.data);
+    } catch (error) {
+      setError('An error occurred while fetching cover letters.');
+    } 
+  };
   
 
   return (
@@ -62,24 +79,37 @@ function Dashboard() {
         </div>
        </div>
        <div className='right-dashboard-container'>
-       <div className='right-dashboard-second-container'>
-       <div className='right-card-container'>
-     
-        <p className='p-box empty'>
-        Looks like you haven't created a cover letter yet ! Please click on  
-        <strong> New Cover Letter </strong>
-        button to create one.
-        </p>
-       </div>
-         
-    
-      {/* Render the selected cover letter */}
-      {selectedCoverLetter &&
-       <div>
-        {selectedCoverLetter}
-       </div>}
-       </div>
-       </div>
+          <div className='right-dashboard-second-container'>
+            <div className='right-card-container'>
+              {coverLetters.length === 0 ? (
+                <p className='p-box empty'>
+                  Looks like you haven't created a cover letter yet! Please click on  
+                  <strong> New Cover Letter </strong>
+                  button to create one.
+                </p>
+              ) : (
+                coverLetters.map((coverLetter, index) => (
+                  <div key={index} className={index}>
+                    
+                    <button 
+                      className='p-box'
+                      onClick={() => setSelectedCoverLetter(coverLetter)}
+                    >
+                      View Cover Letter {index + 1}
+                    </button>
+                  
+                  </div>
+                ))
+              )}
+            </div>
+            {selectedCoverLetter && (
+              <div className='right-card-container'>
+                <p>Cover Letter: {selectedCoverLetter.coverLetter}</p>
+                <p>Timestamp: {selectedCoverLetter.timestamp}</p>
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     </>
   )

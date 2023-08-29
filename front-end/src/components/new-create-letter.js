@@ -182,6 +182,8 @@ function NewCreateLetter()
           },
           body: JSON.stringify({
             items: [{ id: 1, amount: 1000 }],
+            jobtitle: formData.jobTitle,
+            companyname: formData.companyName,
             coverLetterResponse: coverLetterSubmitToDb,
             userEmail: user,
           }),
@@ -814,26 +816,26 @@ function NewCreateLetter()
           case 17:
            
             return (
-              <div className="coverLetterWholeWrapper">
+            <div className="coverLetterWholeWrapper">
+            
+               <p className="type-writer-cover-letter" >{TypedCoverLetter}</p>
               
-                 <p className="type-writer-cover-letter" >{TypedCoverLetter}</p>
-                
-                 {reachedHalfway && (
-                  <div className="blur-background">
-                    <div className="coverLetterdivwrapper-2">
-                      <div id="coverLetterDiv" className="stripe-button-whole-wrapper">  
-                      <p> To see the full letter try for free! </p>    
-                      <button id="Button" className="stripe-button" onClick={stripefunction}>
-                       
-                       <div className="test-mode-wrapper"> <h6 className="test-mode">TEST MODE</h6></div>
-                       <p>Try now</p>
-                       </button>
-                       </div>
-                    </div>
+               {reachedHalfway && (
+                <div className="blur-background">
+                  <div className="coverLetterdivwrapper-2">
+                    <div id="coverLetterDiv" className="stripe-button-whole-wrapper">  
+                    <p> To see the full letter try for free! </p>    
+                    <button id="Button" className="stripe-button" onClick={stripefunction}>
+                     
+                     <div className="test-mode-wrapper"> <h6 className="test-mode">TEST MODE</h6></div>
+                     <p>Try now</p>
+                     </button>
+                     </div>
                   </div>
-                )}
-              </div>
-            );
+                </div>
+              )}
+            </div>
+          );
         default:
           return null;
       }

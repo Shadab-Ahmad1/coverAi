@@ -28,6 +28,8 @@ const storeItems = new Map([
 // Define a mongoose schema for payments
 const paymentSchema = new mongoose.Schema({
   email: String,
+  jobtitle:String,
+  companyname:String,
   name: String,
   amount: Number,
   coverLetter: String,
@@ -133,6 +135,8 @@ const info = await transporter.sendMail(mailOptions);
 app.post('/create-checkout-session-auth', async (req, res) => {
   try {
     const userEmail = req.body.userEmail;
+    const jobtitle=req.body.jobtitle;
+    const companyname=req.body.companyname;
     const payment = await Payment.findOne({ email: userEmail });
 
     if (payment) {
@@ -143,13 +147,14 @@ app.post('/create-checkout-session-auth', async (req, res) => {
     const newPayment = new Payment({
       email: req.body.userEmail,
       name: req.body.name,
+      jobtitle:req.body.jobtitle,
+      companyname:req.body.companyname,
       coverLetter: req.body.coverLetterResponse,
       amount: storeItems.get(req.body.items[0].id).priceInCents,
       timestamp: new Date(),
     });
 
     const savedPayment = await newPayment.save();
-
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       mode: 'payment',
@@ -167,8 +172,10 @@ app.post('/create-checkout-session-auth', async (req, res) => {
           quantity: 1,
         };
       }),
+      
       success_url: `${process.env.SERVER_URL}/client/dashboard?paymentId=${savedPayment._id.toString()}`,
       cancel_url: `${process.env.SERVER_URL}/cancel`,
+      
     });
     res.json({ url: session.url, paymentId: savedPayment._id });
   } catch (error) {
@@ -176,18 +183,21 @@ app.post('/create-checkout-session-auth', async (req, res) => {
     res.status(500).json({ error: 'An error occurred on the server.' });
   }
 });
+
+
 // Dashboard user coverletter
 app.get('/getCoverLetters', async (req, res) => {
   const userEmail = req.query.userEmail;
 
   try {
-    const coverLetters = await Payment.find({ email: userEmail }).select('coverLetter timestamp');
+    const coverLetters = await Payment.find({ email: userEmail }).select('coverLetter timestamp jobtitle companyname');
     res.json(coverLetters);
   } catch (error) {
     console.error('Error fetching cover letters:', error);
     res.status(500).json({ error: 'An error occurred on the server.' });
   }
 });
+
 
 
 app.get('/api/fetch-cover-letter', async (req, res) => {

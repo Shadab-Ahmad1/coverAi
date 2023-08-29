@@ -52,7 +52,7 @@ function Footer() {
               </div>{" "}
               <div className="footer-2">
                 <ul>
-                  <Link to="../Register" className="footer2-a">
+                  <Link to="./Newaccount" className="footer2-a">
                     {" "}
                     Register{" "}
                   </Link>{" "}
