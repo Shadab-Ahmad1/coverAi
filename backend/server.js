@@ -162,6 +162,7 @@ app.post('/create-checkout-session-auth', async (req, res) => {
       line_items: req.body.items.map(item => {
         const storeItem = storeItems.get(item.id);
         return {
+
           price_data: {
             currency: 'usd',
             product_data: {
@@ -183,7 +184,6 @@ app.post('/create-checkout-session-auth', async (req, res) => {
     res.status(500).json({ error: 'An error occurred on the server.' });
   }
 });
-
 
 // Dashboard user coverletter
 app.get('/getCoverLetters', async (req, res) => {

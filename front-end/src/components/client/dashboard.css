@@ -195,7 +195,7 @@
     max-width: 1000px;
     flex-wrap: wrap;
     width: 100%;
-    margin: 5em auto 4em;
+    margin: 4em auto 4em;
 }
 .index
 {
@@ -203,6 +203,93 @@
     flex-wrap: wrap;
 }
 .p-box 
+{   margin-top: -10px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+    flex-wrap: wrap;
+    transition: 0.3s ease-in-out;
+    margin-bottom: 1em;
+    background: #FFFFFF;
+    box-shadow: 0px 2px 17px rgba(0, 0, 0, 0.06);
+    border-radius: 4px;
+    padding: 0px 40px;
+    height: 65px;
+   
+};
+
+.empty
+{
+    display: block;
+}
+
+.letter-card-container
+{
+    display: flex;
+    max-width: 1000px;
+    flex-wrap: wrap;
+    width: 100%;
+    margin: 5em auto 4em;
+}
+.p-box:hover p
+{
+   
+    color: #0056b3;
+   
+}
+.p-box:hover
+{
+    transform: scale(1.05);
+    background: #e9e9e9;
+    color: #0056b3;
+}
+
+
+/* .record-class
+{
+    font-size: 20px;
+    color: #000;
+    line-height: 30px;
+    margin-top: 14px;
+    
+
+}
+.company-data
+{
+    color: #000;
+    gap: 20%;
+    font-style: italic;
+    font-size: 16px;
+    line-height: 25px;
+    display: inline;
+}
+.time-stamp
+{
+    color: #000;
+    margin-left: 380px;
+    font-size: 16px;
+    line-height: 20px;
+    display: inline;
+} */
+.p-box {
+    margin-top: -10px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+    flex-wrap: wrap;
+    transition: 0.3s ease-in-out;
+    margin-bottom: 1em;
+    background: #FFFFFF;
+    box-shadow: 0px 2px 17px rgba(0, 0, 0, 0.06);
+    border-radius: 4px;
+   
+    height: 65px;
+    margin: 0px auto;
+  
+}
+.main-p-box 
 {   
     width: 100%;
     cursor: pointer;
@@ -225,4 +312,45 @@
 .empty
 {
     display: block;
+}
+
+.record-class {
+    font-size: 20px; 
+    color: #000;
+    line-height: 30px; 
+    margin-top: 12px; 
+}
+
+.company-data {
+    color: #000;
+    font-style: italic;
+    font-size: 16px; 
+    line-height: 24px; 
+    display: inline;
+    margin-top: 8px; 
+    gap:20%
+}
+
+.time-stamp {
+    color: #000;
+    font-size: 16px; 
+    line-height: 24px; 
+    display: inline; 
+    margin-top: 8px;
+    margin-left: 380px; 
+}
+
+/* Media query for screens with a maximum width of 768px */
+@media (max-width: 768px) {
+    .p-box {
+        padding: 0px 10px; /* Further reduce padding for smaller screens */
+    }
+
+    .record-class,
+    .company-data,
+    .time-stamp {
+        font-size: 12px; /* Adjust font size for even smaller screens */
+        line-height: 16px; /* Adjust line height for even smaller screens */
+        margin-top: 6px; /* Adjust margin for even smaller screens */
+    }
 }

@@ -9,6 +9,7 @@ import { useAuth } from "../../AuthContext";
 import axios from 'axios';
 function Dashboard() {
   const [showRegister, setShowRegister] = useState(false); 
+  const [selectedCoverIndex, setSelectedCoverIndex] = useState(null);
   const handleCreateNewCoverLetter = () => {
     setShowRegister(true);
   };
@@ -79,36 +80,41 @@ function Dashboard() {
         </div>
        </div>
        <div className='right-dashboard-container'>
-          <div className='right-dashboard-second-container'>
-            <div className='right-card-container'>
-              {coverLetters.length === 0 ? (
-                <p className='p-box empty'>
-                  Looks like you haven't created a cover letter yet! Please click on  
-                  <strong> New Cover Letter </strong>
-                  button to create one.
-                </p>
-              ) : (
-                coverLetters.map((coverLetter, index) => (
-                  <div key={index} className={index}>
-                    
-                    <button 
-                      className='p-box'
-                      onClick={() => setSelectedCoverLetter(coverLetter)}
-                    >
-                      View Cover Letter {index + 1}
-                    </button>
-                  
-                  </div>
-                ))
-              )}
-            </div>
-            {selectedCoverLetter && (
-              <div className='right-card-container'>
-                <p>Cover Letter: {selectedCoverLetter.coverLetter}</p>
-                <p>Timestamp: {selectedCoverLetter.timestamp}</p>
-              </div>
-            )}
-          </div>
+       <div className='right-dashboard-second-container'>
+  <div className='right-card-container'>
+    {coverLetters.length === 0 ? (
+      <p className='main-p-box empty'>
+        Looks like you haven't created a cover letter yet! Please click on  
+        <strong> New Cover Letter </strong>
+        button to create one.
+      </p>
+    ) : (
+      coverLetters.map((coverLetter, index) => (
+        <div key={index} className= "letter-card-container">
+          <button 
+            className='p-box'
+            onClick={() => {
+              setSelectedCoverLetter(coverLetter);
+              setSelectedCoverIndex(index);
+            }}
+          >
+         <p className='record-class'><b> Position is for {coverLetter.jobtitle} </b> 
+         <p className='company-data'>-{coverLetter.companyname} </p>
+         <p className='time-stamp'> {coverLetter.timestamp}</p>
+          </p> 
+          </button>
+        </div>
+      ))
+    )}
+  </div>
+  {selectedCoverLetter && (
+    <div className='right-card-container'>
+      <p>Cover Letter: {selectedCoverLetter.coverLetter}</p>
+      
+    </div>
+  )}
+</div>
+
         </div>
       </div>
     </>
