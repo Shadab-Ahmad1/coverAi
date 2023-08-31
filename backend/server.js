@@ -28,6 +28,7 @@ const storeItems = new Map([
 // Define a mongoose schema for payments
 const paymentSchema = new mongoose.Schema({
   email: String,
+  subscriptionId:String,
   jobtitle:String,
   companyname:String,
   name: String,
@@ -82,9 +83,6 @@ const Payment = mongoose.model('Payment', paymentSchema);
           success_url: `${process.env.SERVER_URL}/thank-you?paymentId=${savedPayment._id.toString()}`,
           cancel_url: `${process.env.SERVER_URL}/cancel`,
         });
-
-
-
  const transporter = nodemailer.createTransport({
    host: "smtp.ethereal.email",
    port: 587,
@@ -132,6 +130,25 @@ const info = await transporter.sendMail(mailOptions);
   }
 });
 
+//checking the payment status against the user that are login 
+
+app.get('/check-payment-status', async (req, res) => {
+  try {
+    const userEmail = req.query.userEmail; 
+    const payment = await Payment.findOne({ email: userEmail });
+    if (payment) {
+      res.json({ paymentDone: true });
+    } else {
+      res.json({ paymentDone: false, message: 'Please make a payment first.' });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred on the server.' });
+  }
+});
+
+//for stripe checkout session
+
 app.post('/create-checkout-session-auth', async (req, res) => {
   try {
     const userEmail = req.body.userEmail;
@@ -139,7 +156,7 @@ app.post('/create-checkout-session-auth', async (req, res) => {
     const companyname=req.body.companyname;
     const payment = await Payment.findOne({ email: userEmail });
 
-    if (payment) {
+    if (payment) {  
       return res.json({ url: '', paymentId: payment._id });
       console.log(res);
       console.log(payment);
@@ -185,6 +202,32 @@ app.post('/create-checkout-session-auth', async (req, res) => {
   }
 });
 
+
+// stripe cancel subscription
+
+app.post('/cancel-subscription', async (req, res) => {
+  try {
+    const userEmail = req.body.userEmail;
+    const payment = await Payment.findOne({ email: userEmail , _id: paymentId });
+
+    if (!payment) {
+      return res.status(404).json({ error: 'Payment not found.' });
+    }
+    const subscriptionId = payment.paymentId;
+
+    if (!subscriptionId) {
+      return res.status(400).json({ error: 'Subscription ID not found.' });
+    }
+    const stripeResponse = await stripe.subscriptions.del(subscriptionId);
+    payment.subscriptionStatus = 'canceled';
+    await payment.save();
+
+    res.json({ message: 'Subscription canceled successfully.', stripeResponse });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred on the server.' });
+  }
+});
 // Dashboard user coverletter
 app.get('/getCoverLetters', async (req, res) => {
   const userEmail = req.query.userEmail;
@@ -197,8 +240,6 @@ app.get('/getCoverLetters', async (req, res) => {
     res.status(500).json({ error: 'An error occurred on the server.' });
   }
 });
-
-
 
 app.get('/api/fetch-cover-letter', async (req, res) => {
   try {

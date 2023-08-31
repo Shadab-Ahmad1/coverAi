@@ -90,12 +90,16 @@ function Dashboard() {
       </p>
     ) : (
       coverLetters.map((coverLetter, index) => (
-        <div key={index} className= "letter-card-container">
+       
+        <div key={index} className= "letter-card-container"> 
+        <Link  to={`/client/letter/?coverLetter=${encodeURIComponent(coverLetter.coverLetter)}`}
+        style={{ textDecoration: 'none' }}>
           <button 
             className='p-box'
             onClick={() => {
               setSelectedCoverLetter(coverLetter);
               setSelectedCoverIndex(index);
+              
             }}
           >
          <p className='record-class'><b> Position is for {coverLetter.jobtitle} </b> 
@@ -103,14 +107,16 @@ function Dashboard() {
          <p className='time-stamp'> {coverLetter.timestamp}</p>
           </p> 
           </button>
+          </Link>
+         
         </div>
+     
       ))
     )}
   </div>
   {selectedCoverLetter && (
     <div className='right-card-container'>
-      <p>Cover Letter: {selectedCoverLetter.coverLetter}</p>
-      
+      <p>Cover Letter: {selectedCoverLetter.coverLetter}</p>  
     </div>
   )}
 </div>

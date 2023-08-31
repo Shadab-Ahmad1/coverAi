@@ -6,40 +6,27 @@ import { loadStripe } from "@stripe/stripe-js";
 
 function Unsubscribe() {
   const [userEmailValue, setUserEmail] = useState("");
+  const [statusMessage, setStatusMessage] = useState("");
   const handleUnsubscribeClick = async () => {
-    // Load the Stripe publishable key
-    const stripe = await loadStripe("pk_test_51NaeWpDY7WDwWj6eXGb42lHuzCQC2hHIl6J8hFGaX1BsxDmQo0L3gzQsou2vYBcHvxf28Iw0HGa7xvXNhNNtM2vi00etx6NicV");
+    try {
+      const response = await fetch("http://localhost:5000/cancel-subscription", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ email: "kon@gmail.com"})
+      });
 
-    // Create a checkout session for cancellation
+      const data = await response.json();
 
-      try {
-        // ... other code ...
-    
-        const response = await fetch("http://localhost:5000/cancel-subscription", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            userEmail: userEmailValue,
-          }),
-        });
-    
-        const result = await response.json();
-    
-        console.log(result.message); // Logging the cancellation message
-    
-        // Redirect to a success page after successful subscription cancellation
-        if (response.ok) {
-          window.location.href = '/cancellation-success'; // Replace with your success page URL
-        } else {
-          console.error("Error cancelling subscription");
-        }
-      } catch (error) {
-        console.error("Error:", error);
+      if (response.ok) {
+        setStatusMessage(`Subscription cancellation status: ${data.status}`);
+      } else {
+        setStatusMessage("An error occurred while canceling the subscription.");
       }
- 
-    
+    } catch (error) {
+      setStatusMessage("An error occurred while processing your request.");
+    }
   };
   
   return (

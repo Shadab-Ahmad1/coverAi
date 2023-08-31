@@ -174,7 +174,8 @@ useEffect(() => {
         clearInterval(typeInterval);
       }
     }, 100); 
-  };  
+  };   
+
   useEffect(() => {
  
     if (currentDisplayIndex == 120) {

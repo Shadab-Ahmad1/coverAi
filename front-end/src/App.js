@@ -18,6 +18,7 @@ import Viewletter from "./components/Viewletter";
 import Thankyou from "./components/thankyou";
 import NewLetter from "./components/client/new-letter";
 import Dashboard from "./components/client/dashboard";
+import Letter from "./components/client/letter";
 import NewLetterThankYou from "./components/client/typeform-thank-you";
 import ResetPassword from "./components/Resetpassword";
 import { AuthProvider } from "./AuthContext";
@@ -32,6 +33,7 @@ function App() {
   const isThankYou = location.pathname.includes("/thank-you");
   const isDashboard =location.pathname.includes("/client/dashboard");
   const isNewLetter =location.pathname.includes("/client/new-letter");
+  const isLetter = location.pathname.includes("/client/letter")
   const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
   useEffect(() => {
@@ -47,7 +49,7 @@ function App() {
   return (
     <>
       {" "}
-      {!isCreateLetter && !isThankYou && !isDashboard  && !isNewLetter && <Navbar />}{" "}
+      {!isCreateLetter && !isThankYou && !isDashboard  && !isNewLetter && !isLetter &&<Navbar />}{" "}
       <Routes>
         <Route path="/" element={<Home />} />{" "}
         <Route path="/create-letter" element={<CreateLetter />} />{" "}
@@ -66,6 +68,7 @@ function App() {
           <>
             <Route path="/client/dashboard" element={<Dashboard />} />
             <Route path="/client/new-letter" element={<NewLetter />} />
+            <Route path="/client/letter" element={<Letter/>}/>
             {/* ... other authenticated routes ... */}
           </>
         )}
@@ -73,7 +76,7 @@ function App() {
         <Route path="Resetpassword/reset-password/:token" element={< ResetPassword/>} />
         
       </Routes>{" "}
-      {!isCreateLetter && !isThankYou && !isDashboard && !isNewLetter  && <Footer />}{" "}
+      {!isCreateLetter && !isThankYou && !isDashboard && !isNewLetter  && !isLetter && <Footer />}{" "}
     </>
   );
 }

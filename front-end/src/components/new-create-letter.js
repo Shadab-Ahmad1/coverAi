@@ -129,6 +129,7 @@ function NewCreateLetter()
           setCoverLetterSubmitToDb(coverLetter);
           setCoverLetterText(coverLetter);
           setShowContent(true);
+          
         }
       } catch (error) {
         setShowLoader(false);
@@ -230,8 +231,7 @@ function NewCreateLetter()
       console.log(formData);
       setFormDataArray((prevArray) => [...prevArray, formData]);
     
-        localStorage.removeItem("formData");
-      
+        localStorage.removeItem("formData");   
     };
   
     const isButtonEnabled = () => {
