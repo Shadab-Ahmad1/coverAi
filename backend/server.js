@@ -21,10 +21,6 @@ mongoose.connect(process.env.MONGODB_URI, {
 
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
-const storeItems = new Map([
-  [1, { priceInCents: 1000, name: "CoverLetter" }]
-]);
-
 // Define a mongoose schema for payments
 const paymentSchema = new mongoose.Schema({
   email: String,
@@ -36,29 +32,21 @@ const paymentSchema = new mongoose.Schema({
   coverLetter: String,
   timestamp: Date,
 });
-
-
 // Define a mongoose schema for users
 const userSchema = new mongoose.Schema({
   email: String,
   password: String,
 });
 
-
 const User = mongoose.model('User', userSchema);
-
-
 const Payment = mongoose.model('Payment', paymentSchema);
-
-// API route for stripe checkout session
-
     app.post('/create-checkout-session', async (req, res) => {
       try {
+        const email = req.body.email;
         const newPayment = new Payment({
           email: req.body.email,
           name: req.body.name,
           coverLetter: req.body.coverLetterResponse,
-          amount: storeItems.get(req.body.items[0].id).priceInCents,
           timestamp: new Date(),
         });
     
@@ -66,20 +54,14 @@ const Payment = mongoose.model('Payment', paymentSchema);
     
         const session = await stripe.checkout.sessions.create({
           payment_method_types: ['card'],
-          mode: 'payment',
-          line_items: req.body.items.map(item => {
-            const storeItem = storeItems.get(item.id);
-            return {
-              price_data: {
-                currency: 'usd',
-                product_data: {
-                  name: storeItem.name,
-                },
-                unit_amount_decimal: storeItem.priceInCents,
-              },
+          mode: 'subscription',
+          customer_email: email,
+          line_items: [
+            {
+              price: 'price_1NqG3DDY7WDwWj6eeEfQCXhH',
               quantity: 1,
-            };
-          }),
+            },
+          ],
           success_url: `${process.env.SERVER_URL}/thank-you?paymentId=${savedPayment._id.toString()}`,
           cancel_url: `${process.env.SERVER_URL}/cancel`,
         });
@@ -130,71 +112,49 @@ const info = await transporter.sendMail(mailOptions);
   }
 });
 
-//checking the payment status against the user that are login 
-
-app.get('/check-payment-status', async (req, res) => {
-  try {
-    const userEmail = req.query.userEmail; 
-    const payment = await Payment.findOne({ email: userEmail });
-    if (payment) {
-      res.json({ paymentDone: true });
-    } else {
-      res.json({ paymentDone: false, message: 'Please make a payment first.' });
-    }
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'An error occurred on the server.' });
-  }
-});
-
-//for stripe checkout session
-
 app.post('/create-checkout-session-auth', async (req, res) => {
   try {
     const userEmail = req.body.userEmail;
-    const jobtitle=req.body.jobtitle;
-    const companyname=req.body.companyname;
+    const jobtitle = req.body.jobtitle;
+    const companyname = req.body.companyname;
     const payment = await Payment.findOne({ email: userEmail });
 
-    if (payment) {  
+    if (payment) {
       return res.json({ url: '', paymentId: payment._id });
-      console.log(res);
-      console.log(payment);
     }
+
     const newPayment = new Payment({
       email: req.body.userEmail,
       name: req.body.name,
-      jobtitle:req.body.jobtitle,
-      companyname:req.body.companyname,
+      jobtitle: req.body.jobtitle,
+      companyname: req.body.companyname,
       coverLetter: req.body.coverLetterResponse,
-      amount: storeItems.get(req.body.items[0].id).priceInCents,
       timestamp: new Date(),
     });
 
     const savedPayment = await newPayment.save();
+
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
-      mode: 'payment',
+      mode: 'subscription',
       customer_email: userEmail,
-      line_items: req.body.items.map(item => {
-        const storeItem = storeItems.get(item.id);
-        return {
-
-          price_data: {
-            currency: 'usd',
-            product_data: {
-              name: storeItem.name,
-            },
-            unit_amount_decimal: storeItem.priceInCents,
-          },
+      line_items: [
+        {
+          price: 'price_1NqG3DDY7WDwWj6eeEfQCXhH',
           quantity: 1,
-        };
-      }),
-      
+        },
+      ],
       success_url: `${process.env.SERVER_URL}/client/dashboard?paymentId=${savedPayment._id.toString()}`,
       cancel_url: `${process.env.SERVER_URL}/cancel`,
-      
     });
+
+    // Get the subscription ID from the session object
+    const subscriptionId = session.subscription;
+
+    // Now, you can directly store the subscription ID in the Payment record
+    savedPayment.subscriptionId = subscriptionId;
+    await savedPayment.save();
+
     res.json({ url: session.url, paymentId: savedPayment._id });
   } catch (error) {
     console.error(error);
@@ -202,32 +162,33 @@ app.post('/create-checkout-session-auth', async (req, res) => {
   }
 });
 
-
-// stripe cancel subscription
-
-app.post('/cancel-subscription', async (req, res) => {
+//cancel subscription
+app.post("/cancel-sub-test", async function (req, res) {
   try {
-    const userEmail = req.body.userEmail;
-    const payment = await Payment.findOne({ email: userEmail , _id: paymentId });
+    const { email } = req.body;
+    const customersData = await stripe.customers.list({ email });
 
-    if (!payment) {
-      return res.status(404).json({ error: 'Payment not found.' });
+    if (customersData.data.length === 0) {
+      return res.status(404).json({ error: "Customer not found" });
     }
-    const subscriptionId = payment.paymentId;
-
-    if (!subscriptionId) {
-      return res.status(400).json({ error: 'Subscription ID not found.' });
+    const customer = customersData.data[0]; 
+    const customerGet = await stripe.customers.retrieve(customer.id, {
+      expand: ["subscriptions"],
+    });
+    if (customerGet.subscriptions.data.length === 0) {
+      return res.status(404).json({ error: "No subscriptions found for this customer" });
     }
-    const stripeResponse = await stripe.subscriptions.del(subscriptionId);
-    payment.subscriptionStatus = 'canceled';
-    await payment.save();
-
-    res.json({ message: 'Subscription canceled successfully.', stripeResponse });
+    const subscription = customerGet.subscriptions.data[0];
+    const resp = await stripe.subscriptions.del(subscription.id);
+    res.send({
+      status: resp.status,
+    });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'An error occurred on the server.' });
+    console.error("Error:", error);
+    res.status(500).json({ error: "An error occurred" });
   }
 });
+
 // Dashboard user coverletter
 app.get('/getCoverLetters', async (req, res) => {
   const userEmail = req.query.userEmail;
@@ -246,11 +207,10 @@ app.get('/api/fetch-cover-letter', async (req, res) => {
     const userEmail = req.query.userEmail;
     const paymentId = req.query.paymentId;
 
-    // Fetch the cover letter content based on userEmail and paymentId
+   
     const payment = await Payment.findOne({ email: userEmail, _id: paymentId });
 
     if (payment) {
-      // Assuming you have a 'coverLetter' field in your Payment schema
       const coverLetter = payment.coverLetter;
       res.json({ coverLetter });
     } else {
@@ -261,7 +221,7 @@ app.get('/api/fetch-cover-letter', async (req, res) => {
     res.status(500).json({ error: 'An error occurred on the server.' });
   }
 });
-// API route for displaying cover Letter on thank you component
+
  app.get('/getCoverletter/:paymentId', async (req, res) => {
   try {
     const paymentId = req.params.paymentId;
@@ -294,8 +254,6 @@ app.post('/register', async (req, res) => {
 
         const saltRounds = 10;
         const hashedPassword = await bcrypt.hash(password, saltRounds);
-
-    // Create a new user document
     const newUser = new User({
       email,
       password: hashedPassword 

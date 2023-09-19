@@ -9,6 +9,21 @@
     justify-content: center;
     margin-bottom: 250px;
 }
+.unsub-input
+{
+    background-color: #f6f6f6;
+    border: none;
+    width: 74.8%;
+    border-radius: 5px;
+    padding: 18.5px 32px;
+    margin-bottom: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    font-size: 16px;
+    outline: none;
+    border: 2px solid #f6f6f6;
+}
 
 .major-div {
     height: 1500px;
@@ -38,9 +53,16 @@
     font-weight: 700;
     margin-left: 32%;
 }
+.unsubcribe-p
+{
+    color: red;
+    font-size: 15px;
+    display: block;
+    margin-top: 14px;
+}
 
 .container-unsubscribe p {
-    margin-top: 10%;
+    margin-top: 5%;
     color: #575A73;
     margin-left: 8%;
     width: 516px;
@@ -184,7 +206,7 @@ input[type="email"] {
         width: 260px;
         padding: 5px 22px 5px 22px;
         display: inline-block;
-        margin-top: 3%;
+        margin-top: 1%;
         margin-left: 9%;
     }
     .p-center {

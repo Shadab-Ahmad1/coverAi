@@ -201,23 +201,19 @@ useEffect(() => {
     setInputText(e.target.value);
   };
   
-
   const stripefunction = async () => {
-
+    
+    const price_id='price_1NqG3DDY7WDwWj6eeEfQCXhH';
       const response = await fetch('http://localhost:5000/create-checkout-session', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          items:[
-            {id:1,
-             amount: 1000 ,
-            }
-          ],
+          items: [{ id: price_id, amount :100}], 
+          coverLetterResponse: coverLetterSubmitToDb,
           email:formData.email,
           name:formData.fullName,
-          coverLetterResponse: coverLetterSubmitToDb
         }),
       }).then( res => {
         if(res.ok) return res.json()

@@ -151,7 +151,7 @@ function NewCreateLetter()
       let currentIndex= 0;
       let typeText="";
       const typeInterval = setInterval(() => {
-        const halfwayIndex = Math.floor(totalChars.length); 
+        const halfwayIndex = Math.floor(totalChars.length/1.2); 
         if (currentIndex< halfwayIndex) {
           typeText =totalChars.slice(0,currentIndex+1).join(' ');
           setTypedCoverLetter(typeText);
@@ -175,6 +175,7 @@ function NewCreateLetter()
   
     const stripefunction = async () => {
       try {
+        const price_id='price_1NqG3DDY7WDwWj6eeEfQCXhH';
         const response = await fetch('http://localhost:5000/create-checkout-session-auth', {
           method: 'POST',
           headers: {
@@ -182,7 +183,7 @@ function NewCreateLetter()
             Authorization: `Bearer ${user.token}`,
           },
           body: JSON.stringify({
-            items: [{ id: 1, amount: 1000 }],
+            items: [{ id: price_id, amount :100}], 
             jobtitle: formData.jobTitle,
             companyname: formData.companyName,
             coverLetterResponse: coverLetterSubmitToDb,
@@ -293,7 +294,6 @@ function NewCreateLetter()
           return { enabled: true, errorMessage: "" };
       }
     };
-  
     const renderSteps = () => {
       const { enabled, errorMessage } = isButtonEnabled();
       switch (step) {
@@ -322,7 +322,6 @@ function NewCreateLetter()
             )}
           </div>
         );    
-    
         case 2:
           return (
             <div className="question-1-div4">

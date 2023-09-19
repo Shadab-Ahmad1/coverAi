@@ -1,48 +1,60 @@
-import React from "react";
-import { useState } from "react";
-import "./Newaccount.css";
-import "./Unsubscribe.css";
-import { loadStripe } from "@stripe/stripe-js";
+import React, { useState } from "react";
+import './Unsubscribe.css';
 
 function Unsubscribe() {
-  const [userEmailValue, setUserEmail] = useState("");
+  const [email, setEmail] = useState("");
   const [statusMessage, setStatusMessage] = useState("");
-  const handleUnsubscribeClick = async () => {
+
+  const handleCancelSubscription = async () => {
     try {
-      const response = await fetch("http://localhost:5000/cancel-subscription", {
+      const response = await fetch("http://localhost:5000/cancel-sub-test", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email: "kon@gmail.com"})
+        body: JSON.stringify({ email }),
       });
 
-      const data = await response.json();
-
       if (response.ok) {
-        setStatusMessage(`Subscription cancellation status: ${data.status}`);
+        const data = await response.json();
+        setStatusMessage(`Subscription successfully ${data.status}`);
       } else {
-        setStatusMessage("An error occurred while canceling the subscription.");
+        const json = await response.json();
+        setStatusMessage(json.error || "An error occurred during cancellation.");
       }
     } catch (error) {
-      setStatusMessage("An error occurred while processing your request.");
+      console.error(error);
+      setStatusMessage("An error occurred while processing the request.");
     }
   };
-  
+  const handleEmailClick = () => {
+    setStatusMessage("");
+  };
+
   return (
     <>
       <section>
         <div className="pic">
           <div className="major-div">
-            <h1 className="unsubscribe-h1"> Cancel My Request </h1>
+            <h1 className="unsubscribe-h1">Cancel My Request</h1>
             <div className="container-unsubscribe">
               <p className="unsub-p">
                 Your subscription will be canceled immediately following your request. No additional fees will be charged to your card. If the subscription to the service has already been taken for the period to come, you can continue to access the site and its services until the end of the period.
               </p>
-              <button className="button" onClick={handleUnsubscribeClick}>
+              <input
+                placeholder="Enter your email"
+                className="unsub-input"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                onClick={handleEmailClick}
+              />
+              <button className="button" onClick={handleCancelSubscription}>
                 Click Here To Unsubscribe
               </button>
+              {statusMessage && <span className="unsubcribe-p">{statusMessage}</span>}
             </div>
+         
           </div>
         </div>
       </section>
