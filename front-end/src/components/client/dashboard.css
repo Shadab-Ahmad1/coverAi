@@ -217,7 +217,7 @@
     border-radius: 4px;
     padding: 0px 40px;
     height: 65px;
-   
+    border: none;
 };
 
 .empty
@@ -246,33 +246,6 @@
     color: #0056b3;
 }
 
-
-/* .record-class
-{
-    font-size: 20px;
-    color: #000;
-    line-height: 30px;
-    margin-top: 14px;
-    
-
-}
-.company-data
-{
-    color: #000;
-    gap: 20%;
-    font-style: italic;
-    font-size: 16px;
-    line-height: 25px;
-    display: inline;
-}
-.time-stamp
-{
-    color: #000;
-    margin-left: 380px;
-    font-size: 16px;
-    line-height: 20px;
-    display: inline;
-} */
 .p-box {
     margin-top: -10px;
     width: 100%;
@@ -318,7 +291,7 @@
 .record-class {
     font-size: 20px; 
     color: #000;
-    line-height: 30px; 
+    line-height: 38px; 
     margin-top: 12px; 
 }
 

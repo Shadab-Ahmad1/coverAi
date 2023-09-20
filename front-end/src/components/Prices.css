@@ -49,6 +49,7 @@
         margin-right: 8%;
         margin-left: 8%;
         text-align: center;
+        line-height: 24px;
     }
     
     .price-p4 {
@@ -133,6 +134,7 @@
     
     @keyframes slideIn {
         from {
+            border-top: #B22222;
             transform: translateY(-100%);
             opacity: 0;
         }

@@ -7,12 +7,14 @@ import { useAuth } from "../AuthContext";
 function NewCreateLetter()
 {
     const { user } = useAuth();
+    const [result, setResult] = useState(null);
     const [step, setStep] = useState(1);
     const [errorMessage, setErrorMessage] = useState("");
     const [formDataArray, setFormDataArray] = useState([]);
     const [isValidEmail, setIsValidEmail] = useState(true);
     const [TypedCoverLetter, setTypedCoverLetter]=useState('');
     const [formData, setFormData] = useState({
+      name:"",
       jobTitle: "",
       companyName: "",
       relevantWorkExperience: "",
@@ -112,7 +114,7 @@ function NewCreateLetter()
         messages: [
           {
             role: "user",
-            content: `You are a helpful assistant that helps users write quality cover letters. The user has been prompted with many questions through a typeform based questionnaire and has provided answers to help craft the letter. The assistant\'s answer must be formatted in simple document, with all necessary tags except style tag for a coherent output as if the letter was in an email to be sent. Just don\'t include any links as clickable. The applicant provides his name in ${formData.fullName} and company name in ${formData.companyName} information on the role he is applying to in ${formData.jobTitle} and ${formData.relevantWorkExperience} and ${formData.keyachievments} is regarding his past or current experience.`,
+            content: `You are a helpful assistant that helps users write quality cover letters. The user has been prompted with many questions through a typeform based questionnaire and has provided answers to help craft the letter. The assistant\'s answer must be formatted in simple document, with all necessary tags except style tag for a coherent output as if the letter was in an email to be sent. Just don\'t include any links as clickable. The applicant provides his name in ${formData.name} and company name in ${formData.companyName} information on the role he is applying to in ${formData.jobTitle} and ${formData.relevantWorkExperience} and ${formData.keyachievments} is regarding his past or current experience.`,
           },
         ],
         model: "gpt-3.5-turbo",
@@ -172,7 +174,8 @@ function NewCreateLetter()
     }, [TypedCoverLetter, coverLetterText]);
     const [responseOk, setResponseOk] = useState(false);
 
-  
+    
+
     const stripefunction = async () => {
       try {
         const price_id='price_1NqG3DDY7WDwWj6eeEfQCXhH';
@@ -234,59 +237,75 @@ function NewCreateLetter()
     
         localStorage.removeItem("formData");   
     };
+
+      const checkPayment = async () => {
+        try {
+       
+          const response = await fetch(`http://localhost:5000/check-payment-status?email=${user}`);
+          const data = await response.json();
+    
+          setResult(data.message);
+        } catch (error) {
+          console.error('Error:', error);
+        }
+      };
   
     const isButtonEnabled = () => {
       let errorMessage = "";
       switch (step) {
         case 1:
           return { enabled: true, errorMessage: "" };
-        case 3:
+          case 3:
+            errorMessage =
+              formData.name.trim() !== "" ? "" : "Please fill this in";
+            return { enabled: errorMessage === "", errorMessage };
+        case 4:
           errorMessage =
             formData.jobTitle.trim() !== "" ? "" : "Please fill this in";
           return { enabled: errorMessage === "", errorMessage };
-        case 4:
+        case 5:
           errorMessage =
             formData.companyName.trim() !== "" ? "" : "Please fill this in";
           return { enabled: errorMessage === "", errorMessage };
-        case 5:
+        case 6:
           errorMessage =
             formData.relevantWorkExperience.trim() !== ""
               ? ""
               : "Please fill this in";
           return { enabled: errorMessage === "", errorMessage };
-        case 6:
+        case 7:
           errorMessage =
             formData.keyachievments.trim() !== "" ? "" : "Please fill this in";
           return { enabled: errorMessage === "", errorMessage };
-        case 8:
+        case 9:
           errorMessage =
             formData.educationLevel.trim() !== "" ? "" : "Please fill this in";
           return { enabled: errorMessage === "", errorMessage };
-        case 9:
+        case 10:
           errorMessage =
             formData.majorOrAreaOfStudy.trim() !== ""
               ? ""
               : "Please fill this in";
           return { enabled: errorMessage === "", errorMessage };
-        case 10:
+        case 11:
           errorMessage =
             formData.notableAccomplishments.trim() !== ""
               ? ""
               : "Please fill this in";
           return { enabled: errorMessage === "", errorMessage };
-        case 11:
+        case 12:
           errorMessage =
             formData.requiredQualifications.trim() !== ""
               ? ""
               : "Please fill this in";
           return { enabled: errorMessage === "", errorMessage };
-        case 12:
+        case 13:
           errorMessage =
             formData.qualificationsMatch.trim() !== ""
               ? ""
               : "Please fill this in";
           return { enabled: errorMessage === "", errorMessage };
-        case 13:
+        case 14:
           errorMessage =
             formData.interestedforjob.trim() !== "" ? "" : "Please fill this in";
           return { enabled: errorMessage === "", errorMessage };
@@ -337,7 +356,43 @@ function NewCreateLetter()
               </div>{" "}
             </div>
           );
-        case 3:
+          case 3:
+            return (
+              <div className="question-2-main">
+                <div className="question-2-header">
+                  <h2> OK let 's get started. First some details about you...</h2>{" "}
+                </div>{" "}
+                <div className="question-2-section2">
+                <div className="question-1-header">
+                  <h2>  Before we start, can we get your first name ?  </h2>{" "}
+                  <input
+                    type="text"
+                    placeholder="Type your answer here"
+                    className="input-question-2"
+                    value={formData.name}
+                    onChange={(e) => handleInputChange("name", e.target.value)}
+                    
+                  />{" "}
+                  <div className="question-2-btn-main">
+                    <div className="question-2-btn ">
+                      <button id="Button"
+                        onClick={() => handleNext()}
+                        disabled={errorMessage !== ""}
+                      >
+                        {" "}
+                        Ok ✓{" "}
+                      </button>{" "}
+                    </div>{" "}
+                    <div className="question-2-data">
+                      press <strong> Enter↵ </strong>{" "}
+                    </div>{" "}
+                  </div>{" "}
+                </div>{" "}
+                </div>
+              </div>
+            );
+
+        case 4:
           return (
             <div className="question-2-main">
               <div className="question-2-header">
@@ -372,7 +427,7 @@ function NewCreateLetter()
               </div>
             </div>
           );
-        case 4:
+        case 5:
           return (
             <div className="question-2A-main">
               <div className="question-2-header">
@@ -409,7 +464,7 @@ function NewCreateLetter()
               </div>{" "}
             </div>
           );
-        case 5:
+        case 6:
           return (
             <div className="question-2B-main">
               <div className="question-2-header">
@@ -450,7 +505,7 @@ function NewCreateLetter()
               </div>{" "}
             </div>
           );
-        case 6:
+        case 7:
           return (
             <div className="question-3-main">
               <div className="question-3-header">
@@ -482,7 +537,7 @@ function NewCreateLetter()
               </div>{" "}
             </div>
           );
-        case 7:
+        case 8:
           return (
             <div className="question-4-main">
               <div className="question-4-header">
@@ -498,7 +553,7 @@ function NewCreateLetter()
               </div>{" "}
             </div>
           );
-        case 8:
+        case 9:
           return (
             <div className="question-5-main">
               <div className="question-5-header">
@@ -531,7 +586,7 @@ function NewCreateLetter()
               </div>{" "}
             </div>
           );
-        case 9:
+        case 10:
           return (
             <div className="question-5b-main">
               <div className="question-5-header">
@@ -564,7 +619,7 @@ function NewCreateLetter()
               </div>{" "}
             </div>
           );
-        case 10:
+        case 11:
           return (
             <div className="question-5c-main">
               <div className="question-5-header">
@@ -601,7 +656,7 @@ function NewCreateLetter()
               </div>{" "}
             </div>
           );
-        case 11:
+        case 12:
           return (
             <div className="question-5d-main">
               <div className="question-5-header">
@@ -637,7 +692,7 @@ function NewCreateLetter()
               </div>{" "}
             </div>
           );
-        case 12:
+        case 13:
           return (
             <div className="question-5e-main">
               <div className="question-5-header">
@@ -672,7 +727,7 @@ function NewCreateLetter()
               </div>{" "}
             </div>
           );
-        case 13:
+        case 14:
           return (
             <div className="question-5f-main">
               <div className="question-5-header">
@@ -708,7 +763,7 @@ function NewCreateLetter()
               </div>{" "}
             </div>
           );
-        case 14:
+        case 15:
           return (
             <div className="question-5g-main">
               <div className="question-1-header">
@@ -746,7 +801,7 @@ function NewCreateLetter()
               </div>{" "}
             </div>
           );
-        case 15:
+        case 16:
           return (
             <div className="question-final-main">
               {" "}
@@ -773,7 +828,7 @@ function NewCreateLetter()
               </div>{" "}
             </div>
           );
-        case 16:
+        case 17:
           return (
             <div className="submitted-data">
               <div className="submitted-data-div2">
@@ -799,11 +854,12 @@ function NewCreateLetter()
                       )}
                       {!showLoader && (
                 <div className="button-text-center" id="coverLetterButton">
-                  <button id="Button" className="show-cover-letter-button" onClick={() => { handleShowLetterClick(); handleNext(); }}>
+                  <button id="Button" className="show-cover-letter-button" onClick={() => { handleShowLetterClick(); handleNext();checkPayment(); }}>
                     Show Letter
                   </button>
                   
                   <p> Your Cover letter has been created </p>
+                  <p>{result}</p>
                 </div>
               )}
                     </div>
@@ -812,7 +868,7 @@ function NewCreateLetter()
               </div>
             </div>
           );
-          case 17:
+          case 18:
            
             return (
             <div className="coverLetterWholeWrapper">

@@ -26,7 +26,7 @@ function Prices() {
                 <ul className="prices-ul">
                   <li>
                     {" "}
-                    <i> </i>Non - binding subscription{" "}
+                    <i className="fa fa-genderless"> </i>Non - binding subscription{" "}
                   </li>{" "}
                   <li>
                     {" "}
@@ -50,7 +50,7 @@ function Prices() {
               <p className="price-p2">
                 {" "}
                 Already have an account ?
-                <Link to="/Register"> Click here </Link>{" "}
+                <Link to="/Login"> Click here </Link>{" "}
               </p>{" "}
               <p className="price-p3">
                 {" "}

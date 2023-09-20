@@ -184,7 +184,7 @@ function Home() {
         <div className="container-home4">
           <div className="container-2-home4">
             <div className="home4-data">
-              <h2> To contact us, nothing could be simpler: </h2>{" "}
+              <h2> To contact us </h2>{" "}
               <p className="p-home4">
                 {" "}
                 By email:

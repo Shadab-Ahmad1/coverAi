@@ -146,8 +146,6 @@ useEffect(() => {
       console.error("Error:", error.message);
     }
   };
-
-
   const handleShowLetterClick = () => {
     setCurrentDisplayIndex(0); 
     setShowContent(true); 
@@ -159,22 +157,23 @@ useEffect(() => {
   const typeOutCoverLetter = () => {
     setCoverLetterText(true);
     setCurrentDisplayIndex(0);
-    const totalChars = coverLetterText.split(' ');
-    let currentIndex= 0;
-    let typeText="";
+    const totalWords = coverLetterText.split(' '); // Change to split by space to work with words
+    let currentIndex = 0;
+    let typeText = "";
     const typeInterval = setInterval(() => {
-      const halfwayIndex = Math.floor(totalChars.length / 2); 
-      if (currentIndex< halfwayIndex) {
-        typeText =totalChars.slice(0,currentIndex+1).join(' ');
-        setTypedCoverLetter(typeText);
-        setCurrentDisplayIndex(currentIndex);
-        console.log(TypedCoverLetter);
-        currentIndex++;
-      } else {
-        clearInterval(typeInterval);
-      }
-    }, 100); 
-  };   
+        const halfwayIndex = Math.floor(totalWords.length / 2); // Calculate halfway point
+        if (currentIndex < halfwayIndex) {
+            typeText = totalWords.slice(0, currentIndex + 1).join(' '); // Join words with space
+            setTypedCoverLetter(typeText);
+            setCurrentDisplayIndex(currentIndex);
+            console.log(TypedCoverLetter); // Note the lowercase 't' here
+            currentIndex++;
+        } else {
+            clearInterval(typeInterval);
+        }
+    }, 100);
+};
+
 
   useEffect(() => {
  
@@ -242,9 +241,7 @@ useEffect(() => {
     generateCoverLetter();
     console.log(formData);
     setFormDataArray((prevArray) => [...prevArray, formData]);
-  
       localStorage.removeItem("formData");
-    
   };
 
   const isButtonEnabled = () => {

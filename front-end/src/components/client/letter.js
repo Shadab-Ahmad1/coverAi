@@ -55,10 +55,8 @@ function Letter() {
       useEffect(() => {
         typeOutCoverLetter();
       }, []);
-
     const userEmail=user;
-   
-  
+
     return (
       <>
       <div className='dashboard-whole-container'>

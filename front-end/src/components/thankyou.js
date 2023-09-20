@@ -61,8 +61,11 @@ function Thankyou() {
           <head>
             <style>
               body {
-                font-family: 'Open Sans', sans-serif;
-                font-size: 14px;
+                font-size: 16px;
+                white-space: pre-line;
+                color: #3d3d3d;
+                line-height: 24px;
+                letter-spacing: 0.7px;
               }
               pre {
                 white-space: pre-wrap;

@@ -56,7 +56,7 @@
 .left-dashboard-second-container
 { 
     padding: 30px 30px;
-    border-bottom: 1.3px solid #E8E8ED;
+       border-bottom: 1.3px #E8E8ED;
 }
 
 .left-dashboard-second-container-button .circle {
@@ -109,6 +109,7 @@
     align-items: center;
     padding: 25px 15px;
     gap: 14px;
+    width: 17%;
     cursor: pointer;
     text-decoration: none;
     border-bottom: 1.3px solid #E8E8ED;

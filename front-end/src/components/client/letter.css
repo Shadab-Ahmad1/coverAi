@@ -127,8 +127,6 @@
     font-family: 'Open Sans', sans-serif;
     width: fit-content;
     text-decoration: none;
-
- 
 }
 .second-img
 {
@@ -190,14 +188,7 @@
     overflow: scroll;
    
 }
-/* .right-card-container
-{
-    display: flex;
-    max-width: 1000px;
-    flex-wrap: wrap;
-    width: 100%;
-    margin: 4em auto 4em;
-} */
+
 .index
 {
     display: flex;

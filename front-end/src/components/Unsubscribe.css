@@ -1,13 +1,12 @@
 .pic {
     background-image: url(../assets/background.jpeg);
     background-size: 100%;
-    background-position: right;
     background-repeat: no-repeat;
     padding-bottom: 10px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    margin-bottom: 250px;
+    margin-bottom: 120px;
 }
 .unsub-input
 {
@@ -40,18 +39,20 @@
 }
 
 .container-unsubscribe {
-    margin-top: 20%;
+    margin-top: 30%;
     background-color: #ffffff;
     width: 600px;
     height: 370px;
-    margin-left: -44%;
+    margin-left: -43%;
     box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
 }
 
 .unsubscribe-h1 {
     font-size: 48px;
     font-weight: 700;
     margin-left: 32%;
+    margin-top: 18%;
 }
 .unsubcribe-p
 {
@@ -67,13 +68,15 @@
     margin-left: 8%;
     width: 516px;
     height: 120px;
-    text-align: left;
+    line-height: 25px;
+    text-align: center;
+
 }
 
 input[type="email"] {
     width: 60%;
     height: 30px;
-    margin-left: 18%;
+    align-items: center;
     margin-top: 10px;
     padding: 10px;
     margin-bottom: 10px;
@@ -81,6 +84,7 @@ input[type="email"] {
     background-color: #F6F6F6;
     border-radius: 4px;
     font-size: 16px;
+    width: 70%;
 }
 
 .button {
@@ -202,7 +206,7 @@ input[type="email"] {
         border-bottom-right-radius: 100px;
         font-weight: bold;
         cursor: pointer;
-        height: 40px;
+        height: 55px;
         width: 260px;
         padding: 5px 22px 5px 22px;
         display: inline-block;

@@ -32,7 +32,6 @@ function Dashboard() {
     fetchCoverLetters();
   }, []);
  
-  const [successfulPayments, setSuccessfulPayments] = useState([]);
   const [coverLetters, setCoverLetters] = useState([]);
   const [selectedCoverLetter, setSelectedCoverLetter] = useState(null);
   const userEmail=user;
@@ -96,6 +95,7 @@ function Dashboard() {
         style={{ textDecoration: 'none' }}>
           <button 
             className='p-box'
+       
             onClick={() => {
               setSelectedCoverLetter(coverLetter);
               setSelectedCoverIndex(index);

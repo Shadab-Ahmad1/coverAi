@@ -156,6 +156,12 @@
     justify-content: center;
     align-items: center;
 }
+.login-button:hover
+{
+    color: #000000;
+    background-color: #ffffff;
+    border: none;
+}
 
 .mobile-menu {
     display: none;

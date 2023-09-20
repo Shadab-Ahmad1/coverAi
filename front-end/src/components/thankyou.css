@@ -91,6 +91,11 @@
     top: 0;
     left: 0;
     padding: 10px 25px;
+    white-space: pre-line;
+    color: #3d3d3d;
+    line-height: 24px;
+    letter-spacing: 0.7px;
+    font-size: 16px;
 }
 
 #download-btn{
