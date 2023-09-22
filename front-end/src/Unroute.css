@@ -1,0 +1,26 @@
+.whole-unroute-container {
+    margin: 0;
+    padding: 0;
+    background-color: #1a202c;
+    font-family: 'Nunito', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+   
+}
+
+.container-unroute {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container-unroute span {
+    color: #7DAAC0;
+    font-size: 20px;
+    font-style: normal;
+    justify-content: center;
+    letter-spacing: .05em;
+    margin: 0 10px;
+}

@@ -112,7 +112,7 @@ useEffect(() => {
   }, [showLoader, messageIndex]);
 
   const generateCoverLetter = async () => {
-    const apiKey = "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";
+    const apiKey = process.env.REACT_APP_CHAT_GPT_API_KEY;
     setShowLoader(true);
     setShowFirstLoader(false)
     const headers = {

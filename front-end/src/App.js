@@ -14,7 +14,6 @@ import Footer from "./components/Footer";
 import Termcond from "./components/Termcond";
 import Privacy from "./components/Privacy";
 import Cookies from "./components/Cookies";
-import Viewletter from "./components/Viewletter";
 import Thankyou from "./components/thankyou";
 import NewLetter from "./components/client/new-letter";
 import Dashboard from "./components/client/dashboard";
@@ -23,34 +22,49 @@ import NewLetterThankYou from "./components/client/typeform-thank-you";
 import ResetPassword from "./components/Resetpassword";
 import { AuthProvider } from "./AuthContext";
 import { useAuth } from "./AuthContext";
-
+import Unroute from "./Unroute";
 
 function App() {
-  
-  const [formData, setFormData] = useState("");
+
   const location = useLocation();
-  const isCreateLetter = location.pathname.includes("/create-letter");
   const isThankYou = location.pathname.includes("/thank-you");
-  const isDashboard =location.pathname.includes("/client/dashboard");
-  const isNewLetter =location.pathname.includes("/client/new-letter");
-  const isLetter = location.pathname.includes("/client/letter")
   const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
+  
   useEffect(() => {
     if (isThankYou) {
       const searchParams = new URLSearchParams(location.search);
       const paymentId = searchParams.get("paymentId");
       if (!paymentId) {
-      
+
         navigate("/Register");
       }  
     }
   }, [location, isThankYou, navigate]);
+
+  const showNavbarAndFooter =
+    location.pathname === "/" ||
+    location.pathname === "/Newaccount" ||
+    location.pathname === "/Login" ||
+    location.pathname === "/Prices" ||
+    location.pathname === "/FAQ" ||
+    location.pathname === "/Unsubscribe" ||
+    location.pathname === "/Termcond" ||
+    location.pathname === "/Privacy" ||
+    location.pathname === "/Cookies" ||
+    location.pathname === "/Forget";
   return (
     <>
-      {" "}
-      {!isCreateLetter && !isThankYou && !isDashboard  && !isNewLetter && !isLetter &&<Navbar />}{" "}
+       {showNavbarAndFooter && <Navbar />}
       <Routes>
+      {isAuthenticated() && (
+          <>
+            <Route path="/client/dashboard" element={<Dashboard />} />
+            <Route path="/client/new-letter" element={<NewLetter />} />
+            <Route path="/client/letter" element={<Letter/>}/>
+          
+          </>
+        )}
         <Route path="/" element={<Home />} />{" "}
         <Route path="/create-letter" element={<CreateLetter />} />{" "}
         <Route path="/Newaccount" element={<Newaccount />} />{" "}
@@ -62,21 +76,12 @@ function App() {
         <Route path="/Privacy" element={<Privacy />} />{" "}
         <Route path="/Cookies" element={<Cookies />} />{" "}
         <Route path="/Forget" element={<Forget />} />{" "}
-        <Route path="/Viewletter" element={<Viewletter />} />{" "}
         <Route path="/thank-you"  element={<Thankyou />} />{" "}
-        {isAuthenticated() && (
-          <>
-            <Route path="/client/dashboard" element={<Dashboard />} />
-            <Route path="/client/new-letter" element={<NewLetter />} />
-            <Route path="/client/letter" element={<Letter/>}/>
-            {/* ... other authenticated routes ... */}
-          </>
-        )}
         <Route path="/client/typeform-thank-you" element={< NewLetterThankYou/>}/>
-        <Route path="Resetpassword/reset-password/:token" element={< ResetPassword/>} />
-        
+        <Route path="reset/:token" element={< ResetPassword/>} />
+        <Route path="/*" element={<Unroute />}  />
       </Routes>{" "}
-      {!isCreateLetter && !isThankYou && !isDashboard && !isNewLetter  && !isLetter && <Footer />}{" "}
+      {showNavbarAndFooter && <Footer />}
     </>
   );
 }

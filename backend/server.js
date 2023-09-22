@@ -123,7 +123,6 @@ const info = await transporter.sendMail(mailOptions);
   }
 });
 
-
 app.post('/create-checkout-session-auth', async (req, res) => {
   try {
     const userEmail = req.body.userEmail;
@@ -382,7 +381,7 @@ app.post('/forgot', async (req, res) => {
     console.log('Token :' , token)
 
     // Log the reset link to the console
-    const resetLink = `${process.env.RESET_LINK_BASE_URL}/reset-password/${token}`;
+    const resetLink = `${process.env.RESET_LINK_BASE_URL}/reset/${token}`;
     console.log("Password reset link:", resetLink);
 
     res.status(200).json({ message: 'Password reset link generated successfully' });
@@ -442,9 +441,9 @@ app.get('/get-user-email/:token', async (req, res) => {
 
 
 //stripe wewbhooks endpoint to get user(customer subscriptions data)
-const endpointSecret = "whsec_b032e46aee6f9559d8c171c9c1901594ddba21530f3a7edd5bbfad1d6c9cc92a";
+const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
-app.post('/webhook', express.raw({type: 'application/json'}), async (request, response) => {
+app.post('/webhook', express.raw({ type: 'application/json' }), async (request, response) => {
   const sig = request.headers['stripe-signature'];
 
   let event;
@@ -457,6 +456,7 @@ app.post('/webhook', express.raw({type: 'application/json'}), async (request, re
   }
   const email = event.data.object.customer_email;
   try {
+    
     const newEvent = new Event({
       email,
       event: event.type,
@@ -464,7 +464,6 @@ app.post('/webhook', express.raw({type: 'application/json'}), async (request, re
       timestamp: new Date(),
     });
     await newEvent.save();
-
     console.log(`Event saved to the database: ${event.type}`);
   } catch (error) {
     console.error('Error saving event to the database:', error);
@@ -488,9 +487,11 @@ app.post('/webhook', express.raw({type: 'application/json'}), async (request, re
     case 'subscription_schedule.updated':
       break;
     default:
-      console.log(`Unhandled event type ${event.type}`); 
+      console.log(`Unhandled event type ${event.type}`);
   }
+  
   response.send();
 });
+
 
 app.listen(5000, () => console.log('Running on port 5000'));

@@ -1,11 +1,23 @@
+
 import React, { useState } from "react";
+import { useAuth } from "../AuthContext"; 
 import './Unsubscribe.css';
 
 function Unsubscribe() {
+  const { isAuthenticated, user } = useAuth(); 
   const [email, setEmail] = useState("");
   const [statusMessage, setStatusMessage] = useState("");
 
   const handleCancelSubscription = async () => {
+    if (!user) {
+      setStatusMessage("You must be logged in to unsubscribe.");
+      console.log(user)
+      return;
+    }
+    if (email !== user) {
+      setStatusMessage("You are unautherized to cancel someone else's subscription.");
+      return;
+    }
     try {
       const response = await fetch("http://localhost:5000/cancel-sub-test", {
         method: "POST",
@@ -26,7 +38,9 @@ function Unsubscribe() {
       console.error(error);
       setStatusMessage("An error occurred while processing the request.");
     }
+
   };
+
   const handleEmailClick = () => {
     setStatusMessage("");
   };
@@ -49,12 +63,15 @@ function Unsubscribe() {
                 onChange={(e) => setEmail(e.target.value)}
                 onClick={handleEmailClick}
               />
-              <button className="button" onClick={handleCancelSubscription}>
-                Click Here To Unsubscribe
-              </button>
-              {statusMessage && <span className="unsubcribe-p">{statusMessage}</span>}
+              {isAuthenticated ? (
+                <button className="button" onClick={handleCancelSubscription}>
+                  Click Here To Unsubscribe
+                </button>
+              ) : (
+                <p>You must be logged in to unsubscribe.</p>
+              )}
+              {statusMessage && <span className="unsubscribe-p">{statusMessage}</span>}
             </div>
-         
           </div>
         </div>
       </section>
@@ -63,3 +80,4 @@ function Unsubscribe() {
 }
 
 export default Unsubscribe;
+
