@@ -31,6 +31,27 @@ function FAQ() {
                     and identity is not shared with anyone.{" "}
                   </p>{" "}
                 </li>{" "}
+                <li className="li-design">
+                  <h3 className="li-design-1"> Is my information secure ? </h3>{" "}
+                  <p className="p-design-1">
+                    Your anonymity is important to us.Your personal information
+                    and identity is not shared with anyone.{" "}
+                  </p>{" "}
+                </li>{" "}
+                <li className="li-design">
+                  <h3 className="li-design-1"> Is my information secure ? </h3>{" "}
+                  <p className="p-design-1">
+                    Your anonymity is important to us.Your personal information
+                    and identity is not shared with anyone.{" "}
+                  </p>{" "}
+                </li>{" "}
+                <li className="li-design">
+                  <h3 className="li-design-1"> Is my information secure ? </h3>{" "}
+                  <p className="p-design-1">
+                    Your anonymity is important to us.Your personal information
+                    and identity is not shared with anyone.{" "}
+                  </p>{" "}
+                </li>{" "}
               </ul>{" "}
             </div>{" "}
           </div>{" "}

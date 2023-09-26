@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useAuth } from "../AuthContext"; 
 import './Unsubscribe.css';
@@ -7,13 +6,19 @@ function Unsubscribe() {
   const { isAuthenticated, user } = useAuth(); 
   const [email, setEmail] = useState("");
   const [statusMessage, setStatusMessage] = useState("");
+  const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
 
   const handleCancelSubscription = async () => {
+    if (!emailRegex.test(email)) {
+      setStatusMessage("Please provide a valid email address.");
+      return;
+    }
     if (!user) {
       setStatusMessage("You must be logged in to unsubscribe.");
       console.log(user)
       return;
     }
+
     if (email !== user) {
       setStatusMessage("You are unautherized to cancel someone else's subscription.");
       return;
@@ -38,13 +43,10 @@ function Unsubscribe() {
       console.error(error);
       setStatusMessage("An error occurred while processing the request.");
     }
-
   };
-
   const handleEmailClick = () => {
     setStatusMessage("");
   };
-
   return (
     <>
       <section>

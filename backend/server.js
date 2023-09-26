@@ -402,18 +402,14 @@ app.post('/reset-password', async (req, res) => {
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
 
     const user = await User.findOne({ email: decodedToken.email });
-
     if (!user) {
       return res.status(404).json({ error: 'User not found.' });
     }
-
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(newPassword, saltRounds);
-
     // Update the user's password
     user.password = hashedPassword;
     await user.save();
-
     res.status(200).json({ message: 'Your Password reset successfully.' });
   } catch (error) {
     console.error('Error resetting password:', error);

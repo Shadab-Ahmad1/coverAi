@@ -213,6 +213,7 @@
 .mobile-menu-button img {
     width: 30px;
     height: 30px;
+    width:120%;
 }
 
 @media (max-width: 768px) {

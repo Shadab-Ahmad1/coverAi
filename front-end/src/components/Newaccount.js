@@ -121,7 +121,7 @@ const validateForm = () => {
                 <div className="text">
                   <p className="newaccount-already">
                     Already have an account?{" "}
-                    <Link to="../login"> Click here </Link>{" "}
+                    <Link to="../Login"> Click here </Link>{" "}
                   </p>{" "}
                   <button  className={`button-register ${isEmailValid ? "" : "disabled-button"}`} onClick={handleRegister} disabled={!isEmailValid}>
                     Continue
