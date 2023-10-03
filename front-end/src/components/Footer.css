@@ -80,7 +80,7 @@
 
 @media (max-width: 767px) {
     .footer-4 {
-        margin-left: -19%;
+        margin-left: -13%;
     }
     .footer-4-payment .h2-footer-4-payment {
         font-size: 14px;
@@ -89,7 +89,16 @@
         max-width: 40px;
         height: 20px;
         gap: -5px;
+     
     }
+    .footer-payment-img ul {
+        display: flex;
+        justify-content: center;
+        list-style: none;
+        margin-left: 3%;
+    }
+    
+   
 }
 
 .footer-data p {
@@ -159,7 +168,7 @@
 
 .footer-4 {
     margin-top: 6.7%;
-    margin-bottom: 27px;
+    margin-bottom: 48px;
 }
 
 .footer-4-payment {

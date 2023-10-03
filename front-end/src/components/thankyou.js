@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
-import jsPDF from 'jspdf';
 import './thankyou.css';
 
 function Thankyou() {
@@ -20,7 +19,6 @@ function Thankyou() {
       fetchPaymentDetails(paymentId);
     }
   }, [paymentId]);
-
   const fetchPaymentDetails = async (paymentId) => {
     try {
       const response = await axios.get(`http://localhost:5000/getCoverletter/${paymentId}`);
@@ -30,7 +28,6 @@ function Thankyou() {
       console.error('Error fetching payment details:', error);
     }
   };
-
   const handleShowCoverLetter = () => {
     setShowCoverLetter(true);
     const words = paymentDetails.coverLetter.split(' ');
@@ -61,7 +58,7 @@ function Thankyou() {
           <head>
             <style>
               body {
-                font-size: 16px;
+                font-size: 14px;
                 white-space: pre-line;
                 color: #3d3d3d;
                 line-height: 24px;
@@ -82,7 +79,6 @@ function Thankyou() {
       printWindow.print();
     }
   };
-
   const handleCopy = () => {
     const textArea = document.createElement('textarea');
     textArea.value = typedCoverLetter;
@@ -90,12 +86,11 @@ function Thankyou() {
     textArea.select();
     document.execCommand('copy');
     document.body.removeChild(textArea);
-    setCopyButtonClicked(true); // Set the state to indicate the button was clicked
+    setCopyButtonClicked(true); 
     setTimeout(() => {
-      setCopyButtonClicked(false); // Reset the state after a short delay
-    }, 400); // Adjust the duration as needed
+      setCopyButtonClicked(false); 
+    }, 400); 
   };
-
   return (
     <>
       <section className="thankyou-whole-wrapper" id="thankyou-whole-wrapper">

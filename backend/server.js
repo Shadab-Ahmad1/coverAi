@@ -6,6 +6,8 @@ const nodemailer = require('nodemailer');
 const bcrypt = require('bcrypt');
 const jwt = require("jsonwebtoken");
 const app = express();
+const bodyParser = require('body-parser');
+
 app.use(express.json());
 app.use(cors());
 
@@ -24,7 +26,7 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 // Define a mongoose schema for payments
 const paymentSchema = new mongoose.Schema({
   email: String,
-  subscriptionId:String,
+  subscription:Object,
   jobtitle:String,
   companyname:String,
   name: String,
@@ -32,20 +34,34 @@ const paymentSchema = new mongoose.Schema({
   coverLetter: String,
   timestamp: Date,
 });
-// Define a mongoose schema for users
+const Subscriptionschema = new mongoose.Schema(
+  {
+    email: String,
+    customerId:String,
+    subscriptionId:String,
+    SubscriptionstartDate:Date,
+    SubscriptionendDate : Date,
+    subscription:mongoose.Schema.Types.Mixed,
+  }
+);
+
+
+//Define a mongoose schema for users
+
 const userSchema = new mongoose.Schema({
   email: String,
   password: String,
 });
-const EventSchema = new mongoose.Schema(
+const NewEventSchema = new mongoose.Schema(
   {
     email: String,
     event: String,
-    eventData: Object, // Adjust the type as needed for your event data structure
+    eventData: Object,
     timestamp: Date,
   }
 );
-const Event =mongoose.model('subscription_event' ,EventSchema);
+const Subscription=mongoose.model('subscription-data',Subscriptionschema)
+const Event =mongoose.model('webhook-event' ,NewEventSchema);
 const User = mongoose.model('User', userSchema);
 const Payment = mongoose.model('Payment', paymentSchema);
     app.post('/create-checkout-session', async (req, res) => {
@@ -57,9 +73,7 @@ const Payment = mongoose.model('Payment', paymentSchema);
           coverLetter: req.body.coverLetterResponse,
           timestamp: new Date(),
         });
-    
         const savedPayment = await newPayment.save();
-    
         const session = await stripe.checkout.sessions.create({
           payment_method_types: ['card'],
            mode: 'subscription',
@@ -84,7 +98,6 @@ const Payment = mongoose.model('Payment', paymentSchema);
      pass: "aggUGt5g8hq9uCZUwr",
    },
  });
-
  const mailOptions = {
   from: '"Cover ai" <info@coverAi.com>',
   to: req.body.email,
@@ -123,6 +136,69 @@ const info = await transporter.sendMail(mailOptions);
   }
 });
 
+// app.post('/create-checkout-session-auth', async (req, res) => {
+//   try {
+//     const userEmail = req.body.userEmail;
+//     const jobtitle = req.body.jobtitle;
+//     const companyname = req.body.companyname;
+//     const payment = await Payment.findOne({ email: userEmail });
+//     if (!payment) {
+//       // Create a new payment record if one doesn't exist
+//       const newPayment = new Payment({
+//         email: req.body.userEmail,
+//         name: req.body.name,
+//         jobtitle: req.body.jobtitle,
+//         companyname: req.body.companyname,
+//         coverLetter: req.body.coverLetterResponse,
+//         timestamp: new Date(),
+//       });
+//       const savedPayment = await newPayment.save();
+//       const session = await stripe.checkout.sessions.create({
+//         payment_method_types: ['card'],
+//         mode: 'subscription',
+//         subscription_data: {
+//           trial_period_days: 1
+//         },
+//         customer_email: userEmail,
+//         line_items: [
+//           {
+//             price: 'price_1NqG3DDY7WDwWj6eeEfQCXhH',
+//             quantity: 1,
+//           },
+//         ],
+//         success_url: `${process.env.SERVER_URL}/client/dashboard?paymentId=${savedPayment._id.toString()}`,
+//         cancel_url: `${process.env.SERVER_URL}/cancel`,
+//       });
+
+//       const subscriptionId = session.subscription;
+//       savedPayment.subscriptionId = subscriptionId;
+//       await savedPayment.save();
+
+//       return res.json({ url: session.url, paymentId: savedPayment._id });
+//     } else {
+    
+//       const newPayment = new Payment({
+//         email: req.body.userEmail,
+//         name: req.body.name,
+//         jobtitle: req.body.jobtitle,
+//         companyname: req.body.companyname,
+//         coverLetter: req.body.coverLetterResponse,
+//         timestamp: new Date(),
+//       });
+
+//       const savedPayment = await newPayment.save();
+
+//       return res.json({ url: '', paymentId: savedPayment._id });
+//     }
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ error: 'An error occurred on the server.' });
+//   }
+// });
+
+
+
+//check payment status
 app.post('/create-checkout-session-auth', async (req, res) => {
   try {
     const userEmail = req.body.userEmail;
@@ -164,9 +240,8 @@ app.post('/create-checkout-session-auth', async (req, res) => {
       savedPayment.subscriptionId = subscriptionId;
       await savedPayment.save();
 
-      return res.json({ url: session.url, paymentId: savedPayment._id });
+      return res.json({ url: session.url, paymentId: savedPayment._id, subscriptionId });
     } else {
-      // Only create a new payment record without a session
       const newPayment = new Payment({
         email: req.body.userEmail,
         name: req.body.name,
@@ -178,7 +253,7 @@ app.post('/create-checkout-session-auth', async (req, res) => {
 
       const savedPayment = await newPayment.save();
 
-      return res.json({ url: '', paymentId: savedPayment._id });
+      return res.json({ url: '', paymentId: savedPayment._id, subscriptionId: null });
     }
   } catch (error) {
     console.error(error);
@@ -187,7 +262,6 @@ app.post('/create-checkout-session-auth', async (req, res) => {
 });
 
 
-//check payment status
 app.get('/check-payment-status', async (req, res) => {
   try {
     const userEmail = req.query.email;
@@ -232,6 +306,50 @@ app.post("/cancel-sub-test", async function (req, res) {
   }
 });
 
+//get customer subscription details
+
+app.post("/get-sub-data", async function (req, res) {
+  try {
+    const { email } = req.body;
+
+    // Retrieve customer data from Stripe
+    const customersData = await stripe.customers.list({ email });
+    if (customersData.data.length === 0) {
+      return res.status(404).json({ error: "Customer not found" });
+    }
+    const customer = customersData.data[0];
+    const customerGet = await stripe.customers.retrieve(customer.id, {
+      expand: ["subscriptions.data"],
+    });
+    
+    if (customerGet.subscriptions.data.length === 0) {
+      return res.status(404).json({ error: "No subscriptions found for this customer" });
+    }
+    
+    const subscription = customerGet.subscriptions.data[0]; 
+    const subscriptionId = subscription.id;
+    const subscriptionStartDate = new Date(subscription.current_period_start * 1000); 
+    const subscriptionEndDate = new Date(subscription.current_period_end * 1000); 
+   
+    const newSubscription = new Subscription({
+      email:email,
+      customerId: customer.id,
+      subscriptionId:subscription.id,
+      subscription: subscription, 
+    });
+    
+    // Save the subscription details to the database
+    await newSubscription.save();
+    
+    res.send({
+      status: "Subscription details saved to the database",
+    });
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ error: "An error occurred" });
+  }
+});
+
 // Dashboard user coverletter
 app.get('/getCoverLetters', async (req, res) => {
   const userEmail = req.query.userEmail;
@@ -244,15 +362,11 @@ app.get('/getCoverLetters', async (req, res) => {
     res.status(500).json({ error: 'An error occurred on the server.' });
   }
 });
-
 app.get('/api/fetch-cover-letter', async (req, res) => {
   try {
     const userEmail = req.query.userEmail;
     const paymentId = req.query.paymentId;
-
-   
     const payment = await Payment.findOne({ email: userEmail, _id: paymentId });
-
     if (payment) {
       const coverLetter = payment.coverLetter;
       res.json({ coverLetter });
@@ -294,16 +408,13 @@ app.post('/register', async (req, res) => {
     if (existingUser) {
       return res.status(400).json({ error: 'User already exists' });
     }
-
         const saltRounds = 10;
         const hashedPassword = await bcrypt.hash(password, saltRounds);
     const newUser = new User({
       email,
       password: hashedPassword 
     });
-
      await newUser.save();
-
     res.status(201).json({ message: 'User registered successfully' });
   } catch (error) {
     console.error(error);
@@ -379,18 +490,17 @@ app.post('/forgot', async (req, res) => {
     const token = jwt.sign({ userId: user._id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
     console.log("Email :",email);
     console.log('Token :' , token)
-
     // Log the reset link to the console
     const resetLink = `${process.env.RESET_LINK_BASE_URL}/reset/${token}`;
     console.log("Password reset link:", resetLink);
-
     res.status(200).json({ message: 'Password reset link generated successfully' });
-
   } catch (error) {
     console.error('Error generating reset link:', error);
     res.status(500).json({ error: 'An error occurred on the server.' });
   }
 });
+
+//Reset password api endpoint
 app.post('/reset-password', async (req, res) => {
   const { token, newPassword } = req.body;
 
@@ -417,7 +527,7 @@ app.post('/reset-password', async (req, res) => {
   }
 });
  
-
+//get user email 
 app.get('/get-user-email/:token', async (req, res) => {
   try {
     const decodedToken = jwt.verify(req.params.token, process.env.JWT_SECRET);
@@ -434,60 +544,62 @@ app.get('/get-user-email/:token', async (req, res) => {
     res.status(500).json({ error: 'An error occurred while fetching user email.' });
   }
 });
+// app.post(
+//   "/webhook",
+//   bodyParser.raw({ type: "application/json" }),
+//   async (req, res) => {
+//    res.json({ success: true });   
+//   }
+// );
+app.post('/webhook', express.json({type: 'application/json'}), (request, response) => {
+  const event = request.body;
 
-
-//stripe wewbhooks endpoint to get user(customer subscriptions data)
-const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
-
-app.post('/webhook', express.raw({ type: 'application/json' }), async (request, response) => {
-  const sig = request.headers['stripe-signature'];
-
-  let event;
-
-  try {
-    event = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
-  } catch (err) {
-    response.status(400).send(`Webhook Error: ${err.message}`);
-    return;
+    let subscription;
+    let invoice;
+    let status;
+    // Handle the event
+    switch (event.type) {
+      case 'customer.created':
+        subscription = event.data.object;
+        status = subscription.status;
+        console.log(`customer status is ${status}.`);
+        break;
+      case 'invoice.created':
+           invoice = event.data.object;
+          console.log(`Invoice ${invoice.id} was created!`);
+          break;
+      case 'invoice.paid':
+           invoice = event.data.object;
+          console.log(`Invoice ${invoice.id} was paid!`);
+          break;
+      case 'invoice.payment_failed':
+          invoice = event.data.object;
+          console.log(`Invoice ${invoice.id} failed to pay!`);
+          break;
+     case 'customer.subscription.trial_will_end':
+        subscription = event.data.object;
+        status = subscription.status;
+        console.log(`Subscription status is ${status}.`);
+        break;
+     case 'customer.subscription.deleted':
+        subscription = event.data.object;
+        status = subscription.status;
+        console.log(`Subscription status is ${status}.`);
+        break;
+     case 'customer.subscription.created':
+        subscription = event.data.object;
+        status = subscription.status;
+        console.log(`Subscription status is ${status}.`);
+        break;
+     case 'customer.subscription.updated':
+        subscription = event.data.object;
+        status = subscription.status;
+        console.log(`Subscription status is ${status}.`);
+        break;
+      default:
+        console.log(`other event type ${event.type}.`);
+    }
+    response.send();
   }
-  const email = event.data.object.customer_email;
-  try {
-    
-    const newEvent = new Event({
-      email,
-      event: event.type,
-      eventData: event.data,
-      timestamp: new Date(),
-    });
-    await newEvent.save();
-    console.log(`Event saved to the database: ${event.type}`);
-  } catch (error) {
-    console.error('Error saving event to the database:', error);
-    response.status(500).send('Internal Server Error');
-    return;
-  }
-
-  switch (event.type) {
-    case 'subscription_schedule.aborted':
-      break;
-    case 'subscription_schedule.canceled':
-      break;
-    case 'subscription_schedule.completed':
-      break;
-    case 'subscription_schedule.created':
-      break;
-    case 'subscription_schedule.expiring':
-      break;
-    case 'subscription_schedule.released':
-      break;
-    case 'subscription_schedule.updated':
-      break;
-    default:
-      console.log(`Unhandled event type ${event.type}`);
-  }
-  
-  response.send();
-});
-
-
+);
 app.listen(5000, () => console.log('Running on port 5000'));

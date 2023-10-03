@@ -3,15 +3,12 @@ import React, { useState, useEffect } from 'react';
 import logo from "../assets/logo.png";
 import "./Navbar.css";
 import menuIcon from "../assets/menu-icon.png";
-import "../assets/menu-icon.png";
 import { useAuth } from "../AuthContext";
 
 function Navbar() {
-
   const { isAuthenticated } = useAuth();
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolling, setScrolling] = useState(false);
-
 
   const handleScroll = () => {
     if (window.scrollY > 50) {
@@ -20,6 +17,7 @@ function Navbar() {
       setScrolling(false);
     }
   };
+  
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
     return () => {
@@ -31,14 +29,18 @@ function Navbar() {
     setMobileMenuOpen(!isMobileMenuOpen);
   };
 
+  const closeMobileMenu = () => {
+    setMobileMenuOpen(false);
+  };
+
   return (
     <>
       <nav className={`navbar ${scrolling ? 'scrolled' : ''}`}>
         <div className="navbar-logo">
-        <Link to="/">  <img src={logo} alt="Logo" className="logo" /></Link>
+          <Link to="/">  <img src={logo} alt="Logo" className="logo" /></Link>
         </div>{" "}
-        <div className="navbar-content">
-          <ul className={`navbar-nav ${isMobileMenuOpen ? "open" : ""}`}>
+        <div className={`navbar-content ${isMobileMenuOpen ? "open" : ""}`}>
+          <ul className="navbar-nav">
             <li className="nav-item">
               <a href="/"> Home </a>{" "}
             </li>{" "}

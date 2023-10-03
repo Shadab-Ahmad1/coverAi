@@ -69,6 +69,7 @@ function Unsubscribe() {
                 <button className="button" onClick={handleCancelSubscription}>
                   Click Here To Unsubscribe
                 </button>
+                
               ) : (
                 <p>You must be logged in to unsubscribe.</p>
               )}

@@ -23,14 +23,61 @@
     font-size: 48px;
     font-weight: 400;
 }
+@media (max-width:1188px) {
 
+    .home-left2 h1 
+    {
+        font-size: 40px;
+    }
+    .home-left1-button
+    {
+        width: 30%;
+    }
+}
+
+@media (max-width:1001px) {
+
+    .home-left2 h1 
+    {
+        font-size: 40px;
+
+    }
+    .home-left1-button {
+    padding: 10px 20px;
+    background-color: #b22222;
+    color: #ffffff;
+    text-decoration: none;
+    align-items: center;
+    border: none;
+    text-align: center;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 12.8px;
+    text-decoration: none solid rgb(255, 255, 255);
+    letter-spacing: 0.5px;
+    transition: all 0s ease 0s;
+    box-sizing: border-box;
+    border-top-left-radius: 100px;
+    border-top-right-radius: 100px;
+    border-bottom-left-radius: 100px;
+    border-bottom-right-radius: 100px;
+    font-weight: bold;
+    cursor: pointer;
+    height: 50px;
+    width: 300px;
+    padding: 5px 22px 5px 22px;
+    display: flex;
+    justify-content: center;
+}
+
+  
+}
 @media (max-width: 767px) {
     .home {
-        background-image: url(../assets/mobile-header.png);
-        background-size: 80%;
-        padding-top: 100px;
-        /* Adjust the value to reduce the top padding */
-        padding-bottom: 100px;
+        background-image: url(../assets/background.jpeg);
+        background-size: cover;
+        background-position: left;
     }
 }
 
@@ -50,6 +97,7 @@
     animation-fill-mode: both;
     animation-name: slideInFromLeft;
 }
+
 
 .home-left1 {
     color: #fff;
@@ -81,8 +129,9 @@
 
 @media (max-width:767px) {
     .home-right-img {
-        margin-top: -1%;
-        width: 50%;
+        margin-top: 2%;
+        width: 77%;
+        margin-left: -25px;
     }
 }
 

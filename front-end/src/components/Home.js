@@ -11,14 +11,6 @@ import icon9 from "../assets/icon9.svg";
 import icon10 from "../assets/icon10.svg";
 import "./Home.css";
 import "../assets/logo.png";
-import icon11 from "../assets/icon11.svg";
-import icon12 from "../assets/icon12.png";
-import icon13 from "../assets/icon13.svg";
-import icon14 from "../assets/icon14.svg";
-import CreateLetter from "./create-letter";
-import { Link } from "react-router-dom";
-import Prices from "./Prices";
-import Unsubscribe from "./Unsubscribe";
 import { useAuth } from '../AuthContext';
 
 function Home() {

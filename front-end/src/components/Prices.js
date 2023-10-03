@@ -45,7 +45,8 @@ function Prices() {
                 </ul>{" "}
               </div>{" "}
               <div className="button-class">
-                <button className="button-register"> Register Now </button>{" "}
+             <Link to="/Newaccount" style={{ textDecoration: 'none' }}>  
+              <button className="button-register"> Register Now </button>{" "}</Link>
               </div>{" "}
               <p className="price-p2">
                 {" "}
