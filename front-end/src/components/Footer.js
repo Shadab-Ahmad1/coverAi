@@ -6,14 +6,16 @@ import icon12 from "../assets/icon12.png";
 import icon13 from "../assets/icon13.svg";
 import icon14 from "../assets/icon14.svg";
 import Register from "./create-letter";
-
 import Prices from "./Prices";
 import Unsubscribe from "./Unsubscribe";
 import "./Footer.css";
 import { Link, useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import { useAuth } from "../AuthContext";
+
 
 function Footer() {
+  const { isAuthenticated } = useAuth();
   const { pathname } = useLocation();
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -51,18 +53,33 @@ function Footer() {
                 </div>{" "}
               </div>{" "}
               <div className="footer-2">
-                <ul>
-                  <Link to="./Newaccount" className="footer2-a">
-                    {" "}
-                    Register{" "}
-                  </Link>{" "}
-                </ul>{" "}
-                <ul>
-                  <Link to="../Login" className="footer2-a">
-                    {" "}
-                    Login{" "}
-                  </Link>{" "}
-                </ul>{" "}
+              {isAuthenticated() ? (
+                  <>
+                    <ul>
+                      <Link to="/" className="footer2-a">
+                        Register
+                      </Link>
+                    </ul>
+                    <ul>
+                      <Link to="/" className="footer2-a">
+                        Login
+                      </Link>
+                    </ul>
+                  </>
+                ) : (
+                  <>
+                    <ul>
+                      <Link to="./Newaccount" className="footer2-a">
+                        Register
+                      </Link>
+                    </ul>
+                    <ul>
+                      <Link to="../Login" className="footer2-a">
+                        Login
+                      </Link>
+                    </ul>
+                  </>
+                )}
                 <ul>
                   <Link to="../Unsubscribe" className="footer2-a">
                     {" "}

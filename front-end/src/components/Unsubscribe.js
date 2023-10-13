@@ -18,9 +18,8 @@ function Unsubscribe() {
       console.log(user)
       return;
     }
-
     if (email !== user) {
-      setStatusMessage("You are unautherized to cancel someone else's subscription.");
+      setStatusMessage("please write your correct email.");
       return;
     }
     try {
@@ -81,6 +80,5 @@ function Unsubscribe() {
     </>
   );
 }
-
 export default Unsubscribe;
 

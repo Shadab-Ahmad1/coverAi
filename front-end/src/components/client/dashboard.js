@@ -10,13 +10,8 @@ import axios from 'axios';
 function Dashboard() {
   const [showRegister, setShowRegister] = useState(false); 
   const [selectedCoverIndex, setSelectedCoverIndex] = useState(null);
-  const handleCreateNewCoverLetter = () => {
-    setShowRegister(true);
-  };
-
   const { logout } = useAuth();
   const { user } = useAuth();
-
   const handleLogout = () => {
     logout();
     window.location.href= ("/");
@@ -30,11 +25,15 @@ function Dashboard() {
   }, [user]);
   useEffect(() => {
     fetchCoverLetters();
-  }, []);
+
+  }, [user]);
  
   const [coverLetters, setCoverLetters] = useState([]);
   const [selectedCoverLetter, setSelectedCoverLetter] = useState(null);
   const userEmail=user;
+  const email=user;
+
+ 
   const fetchCoverLetters = async () => {
     try {
       const response = await axios.get('http://localhost:5000/getCoverLetters', {
@@ -45,8 +44,6 @@ function Dashboard() {
       setError('An error occurred while fetching cover letters.');
     } 
   };
-  
-
   return (
     <>
     <div className='dashboard-whole-container'>
@@ -56,7 +53,9 @@ function Dashboard() {
            <h6 className='dashboard-email'>{userEmail}</h6>
         </div>
         <div className='left-dashboard-second-container'>
-        <a className='left-dashboard-second-container-button' onClick={handleCreateNewCoverLetter} href='/client/new-letter'>
+        <a className='left-dashboard-second-container-button'
+        //  onClick={handleCreateNewCoverLetter} 
+         href='/client/new-letter' >
         <span className='circle'>
             <i className='fa fa-plus'></i>
         </span>
@@ -80,7 +79,7 @@ function Dashboard() {
        </div>
        <div className='right-dashboard-container'>
        <div className='right-dashboard-second-container'>
-  <div className='right-card-container'>
+     <div className='right-card-container'>
     {coverLetters.length === 0 ? (
       <p className='main-p-box empty'>
         Looks like you haven't created a cover letter yet! Please click on  
@@ -95,11 +94,9 @@ function Dashboard() {
         style={{ textDecoration: 'none' }}>
           <button 
             className='p-box'
-       
             onClick={() => {
               setSelectedCoverLetter(coverLetter);
-              setSelectedCoverIndex(index);
-              
+              setSelectedCoverIndex(index);    
             }}
           >
          <p className='record-class'><b> Position is for {coverLetter.jobtitle} </b> 
@@ -107,10 +104,8 @@ function Dashboard() {
          <p className='time-stamp'> {coverLetter.timestamp}</p>
           </p> 
           </button>
-          </Link>
-         
+          </Link>  
         </div>
-     
       ))
     )}
   </div>
@@ -120,7 +115,6 @@ function Dashboard() {
     </div>
   )}
 </div>
-
         </div>
       </div>
     </>

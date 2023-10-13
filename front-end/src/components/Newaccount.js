@@ -47,7 +47,7 @@ const validateForm = () => {
         setEmail("");
         setPassword("");
         setConfirmPassword("");
-        window.location.href = "/login";
+        window.location.href = "/Login";
       } else {
         const data = await response.json();
         setErrors({ ...errors, server: data.error });

@@ -142,6 +142,7 @@
 {
     color: #5B5B62;
     text-decoration: none;
+    font-size: 14px;
    
 }
 .left-view-3-container .left-view-letter-3-container-button:hover .second-view-img{
@@ -190,6 +191,10 @@
     transition: 0.1s;
     background-position-y: 30px;
     background-position-x: 30px;    
+}
+label
+{
+    font-size: 14px;
 }
 .right-dashboard-container {
     background-image: url('../../assets/background.jpeg');

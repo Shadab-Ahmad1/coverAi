@@ -24,7 +24,7 @@
 }
 .dashboard-email
 {
-    opacity: 0.4;
+    opacity: 0.6;
     text-overflow: ellipsis;
     overflow: hidden;
     color: inherit;
@@ -58,6 +58,7 @@
 { 
     padding: 30px 30px;
     border-bottom: 1.3px solid #E8E8ED;
+    margin-top: -13px;
 }
 
 .left-dashboard-second-container-button .circle {
@@ -245,10 +246,11 @@
     background: #e9e9e9;
     color: #0056b3;
 }
-
 .p-box {
     margin-top: -10px;
-    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    width: 110%;
     display: flex;
     justify-content: space-between;
     cursor: pointer;
@@ -260,12 +262,12 @@
     border-radius: 4px;
     outline: none!important;
     height: 65px;
-    margin: 0px auto;
+    margin: -16px auto;
   
 }
 .main-p-box 
 {   
-    width: 100%;
+    width: 85%;
     cursor: pointer;
     padding: 1em 2em;
     transition: 0.3s ease-in-out;

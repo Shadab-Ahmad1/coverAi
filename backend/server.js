@@ -22,17 +22,21 @@ mongoose.connect(process.env.MONGODB_URI, {
 });
 
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
-
 // Define a mongoose schema for payments
 const paymentSchema = new mongoose.Schema({
   email: String,
-  subscription:Object,
+  subscriptionId:String,
+  customerid:String,
   jobtitle:String,
   companyname:String,
   name: String,
   amount: Number,
   coverLetter: String,
   timestamp: Date,
+  subscriptionStatus:String,
+  subscriptiontimestamp:String,
+  canceledTimestamp:Date,
+
 });
 const Subscriptionschema = new mongoose.Schema(
   {
@@ -42,12 +46,10 @@ const Subscriptionschema = new mongoose.Schema(
     SubscriptionstartDate:Date,
     SubscriptionendDate : Date,
     subscription:mongoose.Schema.Types.Mixed,
+    subscriptionStatus:String,
   }
 );
-
-
 //Define a mongoose schema for users
-
 const userSchema = new mongoose.Schema({
   email: String,
   password: String,
@@ -64,6 +66,7 @@ const Subscription=mongoose.model('subscription-data',Subscriptionschema)
 const Event =mongoose.model('webhook-event' ,NewEventSchema);
 const User = mongoose.model('User', userSchema);
 const Payment = mongoose.model('Payment', paymentSchema);
+
     app.post('/create-checkout-session', async (req, res) => {
       try {
         const email = req.body.email;
@@ -105,30 +108,17 @@ const Payment = mongoose.model('Payment', paymentSchema);
   text: `Dear, ${req.body.name}
 
   Thank you for choosing CoverAI and taking the first step towards a brighter, more successful future. We’re thrilled to have you join our family of professionals who believe in maximizing their potential and making the best first impression.
-  
-  We believe that every individual is unique, and so should be their cover letter. With CoverAI, we ensure your applications stand out from the crowd with a personalized touch, a professional tone, and a compelling story.
-  
-  Now, let’s get started on making your job application process smoother and more rewarding. Ready to take the next step?
-  
-  Please complete your registration by setting up a password for your account. This will help keep your account secure and give you full access to our advanced features.
-  
-  After creating your password, you can unlock access to your account and view your very first CoverAI generated cover letter, tailored exclusively for you with our state-of-the-art OpenAI technology.
-  
-  Just click the button below:
-  <button>Set Up My Password</button>
-  If you have any questions, our customer service team is available to provide you with all the support you need. Remember, the job market is competitive but with the right tools and preparation, you can stand out. CoverAI is your partner in this journey, and we can’t wait to celebrate your victories together.
-  
+  Here is your cover letter
   Welcome aboard!
-  
   Best regards,
   
   CoverAI Team`,
+
 };
 
 const info = await transporter.sendMail(mailOptions);
   console.log('Email sent:', info.messageId);
   console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
-
     res.json({ url: session.url, paymentId: savedPayment._id });
   } catch (error) {
     console.error(error);
@@ -136,148 +126,95 @@ const info = await transporter.sendMail(mailOptions);
   }
 });
 
-// app.post('/create-checkout-session-auth', async (req, res) => {
-//   try {
-//     const userEmail = req.body.userEmail;
-//     const jobtitle = req.body.jobtitle;
-//     const companyname = req.body.companyname;
-//     const payment = await Payment.findOne({ email: userEmail });
-//     if (!payment) {
-//       // Create a new payment record if one doesn't exist
-//       const newPayment = new Payment({
-//         email: req.body.userEmail,
-//         name: req.body.name,
-//         jobtitle: req.body.jobtitle,
-//         companyname: req.body.companyname,
-//         coverLetter: req.body.coverLetterResponse,
-//         timestamp: new Date(),
-//       });
-//       const savedPayment = await newPayment.save();
-//       const session = await stripe.checkout.sessions.create({
-//         payment_method_types: ['card'],
-//         mode: 'subscription',
-//         subscription_data: {
-//           trial_period_days: 1
-//         },
-//         customer_email: userEmail,
-//         line_items: [
-//           {
-//             price: 'price_1NqG3DDY7WDwWj6eeEfQCXhH',
-//             quantity: 1,
-//           },
-//         ],
-//         success_url: `${process.env.SERVER_URL}/client/dashboard?paymentId=${savedPayment._id.toString()}`,
-//         cancel_url: `${process.env.SERVER_URL}/cancel`,
-//       });
-
-//       const subscriptionId = session.subscription;
-//       savedPayment.subscriptionId = subscriptionId;
-//       await savedPayment.save();
-
-//       return res.json({ url: session.url, paymentId: savedPayment._id });
-//     } else {
-    
-//       const newPayment = new Payment({
-//         email: req.body.userEmail,
-//         name: req.body.name,
-//         jobtitle: req.body.jobtitle,
-//         companyname: req.body.companyname,
-//         coverLetter: req.body.coverLetterResponse,
-//         timestamp: new Date(),
-//       });
-
-//       const savedPayment = await newPayment.save();
-
-//       return res.json({ url: '', paymentId: savedPayment._id });
-//     }
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ error: 'An error occurred on the server.' });
-//   }
-// });
-
-
-
 //check payment status
+
 app.post('/create-checkout-session-auth', async (req, res) => {
   try {
     const userEmail = req.body.userEmail;
-    const jobtitle = req.body.jobtitle;
-    const companyname = req.body.companyname;
-    const payment = await Payment.findOne({ email: userEmail });
-
-    if (!payment) {
-      // Create a new payment record if one doesn't exist
-      const newPayment = new Payment({
-        email: req.body.userEmail,
-        name: req.body.name,
-        jobtitle: req.body.jobtitle,
-        companyname: req.body.companyname,
-        coverLetter: req.body.coverLetterResponse,
-        timestamp: new Date(),
-      });
-
-      const savedPayment = await newPayment.save();
-
-      const session = await stripe.checkout.sessions.create({
-        payment_method_types: ['card'],
-        mode: 'subscription',
-        subscription_data: {
-          trial_period_days: 1
+    const newPayment = new Payment({
+      email: req.body.userEmail,
+      name: req.body.name,
+      jobtitle: req.body.jobtitle,
+      companyname: req.body.companyname,
+      coverLetter: req.body.coverLetterResponse,
+      timestamp: new Date(),
+    });
+    const savedPayment = await newPayment.save();
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ['card'],
+      mode: 'subscription',
+      subscription_data: {
+        trial_period_days: 1
+      },
+      customer_email: userEmail,
+      line_items: [
+        {
+          price: 'price_1NqG3DDY7WDwWj6eeEfQCXhH',
+          quantity: 1,
         },
-        customer_email: userEmail,
-        line_items: [
-          {
-            price: 'price_1NqG3DDY7WDwWj6eeEfQCXhH',
-            quantity: 1,
-          },
-        ],
-        success_url: `${process.env.SERVER_URL}/client/dashboard?paymentId=${savedPayment._id.toString()}`,
-        cancel_url: `${process.env.SERVER_URL}/cancel`,
-      });
-
-      const subscriptionId = session.subscription;
-      savedPayment.subscriptionId = subscriptionId;
-      await savedPayment.save();
-
-      return res.json({ url: session.url, paymentId: savedPayment._id, subscriptionId });
-    } else {
-      const newPayment = new Payment({
-        email: req.body.userEmail,
-        name: req.body.name,
-        jobtitle: req.body.jobtitle,
-        companyname: req.body.companyname,
-        coverLetter: req.body.coverLetterResponse,
-        timestamp: new Date(),
-      });
-
-      const savedPayment = await newPayment.save();
-
-      return res.json({ url: '', paymentId: savedPayment._id, subscriptionId: null });
-    }
+      ],
+      success_url: `${process.env.SERVER_URL}/client/dashboard?paymentId=${savedPayment._id.toString()}`,
+      cancel_url: `${process.env.SERVER_URL}/cancel`,
+    });
+    const subscriptionId = session.subscription;
+    savedPayment.subscriptionId = subscriptionId;
+    await savedPayment.save(); 
+    return res.json({ url: session.url, paymentId: savedPayment._id, subscriptionId });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'An error occurred on the server.' });
   }
 });
 
+//check-payment-status
 
-app.get('/check-payment-status', async (req, res) => {
+app.get('/check-payment', async (req, res) => {
+  const { email } = req.query;
+
   try {
-    const userEmail = req.query.email;
-    const payment = await Payment.findOne({ email: userEmail });
-
-    if (payment && payment.paymentId) {
-      return res.status(200).json({ message: 'Payment Done.' });
+    console.log('Checking payment and subscription status for email:', email);
+    const payment = await Payment.findOne({ email });
+    if (payment) {
+      if (payment.subscriptionStatus) {
+        if (payment.subscriptionStatus === 'active') {
+          return res.json({ message: "Payment exists and subscription is active" });
+        } else if (payment.subscriptionStatus === 'trialing') {
+          return res.json({ message: "Payment exists and subscription is in the trialing state" });
+        } else if (payment.subscriptionStatus === 'canceled') {
+          const subscriptioncanceled = payment.canceledTimestamp;
+          const timestamp =payment.timestamp;
+         
+          if (subscriptioncanceled) {
+            return res.json({ message: "Subscription cancel at this time", subscriptioncanceled ,timestamp});
+          } else {
+            return res.json({ message: "Payment exists and subscription is canceled, but no cancellation timestamp found" });
+          }
+        }
+      } 
     } else {
-      return res.status(404).json({ message: 'Do Payment first.' });
+      return res.json({ message: "No record exists" });
     }
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'An error occurred on the server.' });
+    console.error('Error checking payment and subscription status:', error);
+    return res.status(500).json({ error: 'Internal server error' });
   }
 });
 
+//store data in db if payment are done
+app.post('/save-data-after-payment', async (req,res)=>
+{
+  const userEmail = req.body.userEmail;
+  console.log(userEmail);
+    const newPayment = new Payment({
+      email: req.body.userEmail,
+      name: req.body.name,
+      jobtitle: req.body.jobtitle,
+      companyname: req.body.companyname,
+      coverLetter: req.body.coverLetterResponse,
+      timestamp: new Date(),
+    });
+    const savedPayment = await newPayment.save();
+})
 
 //cancel subscription
 app.post("/cancel-sub-test", async function (req, res) {
@@ -307,11 +244,9 @@ app.post("/cancel-sub-test", async function (req, res) {
 });
 
 //get customer subscription details
-
 app.post("/get-sub-data", async function (req, res) {
   try {
     const { email } = req.body;
-
     // Retrieve customer data from Stripe
     const customersData = await stripe.customers.list({ email });
     if (customersData.data.length === 0) {
@@ -321,26 +256,21 @@ app.post("/get-sub-data", async function (req, res) {
     const customerGet = await stripe.customers.retrieve(customer.id, {
       expand: ["subscriptions.data"],
     });
-    
     if (customerGet.subscriptions.data.length === 0) {
       return res.status(404).json({ error: "No subscriptions found for this customer" });
-    }
-    
+    } 
     const subscription = customerGet.subscriptions.data[0]; 
     const subscriptionId = subscription.id;
     const subscriptionStartDate = new Date(subscription.current_period_start * 1000); 
     const subscriptionEndDate = new Date(subscription.current_period_end * 1000); 
-   
     const newSubscription = new Subscription({
-      email:email,
+      email,
       customerId: customer.id,
       subscriptionId:subscription.id,
       subscription: subscription, 
     });
-    
     // Save the subscription details to the database
     await newSubscription.save();
-    
     res.send({
       status: "Subscription details saved to the database",
     });
@@ -353,7 +283,6 @@ app.post("/get-sub-data", async function (req, res) {
 // Dashboard user coverletter
 app.get('/getCoverLetters', async (req, res) => {
   const userEmail = req.query.userEmail;
-
   try {
     const coverLetters = await Payment.find({ email: userEmail }).select('coverLetter timestamp jobtitle companyname');
     res.json(coverLetters);
@@ -362,6 +291,7 @@ app.get('/getCoverLetters', async (req, res) => {
     res.status(500).json({ error: 'An error occurred on the server.' });
   }
 });
+
 app.get('/api/fetch-cover-letter', async (req, res) => {
   try {
     const userEmail = req.query.userEmail;
@@ -402,7 +332,6 @@ app.get('/api/fetch-cover-letter', async (req, res) => {
 app.post('/register', async (req, res) => {
   try {
     const { email, password } = req.body;
-
     // Check if the user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
@@ -421,6 +350,7 @@ app.post('/register', async (req, res) => {
     res.status(500).json({ error: 'An error occurred on the server.' });
   }
 });
+
 
 // API route for user logged in
 app.post("/login", async (req, res) => {
@@ -544,62 +474,75 @@ app.get('/get-user-email/:token', async (req, res) => {
     res.status(500).json({ error: 'An error occurred while fetching user email.' });
   }
 });
-// app.post(
-//   "/webhook",
-//   bodyParser.raw({ type: "application/json" }),
-//   async (req, res) => {
-//    res.json({ success: true });   
-//   }
-// );
-app.post('/webhook', express.json({type: 'application/json'}), (request, response) => {
-  const event = request.body;
 
-    let subscription;
-    let invoice;
-    let status;
-    // Handle the event
-    switch (event.type) {
-      case 'customer.created':
-        subscription = event.data.object;
-        status = subscription.status;
-        console.log(`customer status is ${status}.`);
-        break;
-      case 'invoice.created':
-           invoice = event.data.object;
-          console.log(`Invoice ${invoice.id} was created!`);
-          break;
-      case 'invoice.paid':
-           invoice = event.data.object;
-          console.log(`Invoice ${invoice.id} was paid!`);
-          break;
-      case 'invoice.payment_failed':
-          invoice = event.data.object;
-          console.log(`Invoice ${invoice.id} failed to pay!`);
-          break;
-     case 'customer.subscription.trial_will_end':
-        subscription = event.data.object;
-        status = subscription.status;
-        console.log(`Subscription status is ${status}.`);
-        break;
-     case 'customer.subscription.deleted':
-        subscription = event.data.object;
-        status = subscription.status;
-        console.log(`Subscription status is ${status}.`);
-        break;
-     case 'customer.subscription.created':
-        subscription = event.data.object;
-        status = subscription.status;
-        console.log(`Subscription status is ${status}.`);
-        break;
-     case 'customer.subscription.updated':
-        subscription = event.data.object;
-        status = subscription.status;
-        console.log(`Subscription status is ${status}.`);
-        break;
-      default:
-        console.log(`other event type ${event.type}.`);
-    }
-    response.send();
+//webhook api endpoint
+app.post('/webhook', express.json({ type: 'application/json' }), async (request, response) => {
+  const event = request.body;
+  let customerId;
+  let subscriptionId;
+  let status;
+  let customerEmail;
+  let canceledtime = null; 
+  
+  switch (event.type) {
+    case 'customer.created':
+      customerId = event.data.object.id;
+      status = event.data.object.status;
+      break;
+    case 'invoice.created':
+      customerId = event.data.object.customer;
+      subscriptionId = event.data.object.subscription;
+      console.log(`Customer ID: ${customerId}, Invoice ID: ${event.data.object.id}`);
+      break;
+    case 'invoice.paid':
+      customerId = event.data.object.customer;
+      subscriptionId = event.data.object.subscription;
+      console.log(`Customer ID: ${customerId}, Invoice ID: ${event.data.object.id}`);
+      break;
+    case 'invoice.payment_failed':
+      customerId = event.data.object.customer;
+      subscriptionId = event.data.object.subscription;
+      console.log(`Customer ID: ${customerId}, Invoice ID: ${event.data.object.id}`);
+      break;
+    case 'customer.subscription.trial_will_end':
+    case 'customer.subscription.deleted':
+    case 'customer.subscription.created':
+    case 'customer.subscription.updated':
+      customerId = event.data.object.customer;
+      subscriptionId = event.data.object.id;
+      status = event.data.object.status;
+      canceledtime=new Date();
+      console.log(`Customer ID: ${customerId}, Subscription ID: ${subscriptionId}, Subscription Status: ${status}`);
+      break;
+    default:
+      console.log(`other event type ${event.type}.`);
   }
-);
+  if (customerId) {
+    const customer = await stripe.customers.retrieve(customerId);
+    customerEmail = customer.email;
+    console.log(`Customer Email: ${customerEmail}`);
+    try {
+      const existingPayment = await Payment.findOne({ email: customerEmail });
+      if (existingPayment) {
+        existingPayment.customerid = customerId;
+        existingPayment.subscriptionId = subscriptionId;
+        existingPayment.subscriptionStatus = status;
+        await existingPayment.save();
+        if (status==='canceled') {
+          existingPayment. canceledTimestamp = canceledtime;
+        }
+        else {
+          existingPayment.canceledTimestamp = null;
+        }
+        await existingPayment.save();
+        console.log('Payment data updated based on email.');
+      } else {
+        console.log('Payment data not found for this email.');
+      }
+    } catch (error) {
+      console.error('Error updating payment data:', error);
+    }
+  }
+  response.send();
+});
 app.listen(5000, () => console.log('Running on port 5000'));

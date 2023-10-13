@@ -62,7 +62,7 @@ function App() {
             <Route path="/client/dashboard" element={<Dashboard />} />
             <Route path="/client/new-letter" element={<NewLetter />} />
             <Route path="/client/letter" element={<Letter/>}/>
-          
+            
           </>
         )}
         <Route path="/" element={<Home />} />{" "}
@@ -79,7 +79,7 @@ function App() {
         <Route path="/thank-you"  element={<Thankyou />} />{" "}
         <Route path="/client/typeform-thank-you" element={< NewLetterThankYou/>}/>
         <Route path="reset/:token" element={< ResetPassword/>} />
-        <Route path="/*" element={<Unroute />}  />
+        {/* <Route path="/*" element={<Unroute />}  /> */}
       </Routes>{" "}
       {showNavbarAndFooter && <Footer />}
     </>

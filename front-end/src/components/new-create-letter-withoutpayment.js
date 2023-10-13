@@ -3,8 +3,9 @@ import  { useState, useEffect } from "react";
 import axios from "axios";
 import "./new-create-letter.css";
 import { useAuth } from "../AuthContext"; 
+import "./new-letter-withputpayment.css";
 
-function NewCreateLetter()
+function Newletterwithoutpayment()
 {
     const { user } = useAuth();
     const [result, setResult] = useState(null);
@@ -42,9 +43,8 @@ function NewCreateLetter()
       setFormData(JSON.parse(storedData));
     }
   }, []);
-  
-  
-    useEffect(() => {
+
+  useEffect(() => {
       const FirstloaderTimeout = setTimeout(() => {
         setShowFirstLoader(false);
       },500);
@@ -67,11 +67,11 @@ function NewCreateLetter()
       };
     
       window.addEventListener('keydown', handleKeyPress);
-    
       return () => {
         window.removeEventListener('keydown', handleKeyPress);
       };
     }, []);
+    
     const [submitted, setSubmitted] = useState(false);
     const [showLoader, setShowLoader] = useState(true);
     const [showFirstLoader, setShowFirstLoader] = useState(true);
@@ -86,20 +86,19 @@ function NewCreateLetter()
       "Thanks for your patience. Your wait will be worth it!"
     ];
     useEffect(() => {
-      const messageInterval = 2000; 
-      const transitionInterval = 1300; 
+      const messageInterval = 2300; 
+      const transitionInterval = 1400; 
+  
       const showNextMessage = () => {
         if (messageIndex < messages.length - 1) {
           setMessageIndex(prevIndex => prevIndex + 1);
         }
       };
-
       if (showLoader) {
         const messageTimer = setInterval(showNextMessage, messageInterval + transitionInterval);
         return () => clearInterval(messageTimer);
       }
     }, [showLoader, messageIndex]);
-  
     const generateCoverLetter = async () => {
       const apiKey = process.env.REACT_APP_CHAT_GPT_API_KEY;
       setShowLoader(true);
@@ -126,8 +125,7 @@ function NewCreateLetter()
           const coverLetter = response.data.choices[0].message.content;
           setCoverLetterSubmitToDb(coverLetter);
           setCoverLetterText(coverLetter);
-          setShowContent(true);
-          
+          setShowContent(true); 
         }
       } catch (error) {
         setShowLoader(false);
@@ -149,7 +147,7 @@ function NewCreateLetter()
       let currentIndex= 0;
       let typeText="";
       const typeInterval = setInterval(() => {
-        const halfwayIndex = Math.floor(totalChars.length/1.2); 
+        const halfwayIndex = Math.floor(totalChars.length); 
         if (currentIndex< halfwayIndex) {
           typeText =totalChars.slice(0,currentIndex+1).join(' ');
           setTypedCoverLetter(typeText);
@@ -169,40 +167,35 @@ function NewCreateLetter()
       }
     }, [TypedCoverLetter, coverLetterText]);
     const [responseOk, setResponseOk] = useState(false);
-
-    
-
-    const stripefunction = async () => {
-      try {
-        const price_id='price_1NqG3DDY7WDwWj6eeEfQCXhH';
-        const response = await fetch('http://localhost:5000/create-checkout-session-auth', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${user.token}`,
-          },
-          body: JSON.stringify({
-            items: [{ id: price_id, amount :100}], 
-            jobtitle: formData.jobTitle,
-            companyname: formData.companyName,
-            coverLetterResponse: coverLetterSubmitToDb,
-            userEmail: user,
-          }),
-        });
-  
-        if (response.ok) {
-          setResponseOk(true); 
-          const { url } = await response.json();
-          window.location = url;
-        } else {
-          const json = await response.json();
-          console.log(json.error);
+    const StoreAfterShowLetter = async () => {
+        try {
+          const price_id = 'price_1NqG3DDY7WDwWj6eeEfQCXhH';
+          const response = await fetch('http://localhost:5000/save-data-after-payment', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${user.token}`,
+            },
+            body: JSON.stringify({
+              userEmail: user, 
+              name: formData.name, 
+              jobtitle: formData.jobTitle,
+              companyname: formData.companyName,
+              coverLetterResponse: coverLetterSubmitToDb,
+            }),
+          });     
+          if (response.ok) {
+            setResponseOk(true);
+            // Handle success response from your backend if needed
+          } else {
+            const json = await response.json();
+            console.log(json.error);
+          }
+        } catch (error) {
+          console.error(error);
         }
-      } catch (error) {
-        console.error(error);
-      }
-    };
-  
+      };
+    
     useEffect(() => {
       const loaderTimer = setTimeout(() => {
         setShowLoader(false);
@@ -233,7 +226,6 @@ function NewCreateLetter()
     
         localStorage.removeItem("formData");   
     };
-
     const isButtonEnabled = () => {
       let errorMessage = "";
       switch (step) {
@@ -727,7 +719,8 @@ function NewCreateLetter()
                   className="input-question-5"
                   value={formData.interestedforjob}
                   onChange={(e) => handleInputChange("interestedforjob", e.target.value)}
-                />{" "}            
+                />{" "}
+              
                 <div className="question-5-btn-main">
                   <div className="question-5-btn">
                     <button  id="Button"
@@ -756,7 +749,8 @@ function NewCreateLetter()
                 <h2> OK, final question.
                 {" "}
                   Provide a closing statement that summarizes your motivation for
-                  applying and reiterates your interest in the position ?{" "} </h2>{" "}            
+                  applying and reiterates your interest in the position ?{" "} </h2>{" "}
+             
                 <input
                   type="text"
                   placeholder="Type your answer here"
@@ -764,7 +758,8 @@ function NewCreateLetter()
                   value={formData.motivationStatement} 
                   onChange={(e) => handleInputChange("motivationStatement", e.target.value)}
                 />{" "}
-                <h5> Shift⇧ + Enter↵ to make a line break </h5>{" "}              
+                <h5> Shift⇧ + Enter↵ to make a line break </h5>{" "}
+               
                 <div className="question-6-btn-main">
                   <div className="question-5-btn">
                     <button  id="Button"
@@ -790,7 +785,8 @@ function NewCreateLetter()
                 <p> Hope you like it. </p>{" "}
                 <div className="question-5-btn-main">
                   <div className="question-5-btn">
-                    <button id="Sub-Button"                   
+                    <button id="Sub-Button"
+                    
                       onClick={() => {
                         handleSubmit();
                         handleNext();
@@ -833,7 +829,8 @@ function NewCreateLetter()
                       )}
                       {!showLoader && (
                 <div className="button-text-center" id="coverLetterButton">
-                  <button id="Button" className="show-cover-letter-button" onClick={() => { handleShowLetterClick(); handleNext(); }}>
+                  <button id="Button" className="show-cover-letter-button" onClick={() => { handleShowLetterClick(); handleNext();
+                 StoreAfterShowLetter(); }}>
                     Show Letter
                   </button>
                   
@@ -847,25 +844,14 @@ function NewCreateLetter()
               </div>
             </div>
           );
-          case 18:         
+          case 18:
+           
             return (
-            <div className="coverLetterWholeWrapper">            
-               <p className="type-writer-cover-letter" >{TypedCoverLetter}</p>             
-               {reachedHalfway && (
-                <div className="blur-background">
-                  <div className="coverLetterdivwrapper-2">
-                    <div id="coverLetterDiv" className="stripe-button-whole-wrapper">  
-                    <p> To see the full letter try for free! </p>    
-                    <button id="Button" className="stripe-button" onClick={stripefunction}>
-                     
-                     <div className="test-mode-wrapper"> <h6 className="test-mode">TEST MODE</h6></div>
-                     <p>Try now</p>
-                     </button>
-                     </div>
-                  </div>
-                </div>
-              )}
-            </div>
+            <div className='right-card-container'>
+                <div className='type-writer-background'>
+                  <p className='type-letter-cover'>{TypedCoverLetter}</p>
+               </div>
+             </div>
           );
         default:
           return null;
@@ -876,7 +862,8 @@ function NewCreateLetter()
       <section className="container-wraper">
         {" "}
         {showLoader && (
-          <div className="loader-container">          
+          <div className="loader-container">
+           
           </div>
         )}{" "}
       
@@ -890,4 +877,4 @@ function NewCreateLetter()
     </div>
     );  
 };
-export default NewCreateLetter
+export default Newletterwithoutpayment

@@ -998,6 +998,7 @@
     position: relative;
     padding: 25px;
     border-radius: 10px;
+    overflow: auto;
   }
   .blur-background {
     position: absolute;
@@ -1036,7 +1037,7 @@
     backdrop-filter: blur(8px);
     z-index: 1; 
   }
-  
+
   .stripe-button-whole-wrapper
   {
     display: flex;
@@ -1053,7 +1054,6 @@
     border-radius: 10px;
     cursor: pointer;
   }
-  
   .stripe-button-whole-wrapper>p
   {
     color: #575a73;
@@ -1092,7 +1092,6 @@
     height: 2.5vh;
     border-radius: 2px;
   }
-  
   @media (max-width:767) {
     .container-wraper {
       background-image: url("../assets/background.jpeg");
@@ -1104,8 +1103,7 @@
       align-items: center;
       overflow: hidden;
       background-repeat: no-repeat;
-    }
-    
+    }  
   }
   .type-writer-cover-letter{
     white-space: pre-line;

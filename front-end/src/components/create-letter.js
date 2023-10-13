@@ -38,7 +38,6 @@ useEffect(() => {
   }
 }, []);
 
-
   useEffect(() => {
     const FirstloaderTimeout = setTimeout(() => {
       setShowFirstLoader(false);
@@ -46,6 +45,7 @@ useEffect(() => {
     return () => clearTimeout(FirstloaderTimeout);
   }, []);
   useEffect(() => {
+    const isMac = navigator.userAgent.indexOf('Mac') !== -1;
     const handleKeyPress = (event) => {
       if (event.key === 'Enter') {
         const button = document.getElementById('Button');
@@ -53,16 +53,17 @@ useEffect(() => {
           button.click();
         }
       }
-      if (event.ctrlKey && event.key === 'Enter') {
+      if (
+        (isMac && event.metaKey && event.key === 'Enter') || // Mac
+        (!isMac && event.ctrlKey && event.key === 'Enter')   // Windows
+      ) {
         const button = document.getElementById('Sub-Button');
         if (button) {
           button.click();
         }
       }
     };
-  
     window.addEventListener('keydown', handleKeyPress);
-  
     return () => {
       window.removeEventListener('keydown', handleKeyPress);
     };
@@ -76,10 +77,7 @@ useEffect(() => {
     });
     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     setIsValidEmail(emailPattern.test(emailValue));
-    
-    
   };
-  
   const [submitted, setSubmitted] = useState(false);
   const [showLoader, setShowLoader] = useState(true);
   const [showFirstLoader, setShowFirstLoader] = useState(true);
@@ -94,8 +92,8 @@ useEffect(() => {
     "Thanks for your patience"
   ];
   useEffect(() => {
-    const messageInterval = 2000; 
-    const transitionInterval = 1300; 
+    const messageInterval = 2300; 
+    const transitionInterval = 1400; 
 
     const showNextMessage = () => {
       if (messageIndex < messages.length - 1) {
@@ -174,7 +172,6 @@ useEffect(() => {
     }, 100);
 };
 
-
   useEffect(() => {
  
     if (currentDisplayIndex == 120) {
@@ -199,6 +196,7 @@ useEffect(() => {
   const handleChange = (e) => {
     setInputText(e.target.value);
   };
+
   
   const stripefunction = async () => {
     

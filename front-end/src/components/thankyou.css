@@ -134,15 +134,12 @@
 }
 
 .copy-button-container {
-    display: flex; /* Use flexbox for layout */
-    /* Center items vertically */
-   
-    
+    display: flex; 
 }
 
 .copy-tooltip {
-    margin: 0; /* Remove any default margin that might add space */
-    white-space: nowrap; /* Prevent line breaks within the tooltip */
+    margin: 0; 
+    white-space: nowrap; 
     font-size: 10px;
     padding-top: 30px;
     padding-right: 30px;
